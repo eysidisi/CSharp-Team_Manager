@@ -1,4 +1,4 @@
-﻿namespace TeamManager.Service
+﻿namespace TeamManager.Service.Wizard
 {
     public class User
     {

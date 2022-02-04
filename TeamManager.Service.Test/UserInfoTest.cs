@@ -1,4 +1,6 @@
 using Moq;
+using TeamManager.Service.Wizard;
+using TeamManager.Service.Wizard.LoginPage;
 using Xunit;
 
 namespace TeamManager.Service.Test
