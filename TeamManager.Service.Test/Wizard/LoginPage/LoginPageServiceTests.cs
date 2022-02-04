@@ -3,9 +3,9 @@ using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.LoginPage;
 using Xunit;
 
-namespace TeamManager.Service.Test
+namespace TeamManager.Service.Test.Wizard.LoginPage
 {
-    public class UserInfoTest
+    public class LoginPageServiceTests
     {
         [Fact]
         public void CheckUserInfo_ReturnsTrue()
@@ -18,8 +18,7 @@ namespace TeamManager.Service.Test
             connection.Setup(x => x.CheckIfUserExists(It.
                 Is<User>(user => user.userName == userName && user.password == password))).Returns(true);
 
-            LoginPageChecks userInfo = new LoginPageChecks(connection.Object);
-
+            LoginPageService userInfo = new LoginPageService(connection.Object);
 
             // Act
             bool result = userInfo.CheckIfUserExists(userName, password);
