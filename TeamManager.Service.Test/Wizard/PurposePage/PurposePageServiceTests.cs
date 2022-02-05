@@ -48,11 +48,12 @@ namespace TeamManager.Service.Test.Wizard.PurposePage
             // Arrange
             var connection = new Mock<IDatabaseConnection>();
             var page = new PurposePageService(connection.Object);
+            User user = new User();
 
             string purpose = "A valid purpose";
 
             // Act
-            page.SavePurposeOfVisit(purpose);
+            page.SavePurposeOfVisit(purpose,user);
 
             // Assert
         }
