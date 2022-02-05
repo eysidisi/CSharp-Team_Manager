@@ -24,7 +24,7 @@ namespace TeamManager.Service.Wizard.PurposePage
             return true;
         }
 
-        public void SavePurposeOfVisit(string purpose)
+        public void SavePurposeOfVisit(string purpose, User user)
         {
             throw new NotImplementedException();
         }
