@@ -1,5 +1,6 @@
 using Moq;
 using TeamManager.Service.Wizard;
+using TeamManager.Service.Wizard.Database;
 using TeamManager.Service.Wizard.LoginPage;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace TeamManager.Service.Test.Wizard.LoginPage
             
             var connection = new Mock<IDatabaseConnection>();
             connection.Setup(x => x.CheckIfUserExists(It.
-                Is<User>(user => user.userName == userName && user.password == password))).Returns(true);
+                Is<User>(user => user.UserName == userName && user.Password == password))).Returns(true);
 
             LoginPageService userInfo = new LoginPageService(connection.Object);
 

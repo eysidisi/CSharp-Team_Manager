@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeamManager.Service.Wizard.Database;
 
 namespace TeamManager.Service.Wizard.LoginPage
 {
@@ -18,6 +19,11 @@ namespace TeamManager.Service.Wizard.LoginPage
         public bool CheckIfUserExists(string userName, string password)
         {
             return databaseConnection.CheckIfUserExists(new User(userName, password));
+        }
+
+        public User GetUser(string userName)
+        {
+            return databaseConnection.GetUser(userName);
         }
     }
 }

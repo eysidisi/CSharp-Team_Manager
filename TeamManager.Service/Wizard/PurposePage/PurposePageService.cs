@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeamManager.Service.Wizard.Database;
 
 namespace TeamManager.Service.Wizard.PurposePage
 {
@@ -24,9 +25,10 @@ namespace TeamManager.Service.Wizard.PurposePage
             return true;
         }
 
-        public void SavePurposeOfVisit(string purpose, User user)
+        public void SavePurposeOfVisit(string purposeText, User user)
         {
-            connection.SavePurpose(purpose, user);
+            Purpose purpose = new Purpose(user.UserName, purposeText);
+            connection.SavePurpose(purpose);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TeamManager.Service.Wizard;
+using TeamManager.Service.Wizard.Database;
 using TeamManager.Service.Wizard.PurposePage;
 
 namespace TeamManager.UI.UserControls

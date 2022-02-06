@@ -12,4 +12,10 @@
     <ProjectReference Include="..\TeamManager.Service\TeamManager.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestDB.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

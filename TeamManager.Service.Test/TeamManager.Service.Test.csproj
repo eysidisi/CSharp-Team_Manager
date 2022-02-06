@@ -25,4 +25,15 @@
     <ProjectReference Include="..\TeamManager.Service\TeamManager.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SQliteDB\TestDBs\" />
+    <Folder Include="Wizard\Database\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SQliteDB\TestDBs\TestDB.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

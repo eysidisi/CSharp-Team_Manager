@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeamManager.Service.Wizard;
+using TeamManager.Service.Wizard.Database;
 using TeamManager.Service.Wizard.PurposePage;
 using Xunit;
 

@@ -8,13 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TeamManager.Service.Wizard;
+using TeamManager.Service.Wizard.Database;
 using TeamManager.Service.Wizard.LoginPage;
 
 namespace TeamManager.UI.UserControls
 {
     public partial class LoginPageUserControl : UserControl
     {
-        public Action OnSuccessfulLogin;
+        public Action<User> OnSuccessfulLogin;
 
         LoginPageService loginPageService;
         public LoginPageUserControl(IDatabaseConnection databaseConnection)
@@ -32,7 +33,9 @@ namespace TeamManager.UI.UserControls
 
                 if (loginPageService.CheckIfUserExists(userName, password))
                 {
-                    OnSuccessfulLogin?.Invoke();
+                    User user = loginPageService.GetUser(userName);
+
+                    OnSuccessfulLogin?.Invoke(user);
                 }
 
                 else
