@@ -29,13 +29,15 @@ namespace TeamManager.UI.UserControls
 
         private void buttonSavePurpose_Click(object sender, EventArgs e)
         {
-            string purpose = textBoxPurpose.Text;
+            string purposeText = textBoxPurpose.Text;
 
             try
             {
-                if (purposePageService.CheckIfPurposeIsValid(purpose))
+                if (purposePageService.CheckIfPurposeIsValid(purposeText))
                 {
-                    purposePageService.SavePurposeOfVisit(purpose, user);
+                    Purpose purpose = new Purpose(user.UserName, purposeText);
+                    purposePageService.SavePurposeOfVisit(purpose);
+                    MessageBox.Show("Purpose is saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     OnSuccessfulPurposeEnter?.Invoke();
                 }
                 else

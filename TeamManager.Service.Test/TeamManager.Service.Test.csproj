@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Wizard\Database\TestDBs\**" />
+    <EmbeddedResource Remove="Wizard\Database\TestDBs\**" />
+    <None Remove="Wizard\Database\TestDBs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -23,17 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TeamManager.Service\TeamManager.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SQliteDB\TestDBs\" />
-    <Folder Include="Wizard\Database\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="SQliteDB\TestDBs\TestDB.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

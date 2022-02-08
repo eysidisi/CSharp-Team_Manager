@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
 
-namespace TeamManager.Service
+namespace TeamManager.Service.Wizard.Database
 {
     public class SQLiteDataAccess : IDatabaseConnection
     {
@@ -57,6 +57,12 @@ namespace TeamManager.Service
             {
                 string query = $"SELECT * From Purposes where UserName = '{userName}'";
                 var output = cnn.Query<Purpose>(query);
+                
+                if (output == null || output.Count() == 0)
+                {
+                    throw new Exception("Can't find purpose related to that user!");
+                }
+
                 return output.ToList();
             }
         }
@@ -67,6 +73,12 @@ namespace TeamManager.Service
             {
                 string query = $"SELECT * From Users where UserName = '{userName}'";
                 var output = cnn.Query<User>(query);
+                
+                if (output == null || output.Count() == 0)
+                {
+                    throw new Exception("Can't find user!");
+                }
+
                 return output.First();
             }
         }

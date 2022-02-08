@@ -25,9 +25,8 @@ namespace TeamManager.Service.Wizard.PurposePage
             return true;
         }
 
-        public void SavePurposeOfVisit(string purposeText, User user)
+        public void SavePurposeOfVisit(Purpose purpose)
         {
-            Purpose purpose = new Purpose(user.UserName, purposeText);
             connection.SavePurpose(purpose);
         }
     }

@@ -7,10 +7,11 @@ namespace TeamManager.UI
 {
     public partial class WizardForm : Form
     {
-        string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDB.db; Version = 3";
+        string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDBFiles\TestDB.db; Version = 3";
 
         IDatabaseConnection connection;
         LoginPageUserControl loginPageUserControl;
+        PurposePageUserControl purposePageUserControl;
 
         public WizardForm()
         {
@@ -23,12 +24,25 @@ namespace TeamManager.UI
         {
             loginPageUserControl = new LoginPageUserControl(connection);
             Controls.Add(loginPageUserControl);
-            loginPageUserControl.OnSuccessfulLogin += SuccessfulLogin;
+            loginPageUserControl.OnSuccessfulLogin += OnSuccessfulLogin;
         }
 
-        private void SuccessfulLogin(User user)
+        private void OnSuccessfulLogin(User user)
         {
             Controls.Remove(loginPageUserControl);
+            AdjustPurposePage(user);
+        }
+
+        private void AdjustPurposePage(User user)
+        {
+            purposePageUserControl = new PurposePageUserControl(connection, user);
+            purposePageUserControl.OnSuccessfulPurposeEnter += OnSuccessfulPurposeEnter;
+            Controls.Add(purposePageUserControl);
+        }
+
+        private void OnSuccessfulPurposeEnter()
+        {
+            Controls.Remove(purposePageUserControl);
         }
     }
 }

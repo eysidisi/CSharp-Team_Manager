@@ -44,19 +44,23 @@ namespace TeamManager.Service.Test.Wizard.PurposePage
         }
 
         [Fact]
-        public void SavePurposeOfVisitToTheDB_ReturnsFalse()
+        public void SavePurposeOfVisitToTheDB()
         {
             // Arrange
             var connection = new Mock<IDatabaseConnection>();
-            var page = new PurposePageService(connection.Object);
-            User user = new User();
 
-            string purpose = "A valid purpose";
+            string userName = "validUserName";
+            string purposeText = "A valid purpose";
+
+            Purpose purpose = new Purpose(userName, purposeText);
+
+            var page = new PurposePageService(connection.Object);
 
             // Act
-            page.SavePurposeOfVisit(purpose,user);
+            page.SavePurposeOfVisit(purpose);
 
             // Assert
+            connection.Verify(x => x.SavePurpose(purpose));
         }
     }
 }

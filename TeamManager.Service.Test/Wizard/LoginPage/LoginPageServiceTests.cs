@@ -14,7 +14,7 @@ namespace TeamManager.Service.Test.Wizard.LoginPage
             // Arrange
             string userName = "CorrectName";
             string password = "CorrectPassword";
-            
+
             var connection = new Mock<IDatabaseConnection>();
             connection.Setup(x => x.CheckIfUserExists(It.
                 Is<User>(user => user.UserName == userName && user.Password == password))).Returns(true);
@@ -27,5 +27,28 @@ namespace TeamManager.Service.Test.Wizard.LoginPage
             // Assert
             Assert.True(result);
         }
+
+        [Fact]
+        public void GetUser_ReturnsTrue()
+        {
+            // Arrange
+            string userName = "CorrectName";
+            string password = "CorrectPassword";
+
+            User expectedUser = new User(userName, password);
+
+            var connection = new Mock<IDatabaseConnection>();
+            connection.Setup(x => x.GetUser(It.
+                Is<string>(u => u == userName))).Returns(expectedUser);
+
+            LoginPageService userInfo = new LoginPageService(connection.Object);
+
+            // Act
+            var actualUser = userInfo.GetUser(userName);
+
+            // Assert
+            Assert.Equal(expectedUser, actualUser);
+        }
+
     }
 }
