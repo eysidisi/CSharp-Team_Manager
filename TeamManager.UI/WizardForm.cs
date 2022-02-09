@@ -1,7 +1,8 @@
 using TeamManager.UI.UserControls;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Database;
 using TeamManager.Service;
+using TeamManager.Service.Models;
 
 namespace TeamManager.UI
 {
@@ -27,13 +28,13 @@ namespace TeamManager.UI
             loginPageUserControl.OnSuccessfulLogin += OnSuccessfulLogin;
         }
 
-        private void OnSuccessfulLogin(User user)
+        private void OnSuccessfulLogin(Manager manager)
         {
             Controls.Remove(loginPageUserControl);
-            AdjustPurposePage(user);
+            AdjustPurposePage(manager);
         }
 
-        private void AdjustPurposePage(User user)
+        private void AdjustPurposePage(Manager user)
         {
             purposePageUserControl = new PurposePageUserControl(connection, user);
             purposePageUserControl.OnSuccessfulPurposeEnter += OnSuccessfulPurposeEnter;

@@ -1,16 +1,9 @@
 ﻿using Dapper;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Models;
 
-namespace TeamManager.Service.Wizard.Database
+namespace TeamManager.Service.Database
 {
     public class SQLiteDataAccess : IDatabaseConnection
     {
@@ -21,11 +14,11 @@ namespace TeamManager.Service.Wizard.Database
             this.connString = connString;
         }
 
-        public bool CheckIfUserExists(User user)
+        public bool CheckIfManagerExists(Manager manager)
         {
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                string query = $"SELECT * From Users where UserName = '{user.UserName}' and Password = '{user.Password}'";
+                string query = $"SELECT * From Managers where UserName = '{manager.UserName}' and Password = '{manager.Password}'";
                 var output = cnn.Query<User>(query);
 
                 if (output != null && output.Count() != 0)
@@ -60,23 +53,23 @@ namespace TeamManager.Service.Wizard.Database
                 
                 if (output == null || output.Count() == 0)
                 {
-                    throw new Exception("Can't find purpose related to that user!");
+                    throw new Exception("Can't find purpose related to that manager!");
                 }
 
                 return output.ToList();
             }
         }
 
-        public User GetUser(string userName)
+        public Manager GetManager(string userName)
         {
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                string query = $"SELECT * From Users where UserName = '{userName}'";
-                var output = cnn.Query<User>(query);
+                string query = $"SELECT * From Managers where UserName = '{userName}'";
+                var output = cnn.Query<Manager>(query);
                 
                 if (output == null || output.Count() == 0)
                 {
-                    throw new Exception("Can't find user!");
+                    throw new Exception("Can't find manager!");
                 }
 
                 return output.First();

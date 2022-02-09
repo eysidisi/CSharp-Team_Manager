@@ -5,7 +5,7 @@ namespace TeamManager.Service.Test.SQliteDB
 {
     public class HelperMethods
     {
-        readonly public static string validUserName = "validUserName";
+        readonly public static string validManagerName = "validUserName";
         readonly public static string validPassword = "validPassword";
 
         static int dbNumber = 0;
@@ -47,15 +47,24 @@ namespace TeamManager.Service.Test.SQliteDB
                 string userTableSQL = @"CREATE TABLE 'Users' (
                                     'UserName'  TEXT NOT NULL UNIQUE,
                                     'Password'  TEXT NOT NULL,
-	                                'ID'    INTEGER NOT NULL UNIQUE,
+                                 'ID'    INTEGER NOT NULL UNIQUE,
                                     'Name'  TEXT,
-	                                'Surname'   TEXT,
-	                                'CreationDate'  TEXT,
-	                                'PhoneNumber'   INTEGER,
-	                                'Title' INTEGER,
-	                                PRIMARY KEY('ID' AUTOINCREMENT));";
+                                 'Surname'   TEXT,
+                                 'CreationDate'  TEXT,
+                                 'PhoneNumber'   INTEGER,
+                                 'Title' INTEGER,
+                                 PRIMARY KEY('ID' AUTOINCREMENT));";
 
                 SQLiteCommand command = new SQLiteCommand(userTableSQL, conn);
+                command.ExecuteNonQuery();
+                command.Dispose();
+
+                string managersTableSQL = @"CREATE TABLE 'Managers' (
+	                                    'UserName'	TEXT NOT NULL UNIQUE,
+	                                    'Password'	TEXT NOT NULL,
+	                                    'ID'	INTEGER NOT NULL UNIQUE,
+	                                    PRIMARY KEY('ID' AUTOINCREMENT));";
+                command = new SQLiteCommand(managersTableSQL, conn);
                 command.ExecuteNonQuery();
                 command.Dispose();
 
@@ -70,9 +79,9 @@ namespace TeamManager.Service.Test.SQliteDB
                 command.ExecuteNonQuery();
                 command.Dispose();
 
-                string insertUserSQL = "INSERT INTO Users ( UserName, Password) VALUES (?,?)";
+                string insertUserSQL = "INSERT INTO Managers ( UserName, Password) VALUES (?,?)";
                 SQLiteCommand insertSQLCommand = new SQLiteCommand(insertUserSQL, conn);
-                insertSQLCommand.Parameters.Add(new SQLiteParameter("UserName", validUserName));
+                insertSQLCommand.Parameters.Add(new SQLiteParameter("UserName", validManagerName));
                 insertSQLCommand.Parameters.Add(new SQLiteParameter("Password", validPassword));
                 insertSQLCommand.ExecuteNonQuery();
                 insertSQLCommand.Dispose();

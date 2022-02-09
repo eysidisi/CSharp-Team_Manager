@@ -7,15 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TeamManager.Service.Database;
+using TeamManager.Service.Models;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.Database;
 using TeamManager.Service.Wizard.LoginPage;
 
 namespace TeamManager.UI.UserControls
 {
     public partial class LoginPageUserControl : UserControl
     {
-        public Action<User> OnSuccessfulLogin;
+        public Action<Manager> OnSuccessfulLogin;
 
         LoginPageService loginPageService;
         public LoginPageUserControl(IDatabaseConnection databaseConnection)
@@ -33,14 +34,14 @@ namespace TeamManager.UI.UserControls
 
                 if (loginPageService.CheckIfUserExists(userName, password))
                 {
-                    User user = loginPageService.GetUser(userName);
+                    Manager user = loginPageService.GetManager(userName);
 
                     OnSuccessfulLogin?.Invoke(user);
                 }
 
                 else
                 {
-                    MessageBox.Show("Can't find the user!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Can't find the manager!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

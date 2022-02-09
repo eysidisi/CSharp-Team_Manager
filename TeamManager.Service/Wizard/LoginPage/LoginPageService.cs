@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Database;
+using TeamManager.Service.Models;
 
 namespace TeamManager.Service.Wizard.LoginPage
 {
@@ -18,12 +19,12 @@ namespace TeamManager.Service.Wizard.LoginPage
 
         public bool CheckIfUserExists(string userName, string password)
         {
-            return databaseConnection.CheckIfUserExists(new User(userName, password));
+            return databaseConnection.CheckIfManagerExists(new Manager(userName, password));
         }
 
-        public User GetUser(string userName)
+        public Manager GetManager(string userName)
         {
-            return databaseConnection.GetUser(userName);
+            return databaseConnection.GetManager(userName);
         }
     }
 }

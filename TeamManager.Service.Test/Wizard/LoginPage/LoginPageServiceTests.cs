@@ -1,8 +1,9 @@
 using Moq;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Database;
 using TeamManager.Service.Wizard.LoginPage;
 using Xunit;
+using TeamManager.Service.Models;
 
 namespace TeamManager.Service.Test.Wizard.LoginPage
 {
@@ -16,13 +17,13 @@ namespace TeamManager.Service.Test.Wizard.LoginPage
             string password = "CorrectPassword";
 
             var connection = new Mock<IDatabaseConnection>();
-            connection.Setup(x => x.CheckIfUserExists(It.
-                Is<User>(user => user.UserName == userName && user.Password == password))).Returns(true);
+            connection.Setup(x => x.CheckIfManagerExists(It.
+                Is<Manager>(manager => manager.UserName == userName && manager.Password == password))).Returns(true);
 
-            LoginPageService userInfo = new LoginPageService(connection.Object);
+            LoginPageService managerInfo = new LoginPageService(connection.Object);
 
             // Act
-            bool result = userInfo.CheckIfUserExists(userName, password);
+            bool result = managerInfo.CheckIfUserExists(userName, password);
 
             // Assert
             Assert.True(result);
@@ -35,16 +36,16 @@ namespace TeamManager.Service.Test.Wizard.LoginPage
             string userName = "CorrectName";
             string password = "CorrectPassword";
 
-            User expectedUser = new User(userName, password);
+            Manager expectedUser = new Manager(userName, password);
 
             var connection = new Mock<IDatabaseConnection>();
-            connection.Setup(x => x.GetUser(It.
+            connection.Setup(x => x.GetManager(It.
                 Is<string>(u => u == userName))).Returns(expectedUser);
 
-            LoginPageService userInfo = new LoginPageService(connection.Object);
+            LoginPageService managerInfo = new LoginPageService(connection.Object);
 
             // Act
-            var actualUser = userInfo.GetUser(userName);
+            var actualUser = managerInfo.GetManager(userName);
 
             // Assert
             Assert.Equal(expectedUser, actualUser);

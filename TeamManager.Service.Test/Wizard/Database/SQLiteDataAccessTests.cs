@@ -3,8 +3,9 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Database;
 using Xunit;
+using TeamManager.Service.Models;
 
 namespace TeamManager.Service.Test.SQliteDB
 {
@@ -12,7 +13,7 @@ namespace TeamManager.Service.Test.SQliteDB
     {
 
         [Fact]
-        public void CheckIfUserExists_ReturnsTrue()
+        public void CheckIfManagerExists_ReturnsTrue()
         {
             //Arrange
             HelperMethods helperMethods = new HelperMethods();
@@ -21,20 +22,20 @@ namespace TeamManager.Service.Test.SQliteDB
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             SQLiteDataAccess dataAccess = new SQLiteDataAccess(connectionString);
 
-            User validUser = new User(HelperMethods.validUserName, HelperMethods.validPassword);
+            var validManager = new Manager(HelperMethods.validManagerName, HelperMethods.validPassword);
 
             // Act
-            var isUserValid = dataAccess.CheckIfUserExists(validUser);
+            var isManagerValid = dataAccess.CheckIfManagerExists(validManager);
 
 
             // Assert
-            Assert.True(isUserValid);
+            Assert.True(isManagerValid);
 
             helperMethods.DeleteDB(dbFilePath);
         }
 
         [Fact]
-        public void CheckIfUserExists_InvalidUserNameInvalidPasswords_ReturnsFalse()
+        public void CheckIfManagerExists_InvalidManagerNameInvalidPasswords_ReturnsFalse()
         {
             //Arrange
             HelperMethods helperMethods = new HelperMethods();
@@ -43,19 +44,19 @@ namespace TeamManager.Service.Test.SQliteDB
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             SQLiteDataAccess dataAccess = new SQLiteDataAccess(connectionString);
 
-            User invalidUser = new User("invalidUserName", "invalidPassword");
+            var invalidManager = new Manager("invalidManagerName", "invalidPassword");
 
             // Act
-            var isUserValid = dataAccess.CheckIfUserExists(invalidUser);
+            var isManagerValid = dataAccess.CheckIfManagerExists(invalidManager);
 
             // Assert
-            Assert.False(isUserValid);
+            Assert.False(isManagerValid);
 
             helperMethods.DeleteDB(dbFilePath);
         }
 
         [Fact]
-        public void CheckIfUserExists_ValidUserNameInvalidPasswords_ReturnsFalse()
+        public void CheckIfManagerExists_ValidManagerNameInvalidPasswords_ReturnsFalse()
         {
             //Arrange
             HelperMethods helperMethods = new HelperMethods();
@@ -64,13 +65,13 @@ namespace TeamManager.Service.Test.SQliteDB
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             SQLiteDataAccess dataAccess = new SQLiteDataAccess(connectionString);
 
-            User invalidUser = new User("validUserName", "invalidPassword");
+            var invalidManager = new Manager("validManagerName", "invalidPassword");
 
             // Act
-            var isUserValid = dataAccess.CheckIfUserExists(invalidUser);
+            var isManagerValid = dataAccess.CheckIfManagerExists(invalidManager);
 
             // Assert
-            Assert.False(isUserValid);
+            Assert.False(isManagerValid);
 
             helperMethods.DeleteDB(dbFilePath);
         }
@@ -86,13 +87,13 @@ namespace TeamManager.Service.Test.SQliteDB
             SQLiteDataAccess dataAccess = new SQLiteDataAccess(connectionString);
 
             string purposeText = "A purpose text";
-            string userName = "username";
+            string ManagerName = "Managername";
 
-            Purpose purpose = new Purpose(userName, purposeText);
+            Purpose purpose = new Purpose(ManagerName, purposeText);
             dataAccess.SavePurpose(purpose);
 
             // Act
-            List<Purpose> purposes = dataAccess.GetPurposes(userName);
+            List<Purpose> purposes = dataAccess.GetPurposes(ManagerName);
 
             // Assert
             Assert.Contains(purposeText, purposes.Select(p => p.PurposeText).ToList());
