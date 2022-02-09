@@ -44,23 +44,38 @@ namespace TeamManager.Service.Test.SQliteDB
             {
                 conn.Open();
 
-                string sql = " CREATE TABLE 'Users' ( 'UserName' TEXT NOT NULL UNIQUE, 'Password' TEXT, 'ID' INTEGER NOT NULL UNIQUE, PRIMARY KEY('ID' AUTOINCREMENT) )";
-                SQLiteCommand command = new SQLiteCommand(sql, conn);
+                string userTableSQL = @"CREATE TABLE 'Users' (
+                                    'UserName'  TEXT NOT NULL UNIQUE,
+                                    'Password'  TEXT NOT NULL,
+	                                'ID'    INTEGER NOT NULL UNIQUE,
+                                    'Name'  TEXT,
+	                                'Surname'   TEXT,
+	                                'CreationDate'  TEXT,
+	                                'PhoneNumber'   INTEGER,
+	                                'Title' INTEGER,
+	                                PRIMARY KEY('ID' AUTOINCREMENT));";
+
+                SQLiteCommand command = new SQLiteCommand(userTableSQL, conn);
                 command.ExecuteNonQuery();
                 command.Dispose();
 
 
-                sql = "CREATE TABLE 'Purposes'('ID' INTEGER UNIQUE, 'PurposeText' TEXT NOT NULL, 'UserName' TEXT NOT NULL, PRIMARY KEY('ID' AUTOINCREMENT))";
-                command = new SQLiteCommand(sql, conn);
+                string purposesTableSQL = @"CREATE TABLE 'Purposes' (
+	                                    'ID'	INTEGER UNIQUE,
+	                                    'PurposeText'	TEXT NOT NULL,
+	                                    'UserName'	TEXT NOT NULL,
+	                                    PRIMARY KEY('ID' AUTOINCREMENT));";
+
+                command = new SQLiteCommand(purposesTableSQL, conn);
                 command.ExecuteNonQuery();
                 command.Dispose();
 
-                sql = "INSERT INTO Users ( UserName, Password) VALUES (?,?)";
-                SQLiteCommand insertSQL = new SQLiteCommand(sql, conn);
-                insertSQL.Parameters.Add(new SQLiteParameter("UserName", validUserName));
-                insertSQL.Parameters.Add(new SQLiteParameter("Password", validPassword));
-                insertSQL.ExecuteNonQuery();
-                insertSQL.Dispose();
+                string insertUserSQL = "INSERT INTO Users ( UserName, Password) VALUES (?,?)";
+                SQLiteCommand insertSQLCommand = new SQLiteCommand(insertUserSQL, conn);
+                insertSQLCommand.Parameters.Add(new SQLiteParameter("UserName", validUserName));
+                insertSQLCommand.Parameters.Add(new SQLiteParameter("Password", validPassword));
+                insertSQLCommand.ExecuteNonQuery();
+                insertSQLCommand.Dispose();
             }
 
             return dbPath;
