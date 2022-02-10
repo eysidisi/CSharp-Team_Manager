@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using System.Data;
 using System.Data.SQLite;
 using TeamManager.Service.Models;
@@ -16,14 +17,19 @@ namespace TeamManager.Service.Database
 
         public bool CheckIfManagerExists(Manager manager)
         {
+            string query = $"SELECT * From Managers where UserName = @UserName and Password = @Password";
+
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                string query = $"SELECT * From Managers where UserName = '{manager.UserName}' and Password = '{manager.Password}'";
-                var output = cnn.Query<User>(query);
+                List<Manager>? output = cnn.Query<Manager>(query, manager).ToList();
 
-                if (output != null && output.Count() != 0)
+                if (output != null && output.Count() == 1)
                 {
                     return true;
+                }
+                else if (output.Count() > 1)
+                {
+                    throw new Exception("Two same managers are registered to the DB");
                 }
                 else
                 {
@@ -36,21 +42,18 @@ namespace TeamManager.Service.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                string query = $"INSERT INTO Purposes (UserName,PurposeText) VALUES('{purpose.UserName}','{purpose.PurposeText}');";
-                int output = cnn.Execute(query);
-
-                if (output != 1)
-                    throw new Exception("Can't add purpose!");
+                cnn.Insert(purpose);
             }
         }
 
         public List<Purpose> GetPurposes(string userName)
         {
+            string query = $"SELECT * From Purposes where UserName = @UserName";
+
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                string query = $"SELECT * From Purposes where UserName = '{userName}'";
-                var output = cnn.Query<Purpose>(query);
-                
+                var output = cnn.Query<Purpose>(query, new Purpose() { UserName = userName });
+
                 if (output == null || output.Count() == 0)
                 {
                     throw new Exception("Can't find purpose related to that manager!");
@@ -62,17 +65,44 @@ namespace TeamManager.Service.Database
 
         public Manager GetManager(string userName)
         {
+            string query = $"SELECT * From Purposes where UserName = @UserName";
+
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                string query = $"SELECT * From Managers where UserName = '{userName}'";
-                var output = cnn.Query<Manager>(query);
-                
+                var output = cnn.Query<Manager>(query, new Manager() { UserName = "asd" });
+
                 if (output == null || output.Count() == 0)
                 {
                     throw new Exception("Can't find manager!");
                 }
 
                 return output.First();
+            }
+        }
+
+        public void SaveUser(User user)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(connString))
+            {
+                cnn.Insert(user);
+            }
+        }
+
+        public bool DeleteUser(User user)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(connString))
+            {
+              return  cnn.Delete(user);
+            }
+        }
+
+        public List<User> GetUsers()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(connString))
+            {
+                var users = cnn.GetAll<User>().ToList();
+
+                return users;
             }
         }
     }

@@ -7,7 +7,7 @@ using TeamManager.Service.Database;
 using Xunit;
 using TeamManager.Service.Models;
 
-namespace TeamManager.Service.Test.SQliteDB
+namespace TeamManager.Service.Test.Database.SQLiteDB
 {
     public class SQLiteDataAccessTests
     {
@@ -100,5 +100,68 @@ namespace TeamManager.Service.Test.SQliteDB
 
             helperMethods.DeleteDB(dbFilePath);
         }
+
+        [Fact]
+        public void SaveUser_SavesUser()
+        {
+            //Arrange
+            HelperMethods helperMethods = new HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            SQLiteDataAccess dataAccess = new SQLiteDataAccess(connectionString);
+
+            string userName = "userName";
+            string userSurname = "userSurname";
+
+            var user = new User()
+            {
+                Name = userName,
+                Surname = userSurname
+            };
+
+            // Act
+            dataAccess.SaveUser(user);
+
+            List<User> users = dataAccess.GetUsers();
+
+            //// Assert
+            Assert.Contains(users, u => u.Name == userName && u.Surname == userSurname);
+
+            helperMethods.DeleteDB(dbFilePath);
+        }
+
+        [Fact]
+        public void DeleteUser_DeletessUser()
+        {
+            //Arrange
+            HelperMethods helperMethods = new HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            SQLiteDataAccess dataAccess = new SQLiteDataAccess(connectionString);
+
+            string userName = "userName";
+            string userSurname = "userSurname";
+
+            var user = new User()
+            {
+                Name = userName,
+                Surname = userSurname
+            };
+
+            // Act
+            dataAccess.SaveUser(user);
+
+            List<User> users = dataAccess.GetUsers();
+
+            User savedUser = users.Find(u => u.Name == userName && u.Surname == userSurname);
+
+            // Assert
+            Assert.True(dataAccess.DeleteUser(savedUser));
+
+            helperMethods.DeleteDB(dbFilePath);
+        }
+
     }
 }

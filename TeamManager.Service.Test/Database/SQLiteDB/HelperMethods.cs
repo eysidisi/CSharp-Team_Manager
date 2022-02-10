@@ -1,7 +1,7 @@
 ﻿using System.Data.SQLite;
 using System.IO;
 
-namespace TeamManager.Service.Test.SQliteDB
+namespace TeamManager.Service.Test.Database.SQLiteDB
 {
     public class HelperMethods
     {
@@ -45,15 +45,13 @@ namespace TeamManager.Service.Test.SQliteDB
                 conn.Open();
 
                 string userTableSQL = @"CREATE TABLE 'Users' (
-                                    'UserName'  TEXT NOT NULL UNIQUE,
-                                    'Password'  TEXT NOT NULL,
-                                 'ID'    INTEGER NOT NULL UNIQUE,
-                                    'Name'  TEXT,
-                                 'Surname'   TEXT,
-                                 'CreationDate'  TEXT,
-                                 'PhoneNumber'   INTEGER,
-                                 'Title' INTEGER,
-                                 PRIMARY KEY('ID' AUTOINCREMENT));";
+	                                'ID'	INTEGER NOT NULL UNIQUE,
+	                                'Name'	TEXT,
+	                                'Surname'	TEXT,
+	                                'CreationDate'	TEXT,
+	                                'PhoneNumber'	INTEGER,
+	                                'Title'	INTEGER,
+	                                PRIMARY KEY('ID' AUTOINCREMENT));";
 
                 SQLiteCommand command = new SQLiteCommand(userTableSQL, conn);
                 command.ExecuteNonQuery();

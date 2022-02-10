@@ -10,7 +10,7 @@ namespace TeamManager.Service.Test.Wizard.LoginPage
     public class LoginPageServiceTests
     {
         [Fact]
-        public void CheckUserInfo_ReturnsTrue()
+        public void CheckManagerInfo_ReturnsTrue()
         {
             // Arrange
             string userName = "CorrectName";
@@ -30,7 +30,7 @@ namespace TeamManager.Service.Test.Wizard.LoginPage
         }
 
         [Fact]
-        public void GetUser_ReturnsTrue()
+        public void GetManager_ReturnsTrue()
         {
             // Arrange
             string userName = "CorrectName";

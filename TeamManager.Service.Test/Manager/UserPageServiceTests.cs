@@ -24,12 +24,26 @@ namespace TeamManager.Service.Test.Managers
             UserPageService userPageService = new UserPageService(connection.Object);
 
             // Act
-            //User user = new User()
-            //{
-                
-            //}
+            User user = new User();
 
             // Assert
+            userPageService.AddUser(user);
         }
+
+        [Fact]
+        public void DeleteUser_DeletesUser()
+        {
+            // Arrange
+            var connection = new Mock<IDatabaseConnection>();
+
+            UserPageService userPageService = new UserPageService(connection.Object);
+
+            // Act
+            User user = new User();
+
+            // Assert
+            userPageService.DeleteUser(user);
+        }
+
     }
 }

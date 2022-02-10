@@ -8,5 +8,8 @@ namespace TeamManager.Service.Database
         List<Purpose> GetPurposes(string userName);
         public void SavePurpose(Purpose purpose);
         Manager GetManager(string userName);
+        void SaveUser(User user);
+        bool DeleteUser(User user);
+        List<User> GetUsers();
     }
 }
