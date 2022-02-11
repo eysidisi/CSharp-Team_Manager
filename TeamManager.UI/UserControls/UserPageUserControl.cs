@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TeamManager.Service.Database;
-using TeamManager.Service.Managera;
+using TeamManager.Service.ManagerSection;
 using TeamManager.Service.Models;
 
 namespace TeamManager.UI.UserControls
@@ -18,12 +18,17 @@ namespace TeamManager.UI.UserControls
         UserPageService userPageService;
         DataTable usersDataTable;
         List<User> allUsers;
+        IDatabaseConnection connection;
+        NewUserPageUserControl saveNewUserPage;
+
         public UserPageUserControl(IDatabaseConnection connection)
         {
             InitializeComponent();
             userPageService = new UserPageService(connection);
+            this.connection = connection;
             FillTable();
         }
+
 
         private void FillTable()
         {
@@ -50,15 +55,35 @@ namespace TeamManager.UI.UserControls
         private void buttonAddUser_Click(object sender, EventArgs e)
         {
             HideAllItems();
-            LoginPageUserControl login = new LoginPageUserControl(null);
-            panelMain.Controls.Add(login);
+            OpenNewUserPage();
+        }
+
+        private void OpenNewUserPage()
+        {
+            saveNewUserPage = new NewUserPageUserControl(connection);
+            saveNewUserPage.OnCancelClick += AddNewUserCancelClicked;
+            Controls.Add(saveNewUserPage);
         }
 
         private void HideAllItems()
         {
-            foreach (Control control in panelMain.Controls)
+            foreach (Control control in Controls)
             {
                 control.Hide();
+            }
+        }
+        private void AddNewUserCancelClicked()
+        {
+            saveNewUserPage.Dispose();
+            FillTable();
+            ExposeAllItems();
+        }
+
+        private void ExposeAllItems()
+        {
+            foreach (Control control in Controls)
+            {
+                control.Visible = true;
             }
         }
     }

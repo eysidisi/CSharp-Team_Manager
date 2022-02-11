@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TeamManager.Service.Database;
-using TeamManager.Service.Managera;
+using TeamManager.Service.ManagerSection;
 using TeamManager.Service.Models;
 using Xunit;
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using TeamManager.Service.Database;
 using TeamManager.Service.Models;
 
-namespace TeamManager.Service.Managera
+namespace TeamManager.Service.ManagerSection
 {
     public class UserPageService
     {

@@ -31,24 +31,24 @@
             this.dataGridViewUsers = new System.Windows.Forms.DataGridView();
             this.buttonDeleteUser = new System.Windows.Forms.Button();
             this.buttonAddUser = new System.Windows.Forms.Button();
-            this.panelMain = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).BeginInit();
-            this.panelMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridViewUsers
             // 
+            this.dataGridViewUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewUsers.Location = new System.Drawing.Point(35, 57);
+            this.dataGridViewUsers.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewUsers.Name = "dataGridViewUsers";
             this.dataGridViewUsers.ReadOnly = true;
             this.dataGridViewUsers.RowTemplate.Height = 25;
-            this.dataGridViewUsers.Size = new System.Drawing.Size(350, 350);
+            this.dataGridViewUsers.Size = new System.Drawing.Size(494, 367);
             this.dataGridViewUsers.TabIndex = 0;
             // 
             // buttonDeleteUser
             // 
-            this.buttonDeleteUser.Location = new System.Drawing.Point(155, 450);
+            this.buttonDeleteUser.Location = new System.Drawing.Point(187, 485);
             this.buttonDeleteUser.Name = "buttonDeleteUser";
             this.buttonDeleteUser.Size = new System.Drawing.Size(75, 23);
             this.buttonDeleteUser.TabIndex = 1;
@@ -58,7 +58,7 @@
             // 
             // buttonAddUser
             // 
-            this.buttonAddUser.Location = new System.Drawing.Point(155, 479);
+            this.buttonAddUser.Location = new System.Drawing.Point(187, 514);
             this.buttonAddUser.Name = "buttonAddUser";
             this.buttonAddUser.Size = new System.Drawing.Size(75, 23);
             this.buttonAddUser.TabIndex = 2;
@@ -66,25 +66,16 @@
             this.buttonAddUser.UseVisualStyleBackColor = true;
             this.buttonAddUser.Click += new System.EventHandler(this.buttonAddUser_Click);
             // 
-            // panelMain
-            // 
-            this.panelMain.Controls.Add(this.dataGridViewUsers);
-            this.panelMain.Controls.Add(this.buttonDeleteUser);
-            this.panelMain.Controls.Add(this.buttonAddUser);
-            this.panelMain.Location = new System.Drawing.Point(3, 3);
-            this.panelMain.Name = "panelMain";
-            this.panelMain.Size = new System.Drawing.Size(429, 594);
-            this.panelMain.TabIndex = 3;
-            // 
             // UserPageUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panelMain);
+            this.Controls.Add(this.dataGridViewUsers);
+            this.Controls.Add(this.buttonDeleteUser);
+            this.Controls.Add(this.buttonAddUser);
             this.Name = "UserPageUserControl";
-            this.Size = new System.Drawing.Size(435, 600);
+            this.Size = new System.Drawing.Size(500, 600);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).EndInit();
-            this.panelMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -94,6 +85,5 @@
         private DataGridView dataGridViewUsers;
         private Button buttonDeleteUser;
         private Button buttonAddUser;
-        private Panel panelMain;
     }
 }
