@@ -77,6 +77,17 @@ namespace TeamManager.Service.Test.Database.SQLiteDB
                 command.ExecuteNonQuery();
                 command.Dispose();
 
+                string teamsTableSQL = @"CREATE TABLE 'Teams' (
+	                                    'ID'	INTEGER NOT NULL UNIQUE,
+	                                    'Name'	TEXT NOT NULL UNIQUE,
+	                                    'CreationDate'	TEXT,
+	                                    PRIMARY KEY('ID' AUTOINCREMENT));";
+
+                command = new SQLiteCommand(teamsTableSQL, conn);
+                command.ExecuteNonQuery();
+                command.Dispose();
+
+
                 string insertUserSQL = "INSERT INTO Managers ( UserName, Password) VALUES (?,?)";
                 SQLiteCommand insertSQLCommand = new SQLiteCommand(insertUserSQL, conn);
                 insertSQLCommand.Parameters.Add(new SQLiteParameter("UserName", validManagerName));

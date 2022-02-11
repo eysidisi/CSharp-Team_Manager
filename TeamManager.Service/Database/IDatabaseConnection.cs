@@ -10,6 +10,12 @@ namespace TeamManager.Service.Database
         Manager GetManager(string userName);
         void SaveUser(User user);
         bool DeleteUser(User user);
-        List<User> GetUsers();
+        List<User> GetAllUsers();
+        void SaveTeam(Team team);
+        Team GetTeamWithName(string name);
+        void SaveUserToTheTeam(int iD1, int iD2);
+        void DeleteUserFromTheTeam(int iD1, int iD2);
+        List<Team> GetAllTeams();
+        bool DeleteTeam(Team team);
     }
 }

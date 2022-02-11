@@ -9,7 +9,7 @@ using TeamManager.Service.ManagerSection;
 using TeamManager.Service.Models;
 using Xunit;
 
-namespace TeamManager.Service.Test.Managers
+namespace TeamManager.Service.Test.ManagerSection
 {
     public class UserPageServiceTests
     {
@@ -18,8 +18,6 @@ namespace TeamManager.Service.Test.Managers
         {
             // Arrange
             var connection = new Mock<IDatabaseConnection>();
-            //connection.Setup(x => x.CheckIfUserExists(It.
-            //    Is<User>(user => user.UserName == userName && user.Password == password))).Returns(true);
 
             UserPageService userPageService = new UserPageService(connection.Object);
 

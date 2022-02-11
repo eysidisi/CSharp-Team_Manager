@@ -29,11 +29,10 @@ namespace TeamManager.UI.UserControls
             FillTable();
         }
 
-
         private void FillTable()
         {
             allUsers = userPageService.GetUsers();
-            usersDataTable = userPageService.ConvertToDatatable(allUsers);
+            usersDataTable = HelperFunctions.ConvertToDatatable(allUsers);
             dataGridViewUsers.DataSource = usersDataTable;
             dataGridViewUsers.AutoResizeColumns();
         }

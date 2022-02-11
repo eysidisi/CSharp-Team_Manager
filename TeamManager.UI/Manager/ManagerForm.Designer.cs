@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.panelUserDetails = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.panelTeamPage = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // panelUserDetails
@@ -42,18 +42,18 @@
             // 
             // panel2
             // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Location = new System.Drawing.Point(45, 60);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(500, 600);
-            this.panel2.TabIndex = 1;
+            this.panelTeamPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTeamPage.Location = new System.Drawing.Point(45, 60);
+            this.panelTeamPage.Name = "panel2";
+            this.panelTeamPage.Size = new System.Drawing.Size(500, 600);
+            this.panelTeamPage.TabIndex = 1;
             // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 741);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panelTeamPage);
             this.Controls.Add(this.panelUserDetails);
             this.Name = "ManagerForm";
             this.Text = "ManagerForm";
@@ -64,6 +64,6 @@
         #endregion
 
         private Panel panelUserDetails;
-        private Panel panel2;
+        private Panel panelTeamPage;
     }
 }

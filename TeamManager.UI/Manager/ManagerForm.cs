@@ -20,6 +20,18 @@ namespace TeamManager.UI
         {
             InitializeComponent();
             IDatabaseConnection connection = new SQLiteDataAccess(connectionString);
+            CreateUserPage(connection);
+            CreateTeamPage(connection);
+        }
+
+        private void CreateTeamPage(IDatabaseConnection connection)
+        {
+            TeamPageUserControl teamPage = new TeamPageUserControl(connection);
+            panelTeamPage.Controls.Add(teamPage);
+        }
+
+        private void CreateUserPage(IDatabaseConnection connection)
+        {
             UserPageUserControl userPageUser = new UserPageUserControl(connection);
             panelUserDetails.Controls.Add(userPageUser);
         }
