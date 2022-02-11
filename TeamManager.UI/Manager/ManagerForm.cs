@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using TeamManager.Service.Database;
+﻿using TeamManager.Service.ManagerSection.Database;
 using TeamManager.UI.UserControls;
 
 namespace TeamManager.UI
@@ -19,18 +10,18 @@ namespace TeamManager.UI
         public ManagerForm()
         {
             InitializeComponent();
-            IDatabaseConnection connection = new SQLiteDataAccess(connectionString);
+            var connection = new ManagerSQLiteConnetion(connectionString);
             CreateUserPage(connection);
             CreateTeamPage(connection);
         }
 
-        private void CreateTeamPage(IDatabaseConnection connection)
+        private void CreateTeamPage(IManagerDatabaseConnection connection)
         {
             TeamPageUserControl teamPage = new TeamPageUserControl(connection);
             panelTeamPage.Controls.Add(teamPage);
         }
 
-        private void CreateUserPage(IDatabaseConnection connection)
+        private void CreateUserPage(IManagerDatabaseConnection connection)
         {
             UserPageUserControl userPageUser = new UserPageUserControl(connection);
             panelUserDetails.Controls.Add(userPageUser);

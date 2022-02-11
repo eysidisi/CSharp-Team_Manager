@@ -1,11 +1,6 @@
 ﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Database;
 using TeamManager.Service.ManagerSection;
+using TeamManager.Service.ManagerSection.Database;
 using TeamManager.Service.Models;
 using Xunit;
 
@@ -17,7 +12,7 @@ namespace TeamManager.Service.Test.ManagerSection
         public void AddUser_AddsUser()
         {
             // Arrange
-            var connection = new Mock<IDatabaseConnection>();
+            var connection = new Mock<IManagerDatabaseConnection>();
 
             UserPageService userPageService = new UserPageService(connection.Object);
 
@@ -32,7 +27,7 @@ namespace TeamManager.Service.Test.ManagerSection
         public void DeleteUser_DeletesUser()
         {
             // Arrange
-            var connection = new Mock<IDatabaseConnection>();
+            var connection = new Mock<IManagerDatabaseConnection>();
 
             UserPageService userPageService = new UserPageService(connection.Object);
 

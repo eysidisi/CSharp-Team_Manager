@@ -1,8 +1,5 @@
+using TeamManager.Service.Wizard.Database;
 using TeamManager.UI.UserControls;
-using TeamManager.Service.Wizard;
-using TeamManager.Service.Database;
-using TeamManager.Service;
-using TeamManager.Service.Models;
 
 namespace TeamManager.UI
 {
@@ -10,14 +7,14 @@ namespace TeamManager.UI
     {
         string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDBFiles\TestDB.db; Version = 3";
 
-        IDatabaseConnection connection;
+        IWizardDatabaseConnection connection;
         LoginPageUserControl loginPageUserControl;
         PurposePageUserControl purposePageUserControl;
 
         public WizardForm()
         {
             InitializeComponent();
-            connection = new SQLiteDataAccess(connectionString);
+            connection = new WizardSQLiteConnection(connectionString);
             AdjustLoginPage();
         }
 
@@ -28,15 +25,15 @@ namespace TeamManager.UI
             loginPageUserControl.OnSuccessfulLogin += OnSuccessfulLogin;
         }
 
-        private void OnSuccessfulLogin(Manager manager)
+        private void OnSuccessfulLogin(string managerUserName)
         {
             Controls.Remove(loginPageUserControl);
-            AdjustPurposePage(manager);
+            AdjustPurposePage(managerUserName);
         }
 
-        private void AdjustPurposePage(Manager user)
+        private void AdjustPurposePage(string managerUserName)
         {
-            purposePageUserControl = new PurposePageUserControl(connection, user);
+            purposePageUserControl = new PurposePageUserControl(connection, managerUserName);
             purposePageUserControl.OnSuccessfulPurposeEnter += OnSuccessfulPurposeEnter;
             Controls.Add(purposePageUserControl);
         }

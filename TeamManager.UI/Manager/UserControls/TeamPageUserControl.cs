@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using TeamManager.Service.Database;
+﻿using System.Data;
 using TeamManager.Service.ManagerSection;
+using TeamManager.Service.ManagerSection.Database;
 using TeamManager.Service.Models;
 
 namespace TeamManager.UI.UserControls
@@ -17,7 +9,7 @@ namespace TeamManager.UI.UserControls
     {
         TeamPageService teamPageService;
         DataTable teamsDataTable;
-        public TeamPageUserControl(IDatabaseConnection connection)
+        public TeamPageUserControl(IManagerDatabaseConnection connection)
         {
             InitializeComponent();
             teamPageService = new TeamPageService(connection);

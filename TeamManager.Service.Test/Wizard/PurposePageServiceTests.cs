@@ -1,16 +1,11 @@
 ﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Database;
 using TeamManager.Service.Models;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.PurposePage;
+using TeamManager.Service.Wizard.Database;
+
 using Xunit;
 
-namespace TeamManager.Service.Test.Wizard.PurposePage
+namespace TeamManager.Service.Test.Wizard
 {
     public class PurposePageServiceTests
     {
@@ -18,7 +13,7 @@ namespace TeamManager.Service.Test.Wizard.PurposePage
         public void CheckIfPurposeIsValid_ReturnsTrue()
         {
             // Arrange
-            var connection = new Mock<IDatabaseConnection>();
+            var connection = new Mock<IWizardDatabaseConnection>();
             var page = new PurposePageService(connection.Object);
             string purpose = "A valid purpose";
 
@@ -33,7 +28,7 @@ namespace TeamManager.Service.Test.Wizard.PurposePage
         public void CheckIfPurposeIsValid_ReturnsFalse()
         {
             // Arrange
-            var connection = new Mock<IDatabaseConnection>();
+            var connection = new Mock<IWizardDatabaseConnection>();
             var page = new PurposePageService(connection.Object);
             string purpose = "";
 
@@ -48,7 +43,7 @@ namespace TeamManager.Service.Test.Wizard.PurposePage
         public void SavePurposeOfVisitToTheDB()
         {
             // Arrange
-            var connection = new Mock<IDatabaseConnection>();
+            var connection = new Mock<IWizardDatabaseConnection>();
 
             string userName = "validUserName";
             string purposeText = "A valid purpose";

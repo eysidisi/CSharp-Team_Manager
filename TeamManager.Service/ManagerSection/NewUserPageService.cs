@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Database;
+﻿using TeamManager.Service.ManagerSection.Database;
 using TeamManager.Service.Models;
 
 namespace TeamManager.Service.ManagerSection
 {
     public class NewUserPageService
     {
-        IDatabaseConnection connection;
+        IManagerDatabaseConnection connection;
 
-        public NewUserPageService(IDatabaseConnection connection)
+        public NewUserPageService(IManagerDatabaseConnection connection)
         {
             this.connection = connection;
         }

@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using TeamManager.Service.Models;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Database;
-using TeamManager.Service.Wizard.PurposePage;
-using TeamManager.Service.Models;
+using TeamManager.Service.Wizard.Database;
 
 namespace TeamManager.UI.UserControls
 {
@@ -18,14 +8,14 @@ namespace TeamManager.UI.UserControls
     {
         public Action OnSuccessfulPurposeEnter;
 
-        Manager manager;
+        string managerUserName;
         PurposePageService purposePageService;
 
-        public PurposePageUserControl(IDatabaseConnection connection, Manager manager)
+        public PurposePageUserControl(IWizardDatabaseConnection connection, string managerUserName)
         {
             InitializeComponent();
             purposePageService = new PurposePageService(connection);
-            this.manager = manager;
+            this.managerUserName = managerUserName;
         }
 
         private void buttonSavePurpose_Click(object sender, EventArgs e)
@@ -36,7 +26,7 @@ namespace TeamManager.UI.UserControls
             {
                 if (purposePageService.CheckIfPurposeIsValid(purposeText))
                 {
-                    Purpose purpose = new Purpose(manager.UserName, purposeText);
+                    Purpose purpose = new Purpose(managerUserName, purposeText);
                     purposePageService.SavePurposeOfVisit(purpose);
                     MessageBox.Show("Purpose is saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     OnSuccessfulPurposeEnter?.Invoke();

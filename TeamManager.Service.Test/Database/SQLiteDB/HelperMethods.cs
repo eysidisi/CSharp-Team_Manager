@@ -5,8 +5,8 @@ namespace TeamManager.Service.Test.Database.SQLiteDB
 {
     public class HelperMethods
     {
-        readonly public static string validManagerName = "validUserName";
-        readonly public static string validPassword = "validPassword";
+        readonly public static string validManagerUserName = "validUserName";
+        readonly public static string validManagerPassword = "validPassword";
 
         static int dbNumber = 0;
         static object syncObj = new object();
@@ -90,8 +90,8 @@ namespace TeamManager.Service.Test.Database.SQLiteDB
 
                 string insertUserSQL = "INSERT INTO Managers ( UserName, Password) VALUES (?,?)";
                 SQLiteCommand insertSQLCommand = new SQLiteCommand(insertUserSQL, conn);
-                insertSQLCommand.Parameters.Add(new SQLiteParameter("UserName", validManagerName));
-                insertSQLCommand.Parameters.Add(new SQLiteParameter("Password", validPassword));
+                insertSQLCommand.Parameters.Add(new SQLiteParameter("UserName", validManagerUserName));
+                insertSQLCommand.Parameters.Add(new SQLiteParameter("Password", validManagerPassword));
                 insertSQLCommand.ExecuteNonQuery();
                 insertSQLCommand.Dispose();
             }

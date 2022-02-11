@@ -4,80 +4,15 @@ using System.Data;
 using System.Data.SQLite;
 using TeamManager.Service.Models;
 
-namespace TeamManager.Service.Database
+namespace TeamManager.Service.ManagerSection.Database
 {
-    public class SQLiteDataAccess : IDatabaseConnection
+    public class ManagerSQLiteConnetion : IManagerDatabaseConnection
     {
         string connString;
 
-        public SQLiteDataAccess(string connString)
+        public ManagerSQLiteConnetion(string connString)
         {
             this.connString = connString;
-        }
-
-        public bool CheckIfManagerExists(Manager manager)
-        {
-            string query = $"SELECT * From Managers where UserName = @UserName and Password = @Password";
-
-            using (IDbConnection cnn = new SQLiteConnection(connString))
-            {
-                List<Manager>? output = cnn.Query<Manager>(query, manager).ToList();
-
-                if (output != null && output.Count() == 1)
-                {
-                    return true;
-                }
-                else if (output.Count() > 1)
-                {
-                    throw new Exception("Two same managers are registered to the DB");
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        public void SavePurpose(Purpose purpose)
-        {
-            using (IDbConnection cnn = new SQLiteConnection(connString))
-            {
-                cnn.Insert(purpose);
-            }
-        }
-
-        public List<Purpose> GetPurposes(string userName)
-        {
-            string query = $"SELECT * From Purposes where UserName = @UserName";
-
-            using (IDbConnection cnn = new SQLiteConnection(connString))
-            {
-                var output = cnn.Query<Purpose>(query, new Purpose() { UserName = userName });
-
-                if (output == null || output.Count() == 0)
-                {
-                    throw new Exception("Can't find purpose related to that manager!");
-                }
-
-                return output.ToList();
-            }
-        }
-
-        public Manager GetManager(string userName)
-        {
-            string query = $"SELECT * From Purposes where UserName = @UserName";
-
-            using (IDbConnection cnn = new SQLiteConnection(connString))
-            {
-                var output = cnn.Query<Manager>(query, new Manager() { UserName = "asd" });
-
-                if (output == null || output.Count() == 0)
-                {
-                    throw new Exception("Can't find manager!");
-                }
-
-                return output.First();
-            }
         }
 
         public void SaveUser(User user)

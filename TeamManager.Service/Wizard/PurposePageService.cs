@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Database;
-using TeamManager.Service.Models;
-
-namespace TeamManager.Service.Wizard.PurposePage
+﻿using TeamManager.Service.Models;
+using TeamManager.Service.Wizard.Database;
+namespace TeamManager.Service.Wizard
 {
     public class PurposePageService
     {
-        IDatabaseConnection connection;
+        IWizardDatabaseConnection connection;
 
-        public PurposePageService(IDatabaseConnection connection)
+        public PurposePageService(IWizardDatabaseConnection connection)
         {
             this.connection = connection;
         }

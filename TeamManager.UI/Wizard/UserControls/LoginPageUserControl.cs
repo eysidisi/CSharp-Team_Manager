@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using TeamManager.Service.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Models;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.LoginPage;
+using TeamManager.Service.Wizard.Database;
 
 namespace TeamManager.UI.UserControls
 {
     public partial class LoginPageUserControl : UserControl
     {
-        public Action<Manager> OnSuccessfulLogin;
+        public Action<string> OnSuccessfulLogin;
 
         LoginPageService loginPageService;
-        public LoginPageUserControl(IDatabaseConnection databaseConnection)
+        public LoginPageUserControl(IWizardDatabaseConnection databaseConnection)
         {
             InitializeComponent();
             loginPageService = new LoginPageService(databaseConnection);
@@ -31,12 +21,15 @@ namespace TeamManager.UI.UserControls
             {
                 string userName = textBoxUserName.Text;
                 string password = textBoxPassword.Text;
-
-                if (loginPageService.CheckIfUserExists(userName, password))
+                Manager manager = new Manager()
                 {
-                    Manager user = loginPageService.GetManager(userName);
+                    UserName = userName,
+                    Password = password
+                };
 
-                    OnSuccessfulLogin?.Invoke(user);
+                if (loginPageService.CheckIfManagerExists(manager))
+                {
+                    OnSuccessfulLogin?.Invoke(userName);
                 }
 
                 else
