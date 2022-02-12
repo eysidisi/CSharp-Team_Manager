@@ -1,4 +1,5 @@
 using TeamManager.UI.ManagerSection;
+using TeamManager.UI.WizardSection;
 
 namespace TeamManager.UI
 {
@@ -13,7 +14,7 @@ namespace TeamManager.UI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new ManagerForm());
+            Application.Run(new WizardForm());
         }
     }
 }

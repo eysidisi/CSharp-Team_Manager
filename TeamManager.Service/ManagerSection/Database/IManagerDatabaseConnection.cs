@@ -10,5 +10,6 @@ namespace TeamManager.Service.ManagerSection.Database
         Team GetTeamWithName(string name);
         List<Team> GetAllTeams();
         bool DeleteTeam(Team team);
+        void SaveTeam(Team newTeam);
     }
 }

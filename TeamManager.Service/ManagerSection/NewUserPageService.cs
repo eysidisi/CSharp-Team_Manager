@@ -15,16 +15,23 @@ namespace TeamManager.Service.ManagerSection
         public void SaveNewUser(User user)
         {
             AddCreationTimeInfo(user);
-            CheckIfUserIsValid(user);
+            
+            if(CheckIfUserIsValid(user)==false)
+            {
+                throw new ArgumentException("User is not valid!");
+            }
+
             connection.SaveUser(user);
         }
 
-        private void CheckIfUserIsValid(User user)
+        private bool CheckIfUserIsValid(User user)
         {
             if (string.IsNullOrEmpty(user.Name))
             {
-                throw new ArgumentException("User name can not be empty!");
+                return false; 
             }
+
+            return true;
         }
         private void AddCreationTimeInfo(User user)
         {

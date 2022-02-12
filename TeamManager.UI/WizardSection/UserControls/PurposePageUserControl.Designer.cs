@@ -35,17 +35,20 @@
             // 
             // textBoxPurpose
             // 
-            this.textBoxPurpose.Location = new System.Drawing.Point(140, 115);
+            this.textBoxPurpose.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxPurpose.Location = new System.Drawing.Point(3, 40);
             this.textBoxPurpose.Multiline = true;
             this.textBoxPurpose.Name = "textBoxPurpose";
-            this.textBoxPurpose.Size = new System.Drawing.Size(221, 159);
+            this.textBoxPurpose.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.textBoxPurpose.Size = new System.Drawing.Size(394, 202);
             this.textBoxPurpose.TabIndex = 0;
             // 
             // buttonSavePurpose
             // 
-            this.buttonSavePurpose.Location = new System.Drawing.Point(200, 280);
+            this.buttonSavePurpose.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonSavePurpose.Location = new System.Drawing.Point(125, 258);
             this.buttonSavePurpose.Name = "buttonSavePurpose";
-            this.buttonSavePurpose.Size = new System.Drawing.Size(88, 45);
+            this.buttonSavePurpose.Size = new System.Drawing.Size(126, 68);
             this.buttonSavePurpose.TabIndex = 1;
             this.buttonSavePurpose.Text = "Save Purpose";
             this.buttonSavePurpose.UseVisualStyleBackColor = true;
@@ -54,11 +57,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(140, 97);
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 15);
+            this.label1.Size = new System.Drawing.Size(77, 25);
             this.label1.TabIndex = 2;
-            this.label1.Text = "label1";
+            this.label1.Text = "Purpose";
             // 
             // PurposePageUserControl
             // 
@@ -68,7 +72,7 @@
             this.Controls.Add(this.buttonSavePurpose);
             this.Controls.Add(this.textBoxPurpose);
             this.Name = "PurposePageUserControl";
-            this.Size = new System.Drawing.Size(557, 423);
+            this.Size = new System.Drawing.Size(400, 400);
             this.ResumeLayout(false);
             this.PerformLayout();
 

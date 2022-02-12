@@ -1,4 +1,5 @@
 using TeamManager.Service.WizardSection.Database;
+using TeamManager.UI.ManagerSection;
 using TeamManager.UI.WizardSection.UserControls;
 
 namespace TeamManager.UI.WizardSection
@@ -14,6 +15,7 @@ namespace TeamManager.UI.WizardSection
         public WizardForm()
         {
             InitializeComponent();
+            this.CenterToScreen();
             connection = new WizardSQLiteConnection(connectionString);
             AdjustLoginPage();
         }
@@ -21,13 +23,13 @@ namespace TeamManager.UI.WizardSection
         private void AdjustLoginPage()
         {
             loginPageUserControl = new LoginPageUserControl(connection);
-            Controls.Add(loginPageUserControl);
+            panelCenter.Controls.Add(loginPageUserControl);
             loginPageUserControl.OnSuccessfulLogin += OnSuccessfulLogin;
         }
 
         private void OnSuccessfulLogin(string managerUserName)
         {
-            Controls.Remove(loginPageUserControl);
+            panelCenter.Controls.Remove(loginPageUserControl);
             AdjustPurposePage(managerUserName);
         }
 
@@ -35,12 +37,16 @@ namespace TeamManager.UI.WizardSection
         {
             purposePageUserControl = new PurposePageUserControl(connection, managerUserName);
             purposePageUserControl.OnSuccessfulPurposeEnter += OnSuccessfulPurposeEnter;
-            Controls.Add(purposePageUserControl);
+            panelCenter.Controls.Add(purposePageUserControl);
         }
 
         private void OnSuccessfulPurposeEnter()
         {
-            Controls.Remove(purposePageUserControl);
+            panelCenter.Controls.Remove(purposePageUserControl);
+            this.Hide();
+            var managerForm = new ManagerForm();
+            managerForm.Closed += (s, args) => this.Close();
+            managerForm.Show();
         }
     }
 }

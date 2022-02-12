@@ -8,10 +8,13 @@ namespace TeamManager.UI.ManagerSection.UserControls
     public partial class TeamPageUserControl : UserControl
     {
         TeamPageService teamPageService;
+        NewTeamPageUserControl newTeamPageUserControl;
         DataTable teamsDataTable;
+        IManagerDatabaseConnection connection;
         public TeamPageUserControl(IManagerDatabaseConnection connection)
         {
             InitializeComponent();
+            this.connection=connection; 
             teamPageService = new TeamPageService(connection);
             FillTeamsTable();
         }
@@ -37,6 +40,42 @@ namespace TeamManager.UI.ManagerSection.UserControls
             int selectedUserId = (int)selectedRow["ID"];
             var allTeams = teamPageService.GetAllTeams();
             return allTeams.Find(t => t.ID == selectedUserId);
+        }
+
+        private void buttonAddNewTeam_Click(object sender, EventArgs e)
+        {
+            HideAllItems();
+            OpenNewTeamPage();
+        }
+
+        private void OpenNewTeamPage()
+        {
+            newTeamPageUserControl = new NewTeamPageUserControl(connection);
+            newTeamPageUserControl.OnCancelClick += OnAddNewTeamCancelClicked;
+            Controls.Add(newTeamPageUserControl);
+        }
+
+        private void OnAddNewTeamCancelClicked()
+        {
+            newTeamPageUserControl.Dispose();
+            FillTeamsTable();
+            ExposeAllItems();
+        }
+
+        private void ExposeAllItems()
+        {
+            foreach (Control control in Controls)
+            {
+                control.Visible = true;
+            }
+        }
+
+        private void HideAllItems()
+        {
+            foreach (Control control in Controls)
+            {
+                control.Hide();
+            }
         }
     }
 }

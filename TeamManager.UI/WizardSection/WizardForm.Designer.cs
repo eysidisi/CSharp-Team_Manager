@@ -28,19 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.panelCenter = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // Wizard
+            // panelCenter
+            // 
+            this.panelCenter.Location = new System.Drawing.Point(200, 75);
+            this.panelCenter.Name = "panelCenter";
+            this.panelCenter.Size = new System.Drawing.Size(400, 400);
+            this.panelCenter.TabIndex = 0;
+            // 
+            // WizardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Name = "Wizard";
+            this.Controls.Add(this.panelCenter);
+            this.Name = "WizardForm";
             this.Text = "Wizard";
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private Panel panelCenter;
     }
 }
