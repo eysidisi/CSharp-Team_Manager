@@ -65,9 +65,7 @@ namespace TeamManager.Service.ManagerSection.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                var teams = cnn.GetAll<Team>().ToList();
-
-                return teams;
+                return cnn.GetAll<Team>().ToList();
             }
         }
 
@@ -76,6 +74,14 @@ namespace TeamManager.Service.ManagerSection.Database
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
                 return cnn.Delete(team);
+            }
+        }
+
+        public List<UserIDToTeamID> GetAllUserIDToTeamID()
+        {
+            using (IDbConnection cnn = new SQLiteConnection(connString))
+            {
+                return cnn.GetAll<UserIDToTeamID>().ToList();
             }
         }
     }

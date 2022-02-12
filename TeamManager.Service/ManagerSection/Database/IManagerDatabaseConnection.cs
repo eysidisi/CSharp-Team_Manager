@@ -11,5 +11,6 @@ namespace TeamManager.Service.ManagerSection.Database
         List<Team> GetAllTeams();
         bool DeleteTeam(Team team);
         void SaveTeam(Team newTeam);
+        List<UserIDToTeamID> GetAllUserIDToTeamID();
     }
 }

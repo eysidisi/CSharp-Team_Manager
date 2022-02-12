@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TeamManager.Service.ManagerSection.Database;
 using TeamManager.Service.Models;
 using TeamManager.Service.Test.Database.SQLiteDB;
@@ -204,6 +205,5 @@ namespace TeamManager.Service.Test.ManagerSection
 
             helperMethods.DeleteDB(dbFilePath);
         }
-
     }
 }

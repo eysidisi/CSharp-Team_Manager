@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Dapper.Contrib.Extensions;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 using System.Linq;
 using TeamManager.Service.Models;
 using TeamManager.Service.Test.Database.SQLiteDB;
@@ -19,12 +22,23 @@ namespace TeamManager.Service.Test.WizardSection
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);
 
+            // Insert manager
+            Manager expectedManager = new Manager(HelperMethods.validManagerUserName, HelperMethods.validManagerPassword)
+            {
+                ID = 1
+            };
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                cnn.Insert(expectedManager);
+            }
+
             // Act
-            Manager manager = dataAccess.GetManager(HelperMethods.validManagerUserName);
+            Manager actualManager = dataAccess.GetManager(HelperMethods.validManagerUserName);
 
             // Assert
-            Assert.Equal(manager.UserName, HelperMethods.validManagerUserName);
-            Assert.Equal(manager.Password, HelperMethods.validManagerPassword);
+            Assert.Equal(expectedManager.UserName, actualManager.UserName);
+            Assert.Equal(expectedManager.Password, actualManager.Password);
+            Assert.Equal(expectedManager.ID, actualManager.ID);
 
             helperMethods.DeleteDB(dbFilePath);
         }

@@ -35,17 +35,17 @@
             // panelUserDetails
             // 
             this.panelUserDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelUserDetails.Location = new System.Drawing.Point(752, 60);
+            this.panelUserDetails.Location = new System.Drawing.Point(636, 60);
             this.panelUserDetails.Name = "panelUserDetails";
-            this.panelUserDetails.Size = new System.Drawing.Size(500, 600);
+            this.panelUserDetails.Size = new System.Drawing.Size(620, 600);
             this.panelUserDetails.TabIndex = 0;
             // 
-            // panel2
+            // panelTeamPage
             // 
             this.panelTeamPage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelTeamPage.Location = new System.Drawing.Point(45, 60);
-            this.panelTeamPage.Name = "panel2";
-            this.panelTeamPage.Size = new System.Drawing.Size(500, 600);
+            this.panelTeamPage.Location = new System.Drawing.Point(10, 60);
+            this.panelTeamPage.Name = "panelTeamPage";
+            this.panelTeamPage.Size = new System.Drawing.Size(620, 600);
             this.panelTeamPage.TabIndex = 1;
             // 
             // ManagerForm

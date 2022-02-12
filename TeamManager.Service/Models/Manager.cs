@@ -15,7 +15,7 @@ namespace TeamManager.Service.Models
             UserName = userName;
             Password = password;
         }
-
+        public int ID { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
     }

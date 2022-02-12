@@ -20,7 +20,7 @@ namespace TeamManager.Service.Test.Database.SQLiteDB
         }
 
         /// <summary>
-        /// Creates a test DB, adds some data and returns connection string
+        /// Creates a test DB and returns connection string
         /// </summary>
         /// <returns></returns>
         public string CreateTestDB_ReturnFilePath()
@@ -51,7 +51,6 @@ namespace TeamManager.Service.Test.Database.SQLiteDB
 	                                'CreationDate'	TEXT,
 	                                'PhoneNumber'	INTEGER,
 	                                'Title'	INTEGER,
-                                	'TeamName'	TEXT,
                                     PRIMARY KEY('ID' AUTOINCREMENT));";
 
                 SQLiteCommand command = new SQLiteCommand(userTableSQL, conn);
@@ -88,13 +87,14 @@ namespace TeamManager.Service.Test.Database.SQLiteDB
                 command.ExecuteNonQuery();
                 command.Dispose();
 
+                string userIDToTeamIDTableSQL = @"CREATE TABLE 'UserID_To_TeamID' (
+	                                            'UserID'	INTEGER NOT NULL,
+	                                            'TeamID'	INTEGER NOT NULL,
+	                                            PRIMARY KEY('TeamID','UserID'));";
 
-                string insertUserSQL = "INSERT INTO Managers ( UserName, Password) VALUES (?,?)";
-                SQLiteCommand insertSQLCommand = new SQLiteCommand(insertUserSQL, conn);
-                insertSQLCommand.Parameters.Add(new SQLiteParameter("UserName", validManagerUserName));
-                insertSQLCommand.Parameters.Add(new SQLiteParameter("Password", validManagerPassword));
-                insertSQLCommand.ExecuteNonQuery();
-                insertSQLCommand.Dispose();
+                command = new SQLiteCommand(userIDToTeamIDTableSQL, conn);
+                command.ExecuteNonQuery();
+                command.Dispose();
             }
 
             return dbPath;
