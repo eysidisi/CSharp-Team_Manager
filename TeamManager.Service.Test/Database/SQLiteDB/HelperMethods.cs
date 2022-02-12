@@ -18,7 +18,6 @@ namespace TeamManager.Service.Test.Database.SQLiteDB
                 File.Delete(dbFilePath);
             }
         }
-
         /// <summary>
         /// Creates a test DB and returns connection string
         /// </summary>
@@ -88,9 +87,10 @@ namespace TeamManager.Service.Test.Database.SQLiteDB
                 command.Dispose();
 
                 string userIDToTeamIDTableSQL = @"CREATE TABLE 'UserID_To_TeamID' (
+        	                                    'ID'	INTEGER NOT NULL UNIQUE,
 	                                            'UserID'	INTEGER NOT NULL,
 	                                            'TeamID'	INTEGER NOT NULL,
-	                                            PRIMARY KEY('TeamID','UserID'));";
+	                                            PRIMARY KEY('ID' AUTOINCREMENT));";
 
                 command = new SQLiteCommand(userIDToTeamIDTableSQL, conn);
                 command.ExecuteNonQuery();

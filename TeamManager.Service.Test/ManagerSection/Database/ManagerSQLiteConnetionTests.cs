@@ -205,5 +205,28 @@ namespace TeamManager.Service.Test.ManagerSection
 
             helperMethods.DeleteDB(dbFilePath);
         }
+
+        [Fact]
+        public void SaveUserIDToTeamID_SavesUserIDToTeamID()
+        {
+            //Arrange
+            HelperMethods helperMethods = new HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
+
+            int userID = 1;
+            int teamID = 1;
+
+            var userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = userID, TeamID = teamID };
+
+            // Act
+            dataAccess.SaveUserIDToTeamID(userIDToTeamID);
+
+            // Assert
+            var allUserIDToTeamIDs = dataAccess.GetAllUserIDToTeamID();
+            Assert.Contains(allUserIDToTeamIDs, a => a.UserID == userID && a.TeamID == teamID);
+        }
     }
 }

@@ -84,5 +84,13 @@ namespace TeamManager.Service.ManagerSection.Database
                 return cnn.GetAll<UserIDToTeamID>().ToList();
             }
         }
+
+        public void SaveUserIDToTeamID(UserIDToTeamID userIDToTeamID)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(connString))
+            {
+                cnn.Insert(userIDToTeamID);
+            }
+        }
     }
 }
