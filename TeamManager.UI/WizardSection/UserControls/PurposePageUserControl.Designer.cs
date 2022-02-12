@@ -36,7 +36,7 @@
             // textBoxPurpose
             // 
             this.textBoxPurpose.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxPurpose.Location = new System.Drawing.Point(3, 40);
+            this.textBoxPurpose.Location = new System.Drawing.Point(3, 38);
             this.textBoxPurpose.Multiline = true;
             this.textBoxPurpose.Name = "textBoxPurpose";
             this.textBoxPurpose.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
@@ -46,9 +46,9 @@
             // buttonSavePurpose
             // 
             this.buttonSavePurpose.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonSavePurpose.Location = new System.Drawing.Point(125, 258);
+            this.buttonSavePurpose.Location = new System.Drawing.Point(136, 254);
             this.buttonSavePurpose.Name = "buttonSavePurpose";
-            this.buttonSavePurpose.Size = new System.Drawing.Size(126, 68);
+            this.buttonSavePurpose.Size = new System.Drawing.Size(128, 72);
             this.buttonSavePurpose.TabIndex = 1;
             this.buttonSavePurpose.Text = "Save Purpose";
             this.buttonSavePurpose.UseVisualStyleBackColor = true;
@@ -60,9 +60,9 @@
             this.label1.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(77, 25);
+            this.label1.Size = new System.Drawing.Size(81, 25);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Purpose";
+            this.label1.Text = "Purpose:";
             // 
             // PurposePageUserControl
             // 

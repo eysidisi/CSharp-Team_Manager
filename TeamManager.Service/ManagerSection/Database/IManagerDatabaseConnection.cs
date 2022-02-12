@@ -4,9 +4,9 @@ namespace TeamManager.Service.ManagerSection.Database
 {
     public interface IManagerDatabaseConnection
     {
+        List<User> GetAllUsers();
         void SaveUser(User user);
         bool DeleteUser(User user);
-        List<User> GetAllUsers();
         Team GetTeamWithName(string name);
         List<Team> GetAllTeams();
         bool DeleteTeam(Team team);

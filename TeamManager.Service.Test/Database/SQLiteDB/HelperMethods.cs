@@ -51,7 +51,8 @@ namespace TeamManager.Service.Test.Database.SQLiteDB
 	                                'CreationDate'	TEXT,
 	                                'PhoneNumber'	INTEGER,
 	                                'Title'	INTEGER,
-	                                PRIMARY KEY('ID' AUTOINCREMENT));";
+                                	'TeamName'	TEXT,
+                                    PRIMARY KEY('ID' AUTOINCREMENT));";
 
                 SQLiteCommand command = new SQLiteCommand(userTableSQL, conn);
                 command.ExecuteNonQuery();

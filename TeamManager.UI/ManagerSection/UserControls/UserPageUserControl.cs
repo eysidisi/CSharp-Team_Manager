@@ -18,10 +18,10 @@ namespace TeamManager.UI.ManagerSection.UserControls
             InitializeComponent();
             userPageService = new UserPageService(connection);
             this.connection = connection;
-            FillTable();
+            FillDataGrid();
         }
 
-        private void FillTable()
+        private void FillDataGrid()
         {
             allUsers = userPageService.GetUsers();
             usersDataTable = HelperFunctions.ConvertToDatatable(allUsers);
@@ -39,7 +39,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         private void OnAddNewUserCancelClicked()
         {
             saveNewUserPage.Dispose();
-            FillTable();
+            FillDataGrid();
             ExposeAllItems();
         }
 

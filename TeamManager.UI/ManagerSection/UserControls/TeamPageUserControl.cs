@@ -9,12 +9,12 @@ namespace TeamManager.UI.ManagerSection.UserControls
     {
         TeamPageService teamPageService;
         NewTeamPageUserControl newTeamPageUserControl;
-        DataTable teamsDataTable;
+        TeamDetailsPageUserControl teamDetailsPageUserControl;
         IManagerDatabaseConnection connection;
         public TeamPageUserControl(IManagerDatabaseConnection connection)
         {
             InitializeComponent();
-            this.connection=connection; 
+            this.connection = connection;
             teamPageService = new TeamPageService(connection);
             FillTeamsTable();
         }
@@ -22,24 +22,24 @@ namespace TeamManager.UI.ManagerSection.UserControls
         private void FillTeamsTable()
         {
             var teams = teamPageService.GetAllTeams();
-            teamsDataTable = HelperFunctions.ConvertToDatatable(teams);
+            var teamsDataTable = HelperFunctions.ConvertToDatatable(teams);
             dataGridViewTeams.DataSource = teamsDataTable;
             dataGridViewTeams.AutoResizeColumns();
         }
 
         private void buttonDeleteTeam_Click(object sender, EventArgs e)
         {
-            Team teamToDelete = GetTeamToDelete();
+            Team teamToDelete = GetSelectedTeam();
             teamPageService.DeleteTeam(teamToDelete);
             (dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView).Delete();
         }
 
-        private Team GetTeamToDelete()
+        private Team GetSelectedTeam()
         {
             DataRowView selectedRow = dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView;
-            int selectedUserId = (int)selectedRow["ID"];
+            int selectedTeamID = (int)selectedRow["ID"];
             var allTeams = teamPageService.GetAllTeams();
-            return allTeams.Find(t => t.ID == selectedUserId);
+            return allTeams.Find(t => t.ID == selectedTeamID);
         }
 
         private void buttonAddNewTeam_Click(object sender, EventArgs e)
@@ -76,6 +76,21 @@ namespace TeamManager.UI.ManagerSection.UserControls
             {
                 control.Hide();
             }
+        }
+
+        private void buttonTeamDetails_Click(object sender, EventArgs e)
+        {
+            Team team = GetSelectedTeam();
+            teamDetailsPageUserControl = new TeamDetailsPageUserControl(connection, team);
+            teamDetailsPageUserControl.OnBackButtonClicked += OnTeamDetailsPageBackButtonClicked;
+            HideAllItems();
+            Controls.Add(teamDetailsPageUserControl);
+        }
+
+        private void OnTeamDetailsPageBackButtonClicked()
+        {
+            teamDetailsPageUserControl.Dispose();
+            ExposeAllItems();
         }
     }
 }
