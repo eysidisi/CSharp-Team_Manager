@@ -10,6 +10,7 @@ namespace TeamManager.UI.ManagerSection
         public ManagerForm()
         {
             InitializeComponent();
+            this.CenterToScreen();
             var connection = new ManagerSQLiteConnetion(connectionString);
             CreateUserPage(connection);
             CreateTeamPage(connection);

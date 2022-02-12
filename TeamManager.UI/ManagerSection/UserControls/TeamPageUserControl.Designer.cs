@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewTeams = new System.Windows.Forms.DataGridView();
             this.buttonDeleteTeam = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTeams)).BeginInit();
@@ -37,21 +38,31 @@
             // 
             this.dataGridViewTeams.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewTeams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTeams.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTeams.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewTeams.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewTeams.Name = "dataGridViewTeams";
             this.dataGridViewTeams.ReadOnly = true;
             this.dataGridViewTeams.RowTemplate.Height = 25;
-            this.dataGridViewTeams.Size = new System.Drawing.Size(494, 367);
+            this.dataGridViewTeams.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewTeams.Size = new System.Drawing.Size(495, 350);
             this.dataGridViewTeams.TabIndex = 1;
             // 
             // buttonDeleteTeam
             // 
-            this.buttonDeleteTeam.Location = new System.Drawing.Point(165, 396);
+            this.buttonDeleteTeam.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonDeleteTeam.Location = new System.Drawing.Point(163, 404);
             this.buttonDeleteTeam.Name = "buttonDeleteTeam";
-            this.buttonDeleteTeam.Size = new System.Drawing.Size(110, 23);
+            this.buttonDeleteTeam.Size = new System.Drawing.Size(128, 50);
             this.buttonDeleteTeam.TabIndex = 2;
-            this.buttonDeleteTeam.Text = "Delete Team";
+            this.buttonDeleteTeam.Text = "Delete Selected Team";
             this.buttonDeleteTeam.UseVisualStyleBackColor = true;
             this.buttonDeleteTeam.Click += new System.EventHandler(this.buttonDeleteTeam_Click);
             // 

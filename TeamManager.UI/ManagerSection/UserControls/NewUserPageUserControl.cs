@@ -21,7 +21,11 @@ namespace TeamManager.UI.ManagerSection.UserControls
             {
                 User user = new User();
                 user.Name = textBoxName.Text;
+                user.Surname = textBoxSurname.Text;
+                user.PhoneNumber = textBoxPhoneNumber.Text;
+                user.Title = textBoxTitle.Text;
                 newUserPageService.SaveNewUser(user);
+                MessageBox.Show($"User {user.Name} saved succesfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

@@ -29,9 +29,38 @@ namespace TeamManager.UI.ManagerSection.UserControls
             dataGridViewUsers.AutoResizeColumns();
         }
 
+        private void OpenNewUserPage()
+        {
+            saveNewUserPage = new NewUserPageUserControl(connection);
+            saveNewUserPage.OnCancelClick += OnAddNewUserCancelClicked;
+            Controls.Add(saveNewUserPage);
+        }
+
+        private void OnAddNewUserCancelClicked()
+        {
+            saveNewUserPage.Dispose();
+            FillTable();
+            ExposeAllItems();
+        }
+
+        private void ExposeAllItems()
+        {
+            foreach (Control control in Controls)
+            {
+                control.Visible = true;
+            }
+        }
+
         private void buttonDeleteUser_Click(object sender, EventArgs e)
         {
             User userToDelete = GetUserToDelete();
+
+            DialogResult d = MessageBox.Show($"Do you want to delete user '{userToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+            if (d == DialogResult.No)
+            {
+                return;
+            }
+
             userPageService.DeleteUser(userToDelete);
             (dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView).Delete();
         }
@@ -49,32 +78,11 @@ namespace TeamManager.UI.ManagerSection.UserControls
             OpenNewUserPage();
         }
 
-        private void OpenNewUserPage()
-        {
-            saveNewUserPage = new NewUserPageUserControl(connection);
-            saveNewUserPage.OnCancelClick += AddNewUserCancelClicked;
-            Controls.Add(saveNewUserPage);
-        }
-
         private void HideAllItems()
         {
             foreach (Control control in Controls)
             {
                 control.Hide();
-            }
-        }
-        private void AddNewUserCancelClicked()
-        {
-            saveNewUserPage.Dispose();
-            FillTable();
-            ExposeAllItems();
-        }
-
-        private void ExposeAllItems()
-        {
-            foreach (Control control in Controls)
-            {
-                control.Visible = true;
             }
         }
     }
