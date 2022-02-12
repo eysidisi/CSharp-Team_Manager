@@ -1,7 +1,7 @@
 ﻿using TeamManager.Service.Models;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.WizardSection.Database;
 
-namespace TeamManager.Service.Wizard
+namespace TeamManager.Service.WizardSection
 {
     public class LoginPageService
     {

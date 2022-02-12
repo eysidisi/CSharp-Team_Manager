@@ -14,16 +14,24 @@ namespace TeamManager.Service.ManagerSection
 
         public void SaveNewUser(User user)
         {
-            CheckUser(user);
+            AddCreationTimeInfo(user);
+            CheckIfUserIsValid(user);
             connection.SaveUser(user);
         }
 
-        private void CheckUser(User user)
+        private void CheckIfUserIsValid(User user)
         {
             if (string.IsNullOrEmpty(user.Name))
             {
                 throw new ArgumentException("User name can not be empty!");
             }
         }
+        private void AddCreationTimeInfo(User user)
+        {
+            DateTime myDateTime = DateTime.Now;
+            string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+            user.CreationDate = sqlFormattedDate;
+        }
+
     }
 }

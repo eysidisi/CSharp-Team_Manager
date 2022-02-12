@@ -2,7 +2,7 @@
 using TeamManager.Service.ManagerSection.Database;
 using TeamManager.Service.Models;
 
-namespace TeamManager.UI.UserControls
+namespace TeamManager.UI.ManagerSection.UserControls
 {
     public partial class NewUserPageUserControl : UserControl
     {

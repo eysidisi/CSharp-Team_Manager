@@ -1,3 +1,5 @@
+using TeamManager.UI.ManagerSection;
+
 namespace TeamManager.UI
 {
     internal static class Program

@@ -11,16 +11,6 @@ namespace TeamManager.Service.ManagerSection
         {
             this.connection = connection;
         }
-        private bool CheckIfTeamExists(Team team)
-        {
-            Team t = connection.GetTeamWithName(team.Name);
-
-            if (t == null)
-                return false;
-
-            return true;
-        }
-
         public List<Team> GetAllTeams()
         {
             return connection.GetAllTeams();
@@ -28,7 +18,10 @@ namespace TeamManager.Service.ManagerSection
 
         public void DeleteTeam(Team team)
         {
-            connection.DeleteTeam(team);
+           if( connection.DeleteTeam(team)==false)
+            {
+                throw new ArgumentException("Can't delete the team!");
+            }
         }
     }
 }

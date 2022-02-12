@@ -1,7 +1,7 @@
-using TeamManager.Service.Wizard.Database;
-using TeamManager.UI.UserControls;
+using TeamManager.Service.WizardSection.Database;
+using TeamManager.UI.WizardSection.UserControls;
 
-namespace TeamManager.UI
+namespace TeamManager.UI.WizardSection
 {
     public partial class WizardForm : Form
     {

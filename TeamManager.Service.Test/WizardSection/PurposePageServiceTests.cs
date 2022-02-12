@@ -1,11 +1,11 @@
 ﻿using Moq;
 using TeamManager.Service.Models;
-using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.WizardSection;
+using TeamManager.Service.WizardSection.Database;
 
 using Xunit;
 
-namespace TeamManager.Service.Test.Wizard
+namespace TeamManager.Service.Test.WizardSection
 {
     public class PurposePageServiceTests
     {

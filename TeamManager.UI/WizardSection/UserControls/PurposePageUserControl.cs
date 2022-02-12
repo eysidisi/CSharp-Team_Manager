@@ -1,8 +1,8 @@
 ﻿using TeamManager.Service.Models;
-using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.WizardSection;
+using TeamManager.Service.WizardSection.Database;
 
-namespace TeamManager.UI.UserControls
+namespace TeamManager.UI.WizardSection.UserControls
 {
     public partial class PurposePageUserControl : UserControl
     {

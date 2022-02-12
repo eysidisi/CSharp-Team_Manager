@@ -1,6 +1,6 @@
 ﻿using TeamManager.Service.Models;
-using TeamManager.Service.Wizard.Database;
-namespace TeamManager.Service.Wizard
+using TeamManager.Service.WizardSection.Database;
+namespace TeamManager.Service.WizardSection
 {
     public class PurposePageService
     {

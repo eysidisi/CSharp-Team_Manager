@@ -42,20 +42,42 @@ namespace TeamManager.Service.Test.ManagerSection
         public void DeleteTeam_DeletesTeam()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
-
-            TeamPageService teamPageService = new TeamPageService(connection.Object);
-
             Team team = new Team()
             {
                 Name = "Team1",
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
+            var connection = new Mock<IManagerDatabaseConnection>();
+            connection.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(true);
+
+            TeamPageService teamPageService = new TeamPageService(connection.Object);
+
+
             // Act
             teamPageService.DeleteTeam(team);
 
             // Assert
+        }
+        [Fact]
+        public void DeleteTeam_CantDeleteTeam()
+        {
+            // Arrange
+            Team team = new Team()
+            {
+                Name = "Team1",
+                CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            };
+
+            var connection = new Mock<IManagerDatabaseConnection>();
+            connection.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(false);
+
+            TeamPageService teamPageService = new TeamPageService(connection.Object);
+
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));
         }
     }
 }

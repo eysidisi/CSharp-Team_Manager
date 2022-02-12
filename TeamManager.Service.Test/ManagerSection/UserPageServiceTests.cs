@@ -1,4 +1,6 @@
 ﻿using Moq;
+using System;
+using System.Collections.Generic;
 using TeamManager.Service.ManagerSection;
 using TeamManager.Service.ManagerSection.Database;
 using TeamManager.Service.Models;
@@ -9,33 +11,53 @@ namespace TeamManager.Service.Test.ManagerSection
     public class UserPageServiceTests
     {
         [Fact]
-        public void AddUser_AddsUser()
+        public void GetUsers_GetsUsers()
         {
             // Arrange
             var connection = new Mock<IManagerDatabaseConnection>();
-
             UserPageService userPageService = new UserPageService(connection.Object);
 
-            // Act
             User user = new User();
+            var expectedUsers = new List<User>() { user };
+
+            connection.Setup(c => c.GetAllUsers()).Returns(expectedUsers);
+
+            // Act
+            var actualUsers = userPageService.GetUsers();
 
             // Assert
-            userPageService.AddUser(user);
+            Assert.Equal(expectedUsers, actualUsers);
         }
 
         [Fact]
         public void DeleteUser_DeletesUser()
         {
             // Arrange
+            User user = new User();
             var connection = new Mock<IManagerDatabaseConnection>();
+            connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
 
             UserPageService userPageService = new UserPageService(connection.Object);
 
             // Act
-            User user = new User();
 
             // Assert
             userPageService.DeleteUser(user);
+        }
+        [Fact]
+        public void DeleteUser_CantDeleteUser()
+        {
+            // Arrange
+            User user = new User();
+            var connection = new Mock<IManagerDatabaseConnection>();
+            connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(false);
+
+            UserPageService userPageService = new UserPageService(connection.Object);
+
+            // Act
+
+            // Assert
+            Assert.Throws<ArgumentException>(() => userPageService.DeleteUser(user));
         }
 
     }

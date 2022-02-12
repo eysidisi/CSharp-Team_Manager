@@ -1,4 +1,4 @@
-﻿namespace TeamManager.UI.UserControls
+﻿namespace TeamManager.UI.WizardSection.UserControls
 {
     partial class PurposePageUserControl
     {

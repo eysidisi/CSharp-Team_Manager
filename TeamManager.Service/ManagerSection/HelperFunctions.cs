@@ -6,7 +6,7 @@ namespace TeamManager.Service.ManagerSection
     public static class HelperFunctions
     {
         /// <summary>
-        /// Used to transform data into DataTable
+        /// This function is used to transform a List into a DataTable
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>

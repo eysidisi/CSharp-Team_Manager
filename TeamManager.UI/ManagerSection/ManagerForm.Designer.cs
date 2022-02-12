@@ -1,4 +1,4 @@
-﻿namespace TeamManager.UI
+﻿namespace TeamManager.UI.ManagerSection
 {
     partial class ManagerForm
     {

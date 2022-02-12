@@ -57,23 +57,8 @@ namespace TeamManager.Service.ManagerSection.Database
             {
                 var output = cnn.Query<Team>(query, new Team() { Name = name });
 
-                if (output == null || output.Count() == 0)
-                {
-                    throw new Exception("Can't find team!");
-                }
-
-                return output.First();
+                return output.FirstOrDefault();
             }
-        }
-
-        public void SaveUserToTheTeam(int userID, int teamID)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteUserFromTheTeam(int userID, int teamID)
-        {
-            throw new NotImplementedException();
         }
 
         public List<Team> GetAllTeams()

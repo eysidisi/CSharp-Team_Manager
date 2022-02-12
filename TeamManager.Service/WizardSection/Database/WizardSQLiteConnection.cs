@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SQLite;
 using TeamManager.Service.Models;
 
-namespace TeamManager.Service.Wizard.Database
+namespace TeamManager.Service.WizardSection.Database
 {
     public class WizardSQLiteConnection : IWizardDatabaseConnection
     {

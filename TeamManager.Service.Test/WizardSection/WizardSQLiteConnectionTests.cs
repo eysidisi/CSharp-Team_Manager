@@ -2,10 +2,10 @@
 using System.Linq;
 using TeamManager.Service.Models;
 using TeamManager.Service.Test.Database.SQLiteDB;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.WizardSection.Database;
 using Xunit;
 
-namespace TeamManager.Service.Test.Wizard
+namespace TeamManager.Service.Test.WizardSection
 {
     public class WizardSQLiteConnectionTests
     {

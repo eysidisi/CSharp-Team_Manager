@@ -1,7 +1,7 @@
 ﻿using TeamManager.Service.ManagerSection.Database;
-using TeamManager.UI.UserControls;
+using TeamManager.UI.ManagerSection.UserControls;
 
-namespace TeamManager.UI
+namespace TeamManager.UI.ManagerSection
 {
     public partial class ManagerForm : Form
     {
