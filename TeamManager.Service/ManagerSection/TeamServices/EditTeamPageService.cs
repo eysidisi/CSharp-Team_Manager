@@ -29,12 +29,32 @@ namespace TeamManager.Service.ManagerSection.TeamServices
             connection.SaveUserIDToTeamID(userIDToTeamID);
         }
 
+        public List<User> GetUsers()
+        {
+            return connection.GetAllUsers();
+        }
+
+        public List<User> GetUsersInTeam(Team team)
+        {
+            var users = connection.GetAllUsers();
+            var teams = connection.GetAllTeams();
+            var userIDToTeamIDs = connection.GetAllUserIDToTeamID();
+
+            if (users == null || teams == null || userIDToTeamIDs == null)
+            {
+                return new List<User>();
+            }
+
+            var userIDsBelongedToTeam = userIDToTeamIDs.Where(u => u.TeamID == team.ID)
+                                                        .Select(u => u.UserID).ToList();
+            return users.Where(u => userIDsBelongedToTeam.Contains(u.ID)).ToList();
+        }
         private bool CheckIfUserIsInTheTeam(UserIDToTeamID userIDToTeamID)
         {
             var allUserIDsToTeamIDs = connection.GetAllUserIDToTeamID();
-            
+
             // No entry
-            if (allUserIDsToTeamIDs==null)
+            if (allUserIDsToTeamIDs == null)
             {
                 return false;
             }
@@ -48,5 +68,6 @@ namespace TeamManager.Service.ManagerSection.TeamServices
 
             return false;
         }
+
     }
 }

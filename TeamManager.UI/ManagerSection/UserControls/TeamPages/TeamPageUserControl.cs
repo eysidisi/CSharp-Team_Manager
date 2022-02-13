@@ -10,6 +10,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         TeamPageService teamPageService;
         NewTeamPageUserControl newTeamPageUserControl;
         TeamDetailsPageUserControl teamDetailsPageUserControl;
+        EditTeamPageUserControl editTeamPageUserControl;
         IManagerDatabaseConnection connection;
         public TeamPageUserControl(IManagerDatabaseConnection connection)
         {
@@ -91,6 +92,15 @@ namespace TeamManager.UI.ManagerSection.UserControls
         {
             teamDetailsPageUserControl.Dispose();
             ExposeAllItems();
+        }
+
+        private void buttonEditTeam_Click(object sender, EventArgs e)
+        {
+            Team team = GetSelectedTeam();
+            editTeamPageUserControl = new EditTeamPageUserControl(connection, team);
+            //teamDetailsPageUserControl.OnBackButtonClicked += OnTeamDetailsPageBackButtonClicked;
+            HideAllItems();
+            Controls.Add(editTeamPageUserControl);
         }
     }
 }

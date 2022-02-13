@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.textBoxTeamName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.buttonSaveTeam = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -45,10 +45,18 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.Location = new System.Drawing.Point(3, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(494, 240);
+            this.groupBox1.Size = new System.Drawing.Size(614, 240);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "New Team Info";
+            // 
+            // textBoxTeamName
+            // 
+            this.textBoxTeamName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBoxTeamName.Location = new System.Drawing.Point(388, 37);
+            this.textBoxTeamName.Name = "textBoxTeamName";
+            this.textBoxTeamName.Size = new System.Drawing.Size(100, 26);
+            this.textBoxTeamName.TabIndex = 1;
             // 
             // label1
             // 
@@ -61,18 +69,10 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Team Name";
             // 
-            // textBoxTeamName
-            // 
-            this.textBoxTeamName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxTeamName.Location = new System.Drawing.Point(388, 37);
-            this.textBoxTeamName.Name = "textBoxTeamName";
-            this.textBoxTeamName.Size = new System.Drawing.Size(100, 26);
-            this.textBoxTeamName.TabIndex = 1;
-            // 
             // buttonSaveTeam
             // 
             this.buttonSaveTeam.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonSaveTeam.Location = new System.Drawing.Point(174, 301);
+            this.buttonSaveTeam.Location = new System.Drawing.Point(244, 305);
             this.buttonSaveTeam.Name = "buttonSaveTeam";
             this.buttonSaveTeam.Size = new System.Drawing.Size(120, 50);
             this.buttonSaveTeam.TabIndex = 1;
@@ -83,7 +83,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonCancel.Location = new System.Drawing.Point(174, 357);
+            this.buttonCancel.Location = new System.Drawing.Point(244, 361);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(120, 50);
             this.buttonCancel.TabIndex = 2;
@@ -99,7 +99,7 @@
             this.Controls.Add(this.buttonSaveTeam);
             this.Controls.Add(this.groupBox1);
             this.Name = "NewTeamPageUserControl";
-            this.Size = new System.Drawing.Size(500, 600);
+            this.Size = new System.Drawing.Size(620, 600);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
