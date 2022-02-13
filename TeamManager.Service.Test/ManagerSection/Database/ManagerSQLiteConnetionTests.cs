@@ -146,6 +146,24 @@ namespace TeamManager.Service.Test.ManagerSection
 
             helperMethods.DeleteDB(dbFilePath);
         }
+        
+        [Fact]
+        public void GetAllTeams_NoTeam_ReturnsEmptyList()
+        {
+            //Arrange
+            HelperMethods helperMethods = new HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
+
+            var savedTeams = dataAccess.GetAllTeams();
+
+            // Assert
+            Assert.Empty(savedTeams);
+
+            helperMethods.DeleteDB(dbFilePath);
+        }
 
         [Fact]
         public void DeleteTeam_DeletesTeam()

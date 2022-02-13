@@ -2,6 +2,7 @@
 using TeamManager.Service.ManagerSection;
 using TeamManager.Service.ManagerSection.Database;
 using TeamManager.Service.Models;
+using TeamManager.UI.ManagerSection.UserControls.UserPages;
 
 namespace TeamManager.UI.ManagerSection.UserControls
 {
@@ -11,7 +12,6 @@ namespace TeamManager.UI.ManagerSection.UserControls
         DataTable usersDataTable;
         List<User> allUsers;
         IManagerDatabaseConnection connection;
-        NewUserPageUserControl saveNewUserPage;
 
         public UserPageUserControl(IManagerDatabaseConnection connection)
         {
@@ -31,14 +31,14 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void OpenNewUserPage()
         {
-            saveNewUserPage = new NewUserPageUserControl(connection);
-            saveNewUserPage.OnCancelClick += OnAddNewUserCancelClicked;
+            var saveNewUserPage = new NewUserPageUserControl(connection);
+            saveNewUserPage.OnCancelClick += OnBackButtonClicked;
             Controls.Add(saveNewUserPage);
         }
 
-        private void OnAddNewUserCancelClicked()
+        private void OnBackButtonClicked(UserControl userControl)
         {
-            saveNewUserPage.Dispose();
+            userControl.Dispose();
             FillDataGrid();
             ExposeAllItems();
         }
@@ -53,9 +53,9 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonDeleteUser_Click(object sender, EventArgs e)
         {
-            User userToDelete = GetUserToDelete();
+            User userToDelete = GetSelectedUser();
 
-            DialogResult d = MessageBox.Show($"Do you want to delete user '{userToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+            DialogResult d = MessageBox.Show($"Do you want to delete user '{userToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (d == DialogResult.No)
             {
                 return;
@@ -65,7 +65,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
             (dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView).Delete();
         }
 
-        private User GetUserToDelete()
+        private User GetSelectedUser()
         {
             DataRowView selectedRow = dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView;
             int selectedUserId = (int)selectedRow["ID"];
@@ -84,6 +84,20 @@ namespace TeamManager.UI.ManagerSection.UserControls
             {
                 control.Hide();
             }
+        }
+
+        private void buttonUserDetails_Click(object sender, EventArgs e)
+        {
+            User selectedUser = GetSelectedUser();
+            HideAllItems();
+            OpenNewUserDetailsPage(selectedUser);
+        }
+
+        private void OpenNewUserDetailsPage(User selectedUser)
+        {
+            UserDetailsPageUserControl userDetailsPage = new UserDetailsPageUserControl(connection, selectedUser);
+            userDetailsPage.OnBackButtonClicked += OnBackButtonClicked;
+            Controls.Add(userDetailsPage);
         }
     }
 }

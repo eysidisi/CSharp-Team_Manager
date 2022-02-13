@@ -35,9 +35,7 @@ namespace TeamManager.Service.ManagerSection.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                var users = cnn.GetAll<User>().ToList();
-
-                return users;
+                return cnn.GetAll<User>().ToList();
             }
         }
 
