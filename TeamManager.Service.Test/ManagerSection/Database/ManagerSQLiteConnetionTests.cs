@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Dapper.Contrib.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SQLite;
 using TeamManager.Service.ManagerSection.Database;
 using TeamManager.Service.Models;
 using TeamManager.Service.Test.Database.SQLiteDB;
@@ -227,6 +230,30 @@ namespace TeamManager.Service.Test.ManagerSection
             // Assert
             var allUserIDToTeamIDs = dataAccess.GetAllUserIDToTeamID();
             Assert.Contains(allUserIDToTeamIDs, a => a.UserID == userID && a.TeamID == teamID);
+        }
+
+        [Fact]
+        public void DeleteUserIDToTeamID_DeletesUserIDToTeamID()
+        {
+            //Arrange
+            HelperMethods helperMethods = new HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
+
+            int userID = 1;
+            int teamID = 1;
+
+            var userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = userID, TeamID = teamID };
+            
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                cnn.Insert(userIDToTeamID);
+            }
+
+            // Act
+            dataAccess.DeleteUserIDToTeamID(userIDToTeamID);
         }
     }
 }

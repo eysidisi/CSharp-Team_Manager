@@ -17,7 +17,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
     {
         TeamDetailsPageService pageService;
         Team team;
-        public Action OnBackButtonClicked;
+        public Action<TeamDetailsPageUserControl> OnBackButtonClicked;
 
         public TeamDetailsPageUserControl(IManagerDatabaseConnection connection,Team team)
         {
@@ -37,7 +37,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonBack_Click(object sender, EventArgs e)
         {
-            OnBackButtonClicked?.Invoke();
+            OnBackButtonClicked?.Invoke(this);
         }
     }
 }

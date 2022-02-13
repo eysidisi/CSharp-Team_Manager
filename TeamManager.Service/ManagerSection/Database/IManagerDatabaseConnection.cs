@@ -13,5 +13,6 @@ namespace TeamManager.Service.ManagerSection.Database
         void SaveTeam(Team newTeam);
         List<UserIDToTeamID> GetAllUserIDToTeamID();
         void SaveUserIDToTeamID(UserIDToTeamID userIDToTeamID);
+        bool DeleteUserIDToTeamID(UserIDToTeamID userIDToTeamID);
     }
 }

@@ -49,6 +49,40 @@ namespace TeamManager.Service.ManagerSection.TeamServices
                                                         .Select(u => u.UserID).ToList();
             return users.Where(u => userIDsBelongedToTeam.Contains(u.ID)).ToList();
         }
+
+        public bool RemoveUserFromTheTeam(User userToRemove, Team teamToRemoveFrom)
+        {
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID()
+            {
+                UserID = userToRemove.ID,
+                TeamID = teamToRemoveFrom.ID
+            };
+
+            if (CheckIfUserIsInTheTeam(userIDToTeamID) == false)
+            {
+                throw new ArgumentException("User is not in the team!");
+            }
+
+            UserIDToTeamID correctUserIDToTeamID = GetCorrectEntryFromDB(userIDToTeamID);
+
+            return connection.DeleteUserIDToTeamID(correctUserIDToTeamID);
+        }
+
+        private UserIDToTeamID GetCorrectEntryFromDB(UserIDToTeamID userIDToTeamID)
+        {
+            var allUserIDsToTeamIDs = connection.GetAllUserIDToTeamID();
+
+            // No entry
+            if (allUserIDsToTeamIDs == null)
+            {
+                return null;
+            }
+
+            UserIDToTeamID? copyItem = allUserIDsToTeamIDs.Find(u => u.UserID == userIDToTeamID.UserID && u.TeamID == userIDToTeamID.TeamID);
+
+            return copyItem;
+        }
+
         private bool CheckIfUserIsInTheTeam(UserIDToTeamID userIDToTeamID)
         {
             var allUserIDsToTeamIDs = connection.GetAllUserIDToTeamID();
@@ -68,6 +102,5 @@ namespace TeamManager.Service.ManagerSection.TeamServices
 
             return false;
         }
-
     }
 }

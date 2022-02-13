@@ -8,9 +8,6 @@ namespace TeamManager.UI.ManagerSection.UserControls
     public partial class TeamPageUserControl : UserControl
     {
         TeamPageService teamPageService;
-        NewTeamPageUserControl newTeamPageUserControl;
-        TeamDetailsPageUserControl teamDetailsPageUserControl;
-        EditTeamPageUserControl editTeamPageUserControl;
         IManagerDatabaseConnection connection;
         public TeamPageUserControl(IManagerDatabaseConnection connection)
         {
@@ -51,17 +48,11 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void OpenNewTeamPage()
         {
-            newTeamPageUserControl = new NewTeamPageUserControl(connection);
-            newTeamPageUserControl.OnCancelClick += OnAddNewTeamCancelClicked;
+           var newTeamPageUserControl = new NewTeamPageUserControl(connection);
+            newTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(newTeamPageUserControl);
         }
 
-        private void OnAddNewTeamCancelClicked()
-        {
-            newTeamPageUserControl.Dispose();
-            FillTeamsTable();
-            ExposeAllItems();
-        }
 
         private void ExposeAllItems()
         {
@@ -82,23 +73,23 @@ namespace TeamManager.UI.ManagerSection.UserControls
         private void buttonTeamDetails_Click(object sender, EventArgs e)
         {
             Team team = GetSelectedTeam();
-            teamDetailsPageUserControl = new TeamDetailsPageUserControl(connection, team);
-            teamDetailsPageUserControl.OnBackButtonClicked += OnTeamDetailsPageBackButtonClicked;
+            var teamDetailsPageUserControl = new TeamDetailsPageUserControl(connection, team);
+            teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             HideAllItems();
             Controls.Add(teamDetailsPageUserControl);
         }
 
-        private void OnTeamDetailsPageBackButtonClicked()
+        private void OnBackButtonClicked(UserControl pageToClose)
         {
-            teamDetailsPageUserControl.Dispose();
+            pageToClose.Dispose();
             ExposeAllItems();
         }
 
         private void buttonEditTeam_Click(object sender, EventArgs e)
         {
             Team team = GetSelectedTeam();
-            editTeamPageUserControl = new EditTeamPageUserControl(connection, team);
-            //teamDetailsPageUserControl.OnBackButtonClicked += OnTeamDetailsPageBackButtonClicked;
+            var editTeamPageUserControl = new EditTeamPageUserControl(connection, team);
+            editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             HideAllItems();
             Controls.Add(editTeamPageUserControl);
         }

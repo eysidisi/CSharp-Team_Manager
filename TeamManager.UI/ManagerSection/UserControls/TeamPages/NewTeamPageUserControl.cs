@@ -16,7 +16,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
     public partial class NewTeamPageUserControl : UserControl
     {
         NewTeamPageService newTeamPageService;
-        public Action OnCancelClick;
+        public Action<NewTeamPageUserControl> OnBackButtonClicked;
 
         public NewTeamPageUserControl(IManagerDatabaseConnection connection)
         {
@@ -44,7 +44,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            OnCancelClick?.Invoke();
+            OnBackButtonClicked?.Invoke(this);
         }
     }
 }

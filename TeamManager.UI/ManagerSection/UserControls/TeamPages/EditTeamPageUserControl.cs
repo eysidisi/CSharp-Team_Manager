@@ -18,6 +18,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
     {
         Team teamToEdit;
         EditTeamPageService editTeamPageService;
+        public Action<EditTeamPageUserControl> OnBackButtonClicked;
 
         public EditTeamPageUserControl(IManagerDatabaseConnection connection, Team teamToEdit)
         {
@@ -80,6 +81,22 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonRemoveSelectedUser_Click(object sender, EventArgs e)
         {
+            try
+            {
+                User selectedUser = GetUserToRemove();
+                DialogResult d = MessageBox.Show($"Do you want to remove user '{selectedUser.Name}' from the team?", "Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (d == DialogResult.No)
+                {
+                    return;
+                }
+
+                editTeamPageService.RemoveUserFromTheTeam(selectedUser, teamToEdit);
+                FillTeamTable();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private User GetUserToRemove()
@@ -90,5 +107,9 @@ namespace TeamManager.UI.ManagerSection.UserControls
             return allUsers.Find(u => u.ID == selectedUserId);
         }
 
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            OnBackButtonClicked?.Invoke(this);
+        }
     }
 }

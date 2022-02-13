@@ -92,5 +92,13 @@ namespace TeamManager.Service.ManagerSection.Database
                 cnn.Insert(userIDToTeamID);
             }
         }
+
+        public bool DeleteUserIDToTeamID(UserIDToTeamID userIDToTeamID)
+        {
+            using (IDbConnection cnn = new SQLiteConnection(connString))
+            {
+                return cnn.Delete(userIDToTeamID);
+            }
+        }
     }
 }

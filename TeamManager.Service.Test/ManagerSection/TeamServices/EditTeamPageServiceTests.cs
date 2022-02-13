@@ -79,5 +79,49 @@ namespace TeamManager.Service.Test.ManagerSection.TeamServices
 
             // Assert
         }
+
+        [Fact]
+        public void RemoveUserFromTheTeam_RemovesUser()
+        {
+            // Arrange
+            var connection = new Mock<IManagerDatabaseConnection>();
+            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
+
+            Team teamToRemoveFrom = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
+            User userToRemove = new User() { ID = 1, Name = "user", CreationDate = "1234" };
+
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = userToRemove.ID, TeamID = teamToRemoveFrom.ID };
+            List<UserIDToTeamID> userIDsToTeamIDs = new List<UserIDToTeamID>() { userIDToTeamID };
+
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
+            connection.Setup(c => c.DeleteUserIDToTeamID(userIDToTeamID)).Returns(true);
+
+            // Act
+            bool result = editTeamPage.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom);
+            // Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void RemoveUserFromTheTeam_UserIsNotInTheTeam_CantRemoveUser()
+        {
+            // Arrange
+            var connection = new Mock<IManagerDatabaseConnection>();
+            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
+
+            Team teamToRemoveFrom = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
+            Team team2 = new Team() { ID = 2, Name = "team2", CreationDate = "1234" };
+            User userToRemove = new User() { ID = 1, Name = "user", CreationDate = "1234" };
+
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = userToRemove.ID, TeamID = team2.ID };
+            List<UserIDToTeamID> userIDsToTeamIDs = new List<UserIDToTeamID>() { userIDToTeamID };
+
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
+            connection.Setup(c => c.DeleteUserIDToTeamID(userIDToTeamID)).Returns(true);
+
+            // Act
+            // Assert
+            Assert.Throws<ArgumentException>(() => editTeamPage.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom));
+        }
     }
 }
