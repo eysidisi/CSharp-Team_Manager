@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using TeamManager.Service.Models;
-using TeamManager.Service.Test.Database.SQLiteDB;
+using TeamManager.Service.Test.HelperMethods.SQLiteDB;
 using TeamManager.Service.WizardSection.Database;
 using Xunit;
 
@@ -16,14 +16,14 @@ namespace TeamManager.Service.Test.WizardSection
         public void GetManager_GetsManager()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);
 
             // Insert manager
-            Manager expectedManager = new Manager(HelperMethods.validManagerUserName, HelperMethods.validManagerPassword)
+            Manager expectedManager = new Manager(HelperMethods.SQLiteDB.HelperMethods.validManagerUserName, HelperMethods.SQLiteDB.HelperMethods.validManagerPassword)
             {
                 ID = 1
             };
@@ -33,7 +33,7 @@ namespace TeamManager.Service.Test.WizardSection
             }
 
             // Act
-            Manager actualManager = dataAccess.GetManager(HelperMethods.validManagerUserName);
+            Manager actualManager = dataAccess.GetManager(HelperMethods.SQLiteDB.HelperMethods.validManagerUserName);
 
             // Assert
             Assert.Equal(expectedManager.UserName, actualManager.UserName);
@@ -47,7 +47,7 @@ namespace TeamManager.Service.Test.WizardSection
         public void GetManager_CantGetManager()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
@@ -66,7 +66,7 @@ namespace TeamManager.Service.Test.WizardSection
         public void SavePurpose_SavesPurposeSuccessfully()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";

@@ -4,12 +4,12 @@ using TeamManager.Service.WizardSection.Database;
 
 namespace TeamManager.UI.WizardSection.UserControls
 {
-    public partial class LoginPageUserControl : UserControl
+    public partial class LoginPage : UserControl
     {
         public Action<string> OnSuccessfulLogin;
 
         LoginPageService loginPageService;
-        public LoginPageUserControl(IWizardDatabaseConnection databaseConnection)
+        public LoginPage(IWizardDatabaseConnection databaseConnection)
         {
             InitializeComponent();
             loginPageService = new LoginPageService(databaseConnection);

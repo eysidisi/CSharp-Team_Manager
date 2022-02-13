@@ -14,13 +14,13 @@ using TeamManager.Service.Models;
 
 namespace TeamManager.UI.ManagerSection.UserControls
 {
-    public partial class EditTeamPageUserControl : UserControl
+    public partial class EditTeamPage : UserControl
     {
         Team teamToEdit;
         EditTeamPageService editTeamPageService;
-        public Action<EditTeamPageUserControl> OnBackButtonClicked;
+        public Action<EditTeamPage> OnBackButtonClicked;
 
-        public EditTeamPageUserControl(IManagerDatabaseConnection connection, Team teamToEdit)
+        public EditTeamPage(IManagerDatabaseConnection connection, Team teamToEdit)
         {
             InitializeComponent();
             this.teamToEdit = teamToEdit;

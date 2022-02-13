@@ -5,11 +5,11 @@ using TeamManager.Service.Models;
 
 namespace TeamManager.UI.ManagerSection.UserControls
 {
-    public partial class TeamPageUserControl : UserControl
+    public partial class TeamPage : UserControl
     {
         TeamPageService teamPageService;
         IManagerDatabaseConnection connection;
-        public TeamPageUserControl(IManagerDatabaseConnection connection)
+        public TeamPage(IManagerDatabaseConnection connection)
         {
             InitializeComponent();
             this.connection = connection;
@@ -48,7 +48,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void OpenNewTeamPage()
         {
-           var newTeamPageUserControl = new NewTeamPageUserControl(connection);
+           var newTeamPageUserControl = new NewTeamPage(connection);
             newTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(newTeamPageUserControl);
         }
@@ -73,7 +73,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         private void buttonTeamDetails_Click(object sender, EventArgs e)
         {
             Team team = GetSelectedTeam();
-            var teamDetailsPageUserControl = new TeamDetailsPageUserControl(connection, team);
+            var teamDetailsPageUserControl = new TeamDetailsPage(connection, team);
             teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             HideAllItems();
             Controls.Add(teamDetailsPageUserControl);
@@ -88,7 +88,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         private void buttonEditTeam_Click(object sender, EventArgs e)
         {
             Team team = GetSelectedTeam();
-            var editTeamPageUserControl = new EditTeamPageUserControl(connection, team);
+            var editTeamPageUserControl = new EditTeamPage(connection, team);
             editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             HideAllItems();
             Controls.Add(editTeamPageUserControl);

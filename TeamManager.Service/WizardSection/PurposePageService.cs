@@ -11,10 +11,10 @@ namespace TeamManager.Service.WizardSection
             this.connection = connection;
         }
 
-        public bool CheckIfPurposeIsValid(string purpose)
+        private bool CheckIfPurposeIsValid(Purpose purpose)
         {
             // TODO: Can add more validation rules. Length?
-            if (string.IsNullOrEmpty(purpose))
+            if (string.IsNullOrEmpty(purpose.PurposeText))
                 return false;
 
             return true;
@@ -22,6 +22,10 @@ namespace TeamManager.Service.WizardSection
 
         public void SavePurposeOfVisit(Purpose purpose)
         {
+            if (CheckIfPurposeIsValid(purpose) == false)
+            {
+                throw new ArgumentException("Purpuse is not valid!");
+            }
             connection.SavePurpose(purpose);
         }
     }

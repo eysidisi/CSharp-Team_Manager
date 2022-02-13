@@ -4,12 +4,12 @@ using TeamManager.Service.Models;
 
 namespace TeamManager.UI.ManagerSection.UserControls
 {
-    public partial class NewUserPageUserControl : UserControl
+    public partial class NewUserPage : UserControl
     {
         public Action<UserControl> OnCancelClick;
         NewUserPageService newUserPageService;
 
-        public NewUserPageUserControl(IManagerDatabaseConnection connection)
+        public NewUserPage(IManagerDatabaseConnection connection)
         {
             newUserPageService = new NewUserPageService(connection);
             InitializeComponent();

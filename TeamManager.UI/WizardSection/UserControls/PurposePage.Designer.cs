@@ -1,6 +1,6 @@
 ﻿namespace TeamManager.UI.WizardSection.UserControls
 {
-    partial class PurposePageUserControl
+    partial class PurposePage
     {
         /// <summary> 
         /// Required designer variable.

@@ -25,7 +25,9 @@ namespace TeamManager.Service.ManagerSection
             {
                 throw new ArgumentException("Make sure that all of the sections are filled!");
             }
-            if (connection.GetTeamWithName(newTeam.Name) != null)
+            var allTeams = connection.GetAllTeams();
+
+            if (allTeams != null && allTeams.Any(t => t.Name == newTeam.Name))
             {
                 throw new ArgumentException("A team with the same name already exists!");
             }

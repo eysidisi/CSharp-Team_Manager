@@ -33,6 +33,7 @@ namespace TeamManager.Service.ManagerSection
 
             return true;
         }
+
         private void AddCreationTimeInfo(User user)
         {
             DateTime myDateTime = DateTime.Now;

@@ -18,17 +18,14 @@ namespace TeamManager.Service.Test.ManagerSection.TeamServices
         {
             // Arrange
             var connection = new Mock<IManagerDatabaseConnection>();
-            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns<List<UserIDToTeamID>>(null);
-            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            EditTeamPageService editTeamPageService = new EditTeamPageService(connection.Object);
 
             Team teamToAdd = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
             User userToAdd = new User() { ID = 1, Name = "user", CreationDate = "1234" };
 
-            // Act
-            editTeamPage.AddUserToTheTeam(userToAdd, teamToAdd);
-
-            // Assert
-            connection.Verify(c => c.GetAllUserIDToTeamID());
+            // Act && Assert
+            editTeamPageService.AddUserToTheTeam(userToAdd, teamToAdd);
         }
 
         [Fact]
@@ -52,11 +49,8 @@ namespace TeamManager.Service.Test.ManagerSection.TeamServices
 
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
 
-            // Act
+            // Act && Assert
             editTeamPage.AddUserToTheTeam(userToAdd, teamToAdd);
-
-            // Assert
-            connection.Verify(c => c.GetAllUserIDToTeamID());
         }
 
         [Fact]
@@ -74,14 +68,12 @@ namespace TeamManager.Service.Test.ManagerSection.TeamServices
 
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
 
-            // Act
+            // Act && Assert
             Assert.Throws<ArgumentException>(() => editTeamPage.AddUserToTheTeam(userToAdd, teamToAdd));
-
-            // Assert
         }
 
         [Fact]
-        public void RemoveUserFromTheTeam_RemovesUser()
+        public void RemoveUserFromTheTeam_UserIsInTheTeam_RemovesUser()
         {
             // Arrange
             var connection = new Mock<IManagerDatabaseConnection>();
@@ -96,10 +88,8 @@ namespace TeamManager.Service.Test.ManagerSection.TeamServices
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
             connection.Setup(c => c.DeleteUserIDToTeamID(userIDToTeamID)).Returns(true);
 
-            // Act
-            bool result = editTeamPage.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom);
-            // Assert
-            Assert.True(result);
+            // Act && Assert
+            editTeamPage.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom);
         }
 
         [Fact]
@@ -119,9 +109,9 @@ namespace TeamManager.Service.Test.ManagerSection.TeamServices
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
             connection.Setup(c => c.DeleteUserIDToTeamID(userIDToTeamID)).Returns(true);
 
-            // Act
-            // Assert
-            Assert.Throws<ArgumentException>(() => editTeamPage.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom));
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => 
+            editTeamPage.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom));
         }
     }
 }

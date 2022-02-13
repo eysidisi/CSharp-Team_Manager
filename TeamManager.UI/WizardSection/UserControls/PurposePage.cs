@@ -4,14 +4,14 @@ using TeamManager.Service.WizardSection.Database;
 
 namespace TeamManager.UI.WizardSection.UserControls
 {
-    public partial class PurposePageUserControl : UserControl
+    public partial class PurposePage : UserControl
     {
         public Action OnSuccessfulPurposeEnter;
 
         string managerUserName;
         PurposePageService purposePageService;
 
-        public PurposePageUserControl(IWizardDatabaseConnection connection, string managerUserName)
+        public PurposePage(IWizardDatabaseConnection connection, string managerUserName)
         {
             InitializeComponent();
             purposePageService = new PurposePageService(connection);
@@ -24,17 +24,10 @@ namespace TeamManager.UI.WizardSection.UserControls
 
             try
             {
-                if (purposePageService.CheckIfPurposeIsValid(purposeText))
-                {
-                    Purpose purpose = new Purpose(managerUserName, purposeText);
-                    purposePageService.SavePurposeOfVisit(purpose);
-                    MessageBox.Show("Purpose is saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    OnSuccessfulPurposeEnter?.Invoke();
-                }
-                else
-                {
-                    MessageBox.Show("Purpose is not valid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                Purpose purpose = new Purpose(managerUserName, purposeText);
+                purposePageService.SavePurposeOfVisit(purpose);
+                MessageBox.Show("Purpose is saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                OnSuccessfulPurposeEnter?.Invoke();
             }
             catch (Exception ex)
             {

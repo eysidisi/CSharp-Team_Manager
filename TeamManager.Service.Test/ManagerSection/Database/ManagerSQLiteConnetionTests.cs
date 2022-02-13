@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq;
 using TeamManager.Service.ManagerSection.Database;
 using TeamManager.Service.Models;
-using TeamManager.Service.Test.Database.SQLiteDB;
+using TeamManager.Service.Test.HelperMethods.SQLiteDB;
 using Xunit;
 
 namespace TeamManager.Service.Test.ManagerSection
@@ -13,10 +14,10 @@ namespace TeamManager.Service.Test.ManagerSection
     public class ManagerSQLiteConnetionTests
     {
         [Fact]
-        public void SaveUser_SavesUser()
+        public void SaveUser_EmptyDB_SavesUser()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
@@ -43,42 +44,63 @@ namespace TeamManager.Service.Test.ManagerSection
         }
 
         [Fact]
-        public void DeleteUser_DeletesUser()
+        public void DeleteUser_UserExistsInTheDB_DeletesUser()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
 
-            string userName = "userName";
-            string userSurname = "userSurname";
+            int userID = 1;
 
             var user = new User()
             {
-                Name = userName,
-                Surname = userSurname
+                ID = userID,
             };
 
-            // Act
-            dataAccess.SaveUser(user);
-
-            List<User> users = dataAccess.GetAllUsers();
-
-            User savedUser = users.Find(u => u.Name == userName && u.Surname == userSurname);
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                cnn.Insert(user);
+            }
 
             // Assert
-            Assert.True(dataAccess.DeleteUser(savedUser));
+            Assert.True(dataAccess.DeleteUser(user));
 
             helperMethods.DeleteDB(dbFilePath);
         }
 
         [Fact]
-        public void SaveTeam_SavesTeam()
+        public void DeleteUser_UserDoesntExistInTheDB_CantDeleteUser()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
+
+
+            var userToAdd = new User() { };
+
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                cnn.Insert(userToAdd);
+            }
+            var userToDelete = new User() { ID = 2 };
+
+            // Assert
+            Assert.False(dataAccess.DeleteUser(userToDelete));
+
+            helperMethods.DeleteDB(dbFilePath);
+        }
+
+        [Fact]
+        public void SaveTeam_EmptyDB_SavesTeam()
+        {
+            //Arrange
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
@@ -96,20 +118,23 @@ namespace TeamManager.Service.Test.ManagerSection
             // Act
             dataAccess.SaveTeam(team);
 
-            Team savedTeam = dataAccess.GetTeamWithName(teamName);
+            List<Team> allTeams;
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                allTeams = cnn.GetAll<Team>().ToList();
+            }
 
             // Assert
-            Assert.Equal(teamName, savedTeam.Name);
-            Assert.Equal(creationDate, savedTeam.CreationDate);
+            Assert.Contains(allTeams, t => t.Name == team.Name && t.CreationDate == team.CreationDate);
 
             helperMethods.DeleteDB(dbFilePath);
         }
 
         [Fact]
-        public void GetAllTeams_GetsAllTeams()
+        public void GetAllTeams_TeamsExistInDB_GetsAllTeams()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
@@ -133,10 +158,13 @@ namespace TeamManager.Service.Test.ManagerSection
                 CreationDate = creationDate2
             };
 
-            // Act
-            dataAccess.SaveTeam(team1);
-            dataAccess.SaveTeam(team2);
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                cnn.Insert(team1);
+                cnn.Insert(team2);
+            }
 
+            // Act
             var savedTeams = dataAccess.GetAllTeams();
 
             // Assert
@@ -146,17 +174,18 @@ namespace TeamManager.Service.Test.ManagerSection
 
             helperMethods.DeleteDB(dbFilePath);
         }
-        
+
         [Fact]
-        public void GetAllTeams_NoTeam_ReturnsEmptyList()
+        public void GetAllTeams_NoTeamExistsInTheDB_ReturnsEmptyList()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
 
+            // Act
             var savedTeams = dataAccess.GetAllTeams();
 
             // Assert
@@ -166,10 +195,41 @@ namespace TeamManager.Service.Test.ManagerSection
         }
 
         [Fact]
-        public void DeleteTeam_DeletesTeam()
+        public void DeleteTeam_TeamExistsInTheDB_DeletesTeam()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
+
+            string teamName = "team1";
+            string creationDate = "1234";
+            int teamID = 1;
+            var team = new Team()
+            {
+                ID = teamID,
+                Name = teamName,
+                CreationDate = creationDate
+            };
+
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                cnn.Insert(team);
+            }
+
+            // Assert
+            Assert.True(dataAccess.DeleteTeam(team));
+
+            helperMethods.DeleteDB(dbFilePath);
+        }
+
+        [Fact]
+        public void DeleteTeam_TeamDoesntExistInTheDB_CantDeleteTeam()
+        {
+            //Arrange
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
@@ -178,60 +238,31 @@ namespace TeamManager.Service.Test.ManagerSection
             string teamName1 = "team1";
             string creationDate1 = "1234";
 
-            var team1 = new Team()
+            var team = new Team()
             {
                 Name = teamName1,
                 CreationDate = creationDate1
             };
 
-            dataAccess.SaveTeam(team1);
-
-            // Act
-            team1.ID = 1;
-            var result = dataAccess.DeleteTeam(team1);
-
-            // Assert
-            Assert.True(result);
-
-            helperMethods.DeleteDB(dbFilePath);
-        }
-
-        [Fact]
-        public void DeleteTeam_CantDeleteTeam()
-        {
-            //Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
-
-            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
-            ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
-
-            string teamName1 = "team1";
-            string creationDate1 = "1234";
-
-            var team1 = new Team()
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
             {
-                Name = teamName1,
-                CreationDate = creationDate1
-            };
+                cnn.Insert(team);
+            }
 
-            dataAccess.SaveTeam(team1);
-
-            // Act
-            team1.ID = 0;
-            var result = dataAccess.DeleteTeam(team1);
+            // Object in the DB has ID 1
+            team.ID = 0;
 
             // Assert
-            Assert.False(result);
+            Assert.False(dataAccess.DeleteTeam(team));
 
             helperMethods.DeleteDB(dbFilePath);
         }
 
         [Fact]
-        public void SaveUserIDToTeamID_SavesUserIDToTeamID()
+        public void SaveUserIDToTeamID_EmptyDB_SavesUserIDToTeamID()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
@@ -246,15 +277,21 @@ namespace TeamManager.Service.Test.ManagerSection
             dataAccess.SaveUserIDToTeamID(userIDToTeamID);
 
             // Assert
-            var allUserIDToTeamIDs = dataAccess.GetAllUserIDToTeamID();
+            List<UserIDToTeamID> allUserIDToTeamIDs;
+
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                allUserIDToTeamIDs = cnn.GetAll<UserIDToTeamID>().ToList();
+            }
+
             Assert.Contains(allUserIDToTeamIDs, a => a.UserID == userID && a.TeamID == teamID);
         }
 
         [Fact]
-        public void DeleteUserIDToTeamID_DeletesUserIDToTeamID()
+        public void DeleteUserIDToTeamID_UserIDToTeamIDExistsInDB_DeletesUserIDToTeamID()
         {
             //Arrange
-            HelperMethods helperMethods = new HelperMethods();
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
             string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
@@ -264,14 +301,39 @@ namespace TeamManager.Service.Test.ManagerSection
             int teamID = 1;
 
             var userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = userID, TeamID = teamID };
-            
+
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
             {
                 cnn.Insert(userIDToTeamID);
             }
 
             // Act
-            dataAccess.DeleteUserIDToTeamID(userIDToTeamID);
+            Assert.True(dataAccess.DeleteUserIDToTeamID(userIDToTeamID));
+        }
+
+        [Fact]
+        public void DeleteUserIDToTeamID_UserIDToTeamIDDoesntExistInDB_CantDeleteUserIDToTeamID()
+        {
+            //Arrange
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
+
+            int userID = 1;
+            int teamID = 1;
+
+            var userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = userID, TeamID = teamID };
+
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                cnn.Insert(userIDToTeamID);
+            }
+
+            // Act
+            userIDToTeamID.ID = 3;
+            Assert.False(dataAccess.DeleteUserIDToTeamID(userIDToTeamID));
         }
     }
 }

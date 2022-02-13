@@ -6,14 +6,14 @@ using TeamManager.UI.ManagerSection.UserControls.UserPages;
 
 namespace TeamManager.UI.ManagerSection.UserControls
 {
-    public partial class UserPageUserControl : UserControl
+    public partial class UserPage : UserControl
     {
         UserPageService userPageService;
         DataTable usersDataTable;
         List<User> allUsers;
         IManagerDatabaseConnection connection;
 
-        public UserPageUserControl(IManagerDatabaseConnection connection)
+        public UserPage(IManagerDatabaseConnection connection)
         {
             InitializeComponent();
             userPageService = new UserPageService(connection);
@@ -31,7 +31,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void OpenNewUserPage()
         {
-            var saveNewUserPage = new NewUserPageUserControl(connection);
+            var saveNewUserPage = new NewUserPage(connection);
             saveNewUserPage.OnCancelClick += OnBackButtonClicked;
             Controls.Add(saveNewUserPage);
         }
@@ -95,7 +95,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void OpenNewUserDetailsPage(User selectedUser)
         {
-            UserDetailsPageUserControl userDetailsPage = new UserDetailsPageUserControl(connection, selectedUser);
+            UserDetailsPage userDetailsPage = new UserDetailsPage(connection, selectedUser);
             userDetailsPage.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(userDetailsPage);
         }

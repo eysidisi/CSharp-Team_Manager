@@ -1,6 +1,6 @@
 ﻿namespace TeamManager.UI.ManagerSection.UserControls
 {
-    partial class TeamPageUserControl
+    partial class TeamPage
     {
         /// <summary> 
         /// Required designer variable.

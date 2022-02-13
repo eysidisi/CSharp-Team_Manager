@@ -9,8 +9,8 @@ namespace TeamManager.UI.WizardSection
         string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDBFiles\TestDB.db; Version = 3";
 
         IWizardDatabaseConnection connection;
-        LoginPageUserControl loginPageUserControl;
-        PurposePageUserControl purposePageUserControl;
+        LoginPage loginPageUserControl;
+        PurposePage purposePageUserControl;
 
         public WizardForm()
         {
@@ -22,7 +22,7 @@ namespace TeamManager.UI.WizardSection
 
         private void AdjustLoginPage()
         {
-            loginPageUserControl = new LoginPageUserControl(connection);
+            loginPageUserControl = new LoginPage(connection);
             panelCenter.Controls.Add(loginPageUserControl);
             loginPageUserControl.OnSuccessfulLogin += OnSuccessfulLogin;
         }
@@ -35,7 +35,7 @@ namespace TeamManager.UI.WizardSection
 
         private void AdjustPurposePage(string managerUserName)
         {
-            purposePageUserControl = new PurposePageUserControl(connection, managerUserName);
+            purposePageUserControl = new PurposePage(connection, managerUserName);
             purposePageUserControl.OnSuccessfulPurposeEnter += OnSuccessfulPurposeEnter;
             panelCenter.Controls.Add(purposePageUserControl);
         }

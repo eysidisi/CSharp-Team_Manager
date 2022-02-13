@@ -1,7 +1,7 @@
 ﻿using System.Data.SQLite;
 using System.IO;
 
-namespace TeamManager.Service.Test.Database.SQLiteDB
+namespace TeamManager.Service.Test.HelperMethods.SQLiteDB
 {
     public class HelperMethods
     {

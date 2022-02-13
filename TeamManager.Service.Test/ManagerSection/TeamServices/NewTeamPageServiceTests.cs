@@ -14,7 +14,7 @@ namespace TeamManager.Service.Test.ManagerSection
     public class NewTeamPageServiceTests
     {
         [Fact]
-        public void SaveTeam_SavesTeam()
+        public void SaveTeam_EmptyDB_SavesTeam()
         {
             // Arrange
             Team newTeam = new Team()
@@ -23,9 +23,10 @@ namespace TeamManager.Service.Test.ManagerSection
                 CreationDate = "123"
             };
             var connection = new Mock<IManagerDatabaseConnection>();
+            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team> { });
             NewTeamPageService newTeamPageService = new NewTeamPageService(connection.Object);
 
-            // Act
+            // Act && Assert
             newTeamPageService.SaveTeam(newTeam);
         }
 
@@ -39,11 +40,11 @@ namespace TeamManager.Service.Test.ManagerSection
                 CreationDate = "123"
             };
             var connection = new Mock<IManagerDatabaseConnection>();
-            connection.Setup(c => c.GetTeamWithName("Team1")).Returns(newTeam);
+            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { newTeam });
 
             NewTeamPageService newTeamPageService = new NewTeamPageService(connection.Object);
 
-            // Act
+            // Act && Assert
             Assert.Throws<ArgumentException>(() => newTeamPageService.SaveTeam(newTeam));
         }
 
@@ -59,7 +60,7 @@ namespace TeamManager.Service.Test.ManagerSection
 
             NewTeamPageService newTeamPageService = new NewTeamPageService(connection.Object);
 
-            // Act
+            // Act && Assert
             Assert.Throws<ArgumentException>(() => newTeamPageService.SaveTeam(newTeam));
         }
     }

@@ -18,13 +18,13 @@ namespace TeamManager.UI.ManagerSection
 
         private void CreateTeamPage(IManagerDatabaseConnection connection)
         {
-            TeamPageUserControl teamPage = new TeamPageUserControl(connection);
+            TeamPage teamPage = new TeamPage(connection);
             panelTeamPage.Controls.Add(teamPage);
         }
 
         private void CreateUserPage(IManagerDatabaseConnection connection)
         {
-            UserPageUserControl userPageUser = new UserPageUserControl(connection);
+            UserPage userPageUser = new UserPage(connection);
             panelUserDetails.Controls.Add(userPageUser);
         }
     }

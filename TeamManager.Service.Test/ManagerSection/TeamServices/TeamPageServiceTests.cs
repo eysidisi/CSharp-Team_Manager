@@ -11,7 +11,7 @@ namespace TeamManager.Service.Test.ManagerSection
     public class TeamPageServiceTests
     {
         [Fact]
-        public void GetTeams_GetsTeams()
+        public void GetAllTeams_TeamsExistInDB_GetsTeams()
         {
             // Arrange
             var connection = new Mock<IManagerDatabaseConnection>();
@@ -39,7 +39,23 @@ namespace TeamManager.Service.Test.ManagerSection
             Assert.Equal(expectedTeams, actualTeams);
         }
         [Fact]
-        public void DeleteTeam_DeletesTeam()
+        public void GetAllTeams_TeamsDontExistInDB_ReturnsEmptyList()
+        {
+            // Arrange
+            var connection = new Mock<IManagerDatabaseConnection>();
+
+            connection.Setup(x => x.GetAllTeams()).Returns(new List<Team>());
+
+            TeamPageService teamPageService = new TeamPageService(connection.Object);
+
+            // Act
+            List<Team> actualTeams = teamPageService.GetAllTeams();
+
+            // Assert
+            Assert.Empty(actualTeams);
+        }
+        [Fact]
+        public void DeleteTeam_TeamExistInDB_DeletesTeam()
         {
             // Arrange
             Team team = new Team()
@@ -53,14 +69,12 @@ namespace TeamManager.Service.Test.ManagerSection
 
             TeamPageService teamPageService = new TeamPageService(connection.Object);
 
-
-            // Act
+            // Act && Assert
             teamPageService.DeleteTeam(team);
-
-            // Assert
         }
+
         [Fact]
-        public void DeleteTeam_CantDeleteTeam()
+        public void DeleteTeam_TeamDoesntExistInDB_CantDeleteTeam()
         {
             // Arrange
             Team team = new Team()
@@ -74,9 +88,7 @@ namespace TeamManager.Service.Test.ManagerSection
 
             TeamPageService teamPageService = new TeamPageService(connection.Object);
 
-
-            // Act
-            // Assert
+            // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));
         }
     }

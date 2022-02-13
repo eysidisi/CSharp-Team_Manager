@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Database\TestDBs\**" />
-    <EmbeddedResource Remove="Database\TestDBs\**" />
-    <None Remove="Database\TestDBs\**" />
+    <Compile Remove="HelperMethods\TestDBs\**" />
+    <EmbeddedResource Remove="HelperMethods\TestDBs\**" />
+    <None Remove="HelperMethods\TestDBs\**" />
   </ItemGroup>
 
   <ItemGroup>

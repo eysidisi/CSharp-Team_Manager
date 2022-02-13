@@ -13,13 +13,13 @@ using TeamManager.Service.Models;
 
 namespace TeamManager.UI.ManagerSection.UserControls
 {
-    public partial class TeamDetailsPageUserControl : UserControl
+    public partial class TeamDetailsPage : UserControl
     {
         TeamDetailsPageService pageService;
         Team team;
-        public Action<TeamDetailsPageUserControl> OnBackButtonClicked;
+        public Action<TeamDetailsPage> OnBackButtonClicked;
 
-        public TeamDetailsPageUserControl(IManagerDatabaseConnection connection,Team team)
+        public TeamDetailsPage(IManagerDatabaseConnection connection,Team team)
         {
             InitializeComponent();
             pageService = new TeamDetailsPageService(connection);

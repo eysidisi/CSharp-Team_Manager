@@ -11,6 +11,7 @@ namespace TeamManager.Service.ManagerSection
         {
             this.connection = connection;
         }
+
         public List<Team> GetAllTeams()
         {
             return connection.GetAllTeams();

@@ -50,7 +50,7 @@ namespace TeamManager.Service.ManagerSection.TeamServices
             return users.Where(u => userIDsBelongedToTeam.Contains(u.ID)).ToList();
         }
 
-        public bool RemoveUserFromTheTeam(User userToRemove, Team teamToRemoveFrom)
+        public void RemoveUserFromTheTeam(User userToRemove, Team teamToRemoveFrom)
         {
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID()
             {
@@ -65,7 +65,7 @@ namespace TeamManager.Service.ManagerSection.TeamServices
 
             UserIDToTeamID correctUserIDToTeamID = GetCorrectEntryFromDB(userIDToTeamID);
 
-            return connection.DeleteUserIDToTeamID(correctUserIDToTeamID);
+            connection.DeleteUserIDToTeamID(correctUserIDToTeamID);
         }
 
         private UserIDToTeamID GetCorrectEntryFromDB(UserIDToTeamID userIDToTeamID)

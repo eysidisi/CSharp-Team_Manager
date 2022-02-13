@@ -1,6 +1,6 @@
-﻿namespace TeamManager.UI.ManagerSection.UserControls
+﻿namespace TeamManager.UI.ManagerSection.UserControls.UserPages
 {
-    partial class TeamDetailsPageUserControl
+    partial class UserDetailsPage
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridViewUsers = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTeams = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonBack = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTeams)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridViewUsers
+            // dataGridViewTeams
             // 
-            this.dataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewUsers.Location = new System.Drawing.Point(2, 50);
-            this.dataGridViewUsers.Name = "dataGridViewUsers";
-            this.dataGridViewUsers.RowTemplate.Height = 25;
-            this.dataGridViewUsers.Size = new System.Drawing.Size(495, 350);
-            this.dataGridViewUsers.TabIndex = 0;
+            this.dataGridViewTeams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTeams.Location = new System.Drawing.Point(3, 40);
+            this.dataGridViewTeams.Name = "dataGridViewTeams";
+            this.dataGridViewTeams.RowTemplate.Height = 25;
+            this.dataGridViewTeams.Size = new System.Drawing.Size(594, 270);
+            this.dataGridViewTeams.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 12);
+            this.label1.Location = new System.Drawing.Point(222, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 15);
             this.label1.TabIndex = 1;
@@ -54,7 +54,7 @@
             // 
             // buttonBack
             // 
-            this.buttonBack.Location = new System.Drawing.Point(187, 474);
+            this.buttonBack.Location = new System.Drawing.Point(222, 389);
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(75, 23);
             this.buttonBack.TabIndex = 2;
@@ -62,16 +62,16 @@
             this.buttonBack.UseVisualStyleBackColor = true;
             this.buttonBack.Click += new System.EventHandler(this.buttonBack_Click);
             // 
-            // TeamDetailsPageUserControl
+            // UserDetailsPageUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataGridViewUsers);
-            this.Name = "TeamDetailsPageUserControl";
-            this.Size = new System.Drawing.Size(500, 600);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).EndInit();
+            this.Controls.Add(this.dataGridViewTeams);
+            this.Name = "UserDetailsPageUserControl";
+            this.Size = new System.Drawing.Size(600, 600);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTeams)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -79,7 +79,7 @@
 
         #endregion
 
-        private DataGridView dataGridViewUsers;
+        private DataGridView dataGridViewTeams;
         private Label label1;
         private Button buttonBack;
     }

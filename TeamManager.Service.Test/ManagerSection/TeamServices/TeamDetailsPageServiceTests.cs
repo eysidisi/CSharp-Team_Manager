@@ -49,7 +49,7 @@ namespace TeamManager.Service.Test.ManagerSection
             Team team1 = new Team() { Name = "Team1" };
 
             var connection = new Mock<IManagerDatabaseConnection>();
-            connection.Setup(c => c.GetAllUsers()).Returns<List<User>>(null);
+            connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
             TeamDetailsPageService teamDetailsPage = new TeamDetailsPageService(connection.Object);
             List<User> expectedUsers = new List<User>();
 
@@ -59,6 +59,7 @@ namespace TeamManager.Service.Test.ManagerSection
             // Assert
             Assert.Equal(expectedUsers, actualUsers);
         }
+
         [Fact]
         public void GetUsersInTheTeam_NoUsersInTheTeam()
         {

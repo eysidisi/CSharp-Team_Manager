@@ -47,18 +47,6 @@ namespace TeamManager.Service.ManagerSection.Database
             }
         }
 
-        public Team GetTeamWithName(string name)
-        {
-            string query = $"SELECT * From Teams where Name = @Name";
-
-            using (IDbConnection cnn = new SQLiteConnection(connString))
-            {
-                var output = cnn.Query<Team>(query, new Team() { Name = name });
-
-                return output.FirstOrDefault();
-            }
-        }
-
         public List<Team> GetAllTeams()
         {
             using (IDbConnection cnn = new SQLiteConnection(connString))
