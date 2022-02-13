@@ -18,10 +18,26 @@ namespace TeamManager.Service.ManagerSection
 
         public void DeleteTeam(Team team)
         {
-           if( connection.DeleteTeam(team)==false)
+            if (CheckIfTeamHasAnyMembers(team))
+            {
+                throw new ArgumentException("Can't delete the team! Team has members!");
+            }
+            if (connection.DeleteTeam(team) == false)
             {
                 throw new ArgumentException("Can't delete the team!");
             }
+        }
+
+        private bool CheckIfTeamHasAnyMembers(Team team)
+        {
+            var allUserIDToTeamIDs = connection.GetAllUserIDToTeamID();
+
+            if (allUserIDToTeamIDs != null && allUserIDToTeamIDs.Any(a => a.TeamID == team.ID))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
