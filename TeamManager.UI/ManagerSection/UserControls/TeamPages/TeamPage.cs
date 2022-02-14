@@ -22,7 +22,16 @@ namespace TeamManager.UI.ManagerSection.UserControls
             var teams = teamPageService.GetAllTeams();
             var teamsDataTable = HelperFunctions.ConvertToDatatable(teams);
             dataGridViewTeams.DataSource = teamsDataTable;
-            dataGridViewTeams.AutoResizeColumns();
+            ResizeColumns(dataGridViewTeams);
+        }
+        private void ResizeColumns(DataGridView dataGrid)
+        {
+            int width = dataGrid.Width;
+            int minColWidth = (int)Math.Ceiling(width / (double)dataGrid.Columns.Count);
+            for (int i = 0; i < dataGrid.Columns.Count; i++)
+            {
+                dataGrid.Columns[i].MinimumWidth = minColWidth;
+            }
         }
 
         private void buttonDeleteTeam_Click(object sender, EventArgs e)
@@ -30,6 +39,13 @@ namespace TeamManager.UI.ManagerSection.UserControls
             try
             {
                 Team teamToDelete = GetSelectedTeam();
+                
+                DialogResult d = MessageBox.Show($"Do you want to delete team '{teamToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (d == DialogResult.No)
+                {
+                    return;
+                }
+
                 teamPageService.DeleteTeam(teamToDelete);
                 (dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView).Delete();
             }

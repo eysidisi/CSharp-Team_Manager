@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewTeams = new System.Windows.Forms.DataGridView();
             this.labelUserName = new System.Windows.Forms.Label();
             this.buttonBack = new System.Windows.Forms.Button();
@@ -37,26 +37,27 @@
             // 
             // dataGridViewTeams
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTeams.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewTeams.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTeams.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewTeams.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTeams.Location = new System.Drawing.Point(3, 60);
             this.dataGridViewTeams.Name = "dataGridViewTeams";
             this.dataGridViewTeams.RowTemplate.Height = 25;
-            this.dataGridViewTeams.Size = new System.Drawing.Size(594, 270);
+            this.dataGridViewTeams.Size = new System.Drawing.Size(614, 350);
             this.dataGridViewTeams.TabIndex = 0;
             // 
             // labelUserName
             // 
             this.labelUserName.AutoSize = true;
             this.labelUserName.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelUserName.Location = new System.Drawing.Point(279, 29);
+            this.labelUserName.Location = new System.Drawing.Point(278, 10);
             this.labelUserName.Name = "labelUserName";
             this.labelUserName.Size = new System.Drawing.Size(65, 28);
             this.labelUserName.TabIndex = 1;
@@ -65,7 +66,7 @@
             // buttonBack
             // 
             this.buttonBack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonBack.Location = new System.Drawing.Point(222, 389);
+            this.buttonBack.Location = new System.Drawing.Point(234, 416);
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(150, 50);
             this.buttonBack.TabIndex = 2;
@@ -81,7 +82,7 @@
             this.Controls.Add(this.labelUserName);
             this.Controls.Add(this.dataGridViewTeams);
             this.Name = "UserDetailsPage";
-            this.Size = new System.Drawing.Size(600, 600);
+            this.Size = new System.Drawing.Size(620, 600);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTeams)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

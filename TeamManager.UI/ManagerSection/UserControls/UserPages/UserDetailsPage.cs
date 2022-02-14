@@ -35,6 +35,15 @@ namespace TeamManager.UI.ManagerSection.UserControls.UserPages
             dataGridViewTeams.DataSource = usersDataTable;
             dataGridViewTeams.AutoResizeColumns();
         }
+        private void ResizeColumns(DataGridView dataGrid)
+        {
+            int width = dataGrid.Width;
+            int minColWidth = (int)Math.Ceiling(width / (double)dataGrid.Columns.Count);
+            for (int i = 0; i < dataGrid.Columns.Count; i++)
+            {
+                dataGrid.Columns[i].MinimumWidth = minColWidth;
+            }
+        }
 
         private void buttonBack_Click(object sender, EventArgs e)
         {
