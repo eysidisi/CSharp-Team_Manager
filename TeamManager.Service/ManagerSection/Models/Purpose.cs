@@ -14,6 +14,7 @@ namespace TeamManager.Service.Models
         {
 
         }
+        public int ID { get; set; }
         public string UserName { get; set; }
         public string PurposeText { get; set; }
     }

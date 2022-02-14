@@ -30,12 +30,11 @@ namespace TeamManager.Service.ManagerSection
 
             // Delete all user to team connections
             var allUserIDToTeamIDs = connection.GetAllUserIDToTeamID();
-            var userToTeamIDs = allUserIDToTeamIDs.Where(a => a.TeamID == team.ID).ToList();
+            var userToTeamIDs = allUserIDToTeamIDs.Where(a => a.TeamID == team.ID);
             foreach (var userToTeamID in userToTeamIDs)
             {
                 connection.DeleteUserIDToTeamID(userToTeamID);
             }
-
         }
 
         private bool CheckIfTeamHasAnyMembers(Team team)

@@ -52,6 +52,7 @@ namespace TeamManager.Service.Test.ManagerSection
             User user = new User();
             var connection = new Mock<IManagerDatabaseConnection>();
             connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             UserPageService userPageService = new UserPageService(connection.Object);
 

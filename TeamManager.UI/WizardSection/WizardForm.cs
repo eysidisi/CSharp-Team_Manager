@@ -1,3 +1,4 @@
+using System.Configuration;
 using TeamManager.Service.Models;
 using TeamManager.Service.WizardSection.Database;
 using TeamManager.UI.ManagerSection;
@@ -7,7 +8,9 @@ namespace TeamManager.UI.WizardSection
 {
     public partial class WizardForm : Form
     {
-        string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDBFiles\Large.db; Version = 3";
+        string connectionString = ConfigurationManager.ConnectionStrings["TestSmallDB"].ConnectionString;
+        //string connectionString = ConfigurationManager.ConnectionStrings["TestMediumDB"].ConnectionString;
+        //string connectionString = ConfigurationManager.ConnectionStrings["TestLargeDB"].ConnectionString;
 
         IWizardDatabaseConnection connection;
         LoginPage loginPageUserControl;
@@ -45,7 +48,7 @@ namespace TeamManager.UI.WizardSection
         {
             panelCenter.Controls.Remove(purposePageUserControl);
             this.Hide();
-            var managerForm = new ManagerForm();
+            var managerForm = new ManagerForm(connectionString);
             managerForm.Closed += (s, args) => this.Close();
             managerForm.Show();
         }

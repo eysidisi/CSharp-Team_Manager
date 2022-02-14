@@ -5,9 +5,7 @@ namespace TeamManager.UI.ManagerSection
 {
     public partial class ManagerForm : Form
     {
-        string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDBFiles\Large.db; Version = 3";
-
-        public ManagerForm()
+        public ManagerForm(string connectionString)
         {
             InitializeComponent();
             this.CenterToScreen();

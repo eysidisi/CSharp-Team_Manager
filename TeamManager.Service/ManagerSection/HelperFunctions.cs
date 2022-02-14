@@ -7,6 +7,7 @@ namespace TeamManager.Service.ManagerSection
     {
         /// <summary>
         /// This function is used to transform a List into a DataTable
+        /// https://stackoverflow.com/a/564373/11741043
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
