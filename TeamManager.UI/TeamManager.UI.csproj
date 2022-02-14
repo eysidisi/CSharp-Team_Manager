@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestDBFiles\Small.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestDBFiles\TestDB.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
