@@ -5,7 +5,7 @@ namespace TeamManager.UI.ManagerSection
 {
     public partial class ManagerForm : Form
     {
-        string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDBFiles\Small.db; Version = 3";
+        string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDBFiles\Large.db; Version = 3";
 
         public ManagerForm()
         {

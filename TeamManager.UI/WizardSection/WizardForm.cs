@@ -7,7 +7,7 @@ namespace TeamManager.UI.WizardSection
 {
     public partial class WizardForm : Form
     {
-        string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDBFiles\TestDB.db; Version = 3";
+        string connectionString = $@"Data Source = {Directory.GetCurrentDirectory()}\TestDBFiles\Large.db; Version = 3";
 
         IWizardDatabaseConnection connection;
         LoginPage loginPageUserControl;

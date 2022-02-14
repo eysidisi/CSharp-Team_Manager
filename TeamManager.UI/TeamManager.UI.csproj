@@ -13,6 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestDBFiles\Large.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestDBFiles\Medium.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestDBFiles\Small.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
