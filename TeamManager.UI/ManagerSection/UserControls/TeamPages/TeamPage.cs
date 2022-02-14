@@ -24,6 +24,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
             dataGridViewTeams.DataSource = teamsDataTable;
             ResizeColumns(dataGridViewTeams);
         }
+
         private void ResizeColumns(DataGridView dataGrid)
         {
             int width = dataGrid.Width;
@@ -96,7 +97,6 @@ namespace TeamManager.UI.ManagerSection.UserControls
             Controls.Add(newTeamPageUserControl);
         }
 
-
         private void ExposeAllItems()
         {
             foreach (Control control in Controls)
@@ -133,6 +133,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         {
             pageToClose.Dispose();
             ExposeAllItems();
+            FillTeamsTable();
         }
 
         private void buttonEditTeam_Click(object sender, EventArgs e)
