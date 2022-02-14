@@ -6,7 +6,7 @@ namespace TeamManager.UI.WizardSection.UserControls
 {
     public partial class LoginPage : UserControl
     {
-        public Action<string> OnSuccessfulLogin;
+        public Action<Manager> OnSuccessfulLogin;
 
         LoginPageService loginPageService;
         public LoginPage(IWizardDatabaseConnection databaseConnection)
@@ -21,21 +21,15 @@ namespace TeamManager.UI.WizardSection.UserControls
             {
                 string userName = textBoxUserName.Text;
                 string password = textBoxPassword.Text;
-                Manager manager = new Manager()
+                Manager enteredManager = new Manager()
                 {
                     UserName = userName,
                     Password = password
                 };
 
-                if (loginPageService.CheckIfManagerExists(manager))
-                {
-                    OnSuccessfulLogin?.Invoke(userName);
-                }
+                var managerFromDB = loginPageService.GetManager(enteredManager);
 
-                else
-                {
-                    MessageBox.Show("Can't find the manager!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                OnSuccessfulLogin?.Invoke(managerFromDB);
             }
             catch (Exception ex)
             {

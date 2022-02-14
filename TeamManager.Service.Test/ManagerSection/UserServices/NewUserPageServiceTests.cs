@@ -14,7 +14,7 @@ namespace TeamManager.Service.Test.ManagerSection
     public class NewUserPageServiceTests
     {
         [Fact]
-        public void AddUser_AddsUser()
+        public void AddUser_ValidUser_AddsUser()
         {
             // Arrange
             var connection = new Mock<IManagerDatabaseConnection>();
@@ -29,13 +29,11 @@ namespace TeamManager.Service.Test.ManagerSection
                 Title = "title"
             };
 
-            // Act
-
-            // Assert
+            // Act && Assert
             newUserPageService.SaveNewUser(user);
         }
         [Fact]
-        public void AddUser_CantAddUser()
+        public void AddUser_InvalidUser_CantAddUser()
         {
             // Arrange
             var connection = new Mock<IManagerDatabaseConnection>();
@@ -48,6 +46,5 @@ namespace TeamManager.Service.Test.ManagerSection
             // Assert
             Assert.Throws<ArgumentException>(() => newUserPageService.SaveNewUser(user));
         }
-
     }
 }

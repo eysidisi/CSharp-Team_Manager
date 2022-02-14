@@ -8,14 +8,14 @@ namespace TeamManager.UI.WizardSection.UserControls
     {
         public Action OnSuccessfulPurposeEnter;
 
-        string managerUserName;
+        Manager manager;
         PurposePageService purposePageService;
 
-        public PurposePage(IWizardDatabaseConnection connection, string managerUserName)
+        public PurposePage(IWizardDatabaseConnection connection, Manager manager)
         {
             InitializeComponent();
             purposePageService = new PurposePageService(connection);
-            this.managerUserName = managerUserName;
+            this.manager = manager;
         }
 
         private void buttonSavePurpose_Click(object sender, EventArgs e)
@@ -24,7 +24,7 @@ namespace TeamManager.UI.WizardSection.UserControls
 
             try
             {
-                Purpose purpose = new Purpose(managerUserName, purposeText);
+                Purpose purpose = new Purpose(manager.UserName, purposeText);
                 purposePageService.SavePurposeOfVisit(purpose);
                 MessageBox.Show("Purpose is saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 OnSuccessfulPurposeEnter?.Invoke();

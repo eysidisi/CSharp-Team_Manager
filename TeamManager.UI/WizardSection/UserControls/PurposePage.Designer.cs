@@ -46,9 +46,9 @@
             // buttonSavePurpose
             // 
             this.buttonSavePurpose.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonSavePurpose.Location = new System.Drawing.Point(136, 254);
+            this.buttonSavePurpose.Location = new System.Drawing.Point(125, 254);
             this.buttonSavePurpose.Name = "buttonSavePurpose";
-            this.buttonSavePurpose.Size = new System.Drawing.Size(128, 72);
+            this.buttonSavePurpose.Size = new System.Drawing.Size(150, 50);
             this.buttonSavePurpose.TabIndex = 1;
             this.buttonSavePurpose.Text = "Save Purpose";
             this.buttonSavePurpose.UseVisualStyleBackColor = true;
@@ -64,14 +64,14 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Purpose:";
             // 
-            // PurposePageUserControl
+            // PurposePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonSavePurpose);
             this.Controls.Add(this.textBoxPurpose);
-            this.Name = "PurposePageUserControl";
+            this.Name = "PurposePage";
             this.Size = new System.Drawing.Size(400, 400);
             this.ResumeLayout(false);
             this.PerformLayout();

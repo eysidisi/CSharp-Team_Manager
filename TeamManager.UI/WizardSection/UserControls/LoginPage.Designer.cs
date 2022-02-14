@@ -78,13 +78,13 @@
             this.buttonEnter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonEnter.Location = new System.Drawing.Point(147, 216);
             this.buttonEnter.Name = "buttonEnter";
-            this.buttonEnter.Size = new System.Drawing.Size(100, 50);
+            this.buttonEnter.Size = new System.Drawing.Size(150, 50);
             this.buttonEnter.TabIndex = 4;
             this.buttonEnter.Text = "Enter";
             this.buttonEnter.UseVisualStyleBackColor = true;
             this.buttonEnter.Click += new System.EventHandler(this.buttonNext_Click);
             // 
-            // LoginPageUserControl
+            // LoginPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -93,7 +93,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.textBoxUserName);
-            this.Name = "LoginPageUserControl";
+            this.Name = "LoginPage";
             this.Size = new System.Drawing.Size(400, 400);
             this.ResumeLayout(false);
             this.PerformLayout();

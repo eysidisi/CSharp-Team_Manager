@@ -27,9 +27,17 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonDeleteTeam_Click(object sender, EventArgs e)
         {
-            Team teamToDelete = GetSelectedTeam();
-            teamPageService.DeleteTeam(teamToDelete);
-            (dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView).Delete();
+            try
+            {
+                Team teamToDelete = GetSelectedTeam();
+                teamPageService.DeleteTeam(teamToDelete);
+                (dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView).Delete();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
         }
 
         private Team GetSelectedTeam()
@@ -42,8 +50,15 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonAddNewTeam_Click(object sender, EventArgs e)
         {
-            HideAllItems();
-            OpenNewTeamPage();
+            try
+            {
+                HideAllItems();
+                OpenNewTeamPage();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void OpenNewTeamPage()
@@ -72,11 +87,18 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonTeamDetails_Click(object sender, EventArgs e)
         {
-            Team team = GetSelectedTeam();
-            var teamDetailsPageUserControl = new TeamDetailsPage(connection, team);
-            teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
-            HideAllItems();
-            Controls.Add(teamDetailsPageUserControl);
+            try
+            {
+                Team team = GetSelectedTeam();
+                var teamDetailsPageUserControl = new TeamDetailsPage(connection, team);
+                teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
+                HideAllItems();
+                Controls.Add(teamDetailsPageUserControl);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void OnBackButtonClicked(UserControl pageToClose)
@@ -87,11 +109,18 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonEditTeam_Click(object sender, EventArgs e)
         {
-            Team team = GetSelectedTeam();
-            var editTeamPageUserControl = new EditTeamPage(connection, team);
-            editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
-            HideAllItems();
-            Controls.Add(editTeamPageUserControl);
+            try
+            {
+                Team team = GetSelectedTeam();
+                var editTeamPageUserControl = new EditTeamPage(connection, team);
+                editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
+                HideAllItems();
+                Controls.Add(editTeamPageUserControl);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

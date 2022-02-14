@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewTeamUsers = new System.Windows.Forms.DataGridView();
             this.labelTeamName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,14 +47,14 @@
             this.dataGridViewTeamUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTeamUsers.Location = new System.Drawing.Point(3, 80);
             this.dataGridViewTeamUsers.Name = "dataGridViewTeamUsers";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTeamUsers.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTeamUsers.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTeamUsers.RowHeadersVisible = false;
             this.dataGridViewTeamUsers.RowTemplate.Height = 25;
             this.dataGridViewTeamUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -97,9 +97,9 @@
             // buttonAddSelectedUser
             // 
             this.buttonAddSelectedUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonAddSelectedUser.Location = new System.Drawing.Point(189, 438);
+            this.buttonAddSelectedUser.Location = new System.Drawing.Point(160, 436);
             this.buttonAddSelectedUser.Name = "buttonAddSelectedUser";
-            this.buttonAddSelectedUser.Size = new System.Drawing.Size(300, 41);
+            this.buttonAddSelectedUser.Size = new System.Drawing.Size(300, 50);
             this.buttonAddSelectedUser.TabIndex = 5;
             this.buttonAddSelectedUser.Text = "Add Selected User To The Team";
             this.buttonAddSelectedUser.UseVisualStyleBackColor = true;
@@ -108,9 +108,9 @@
             // buttonRemoveSelectedUser
             // 
             this.buttonRemoveSelectedUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonRemoveSelectedUser.Location = new System.Drawing.Point(189, 485);
+            this.buttonRemoveSelectedUser.Location = new System.Drawing.Point(160, 490);
             this.buttonRemoveSelectedUser.Name = "buttonRemoveSelectedUser";
-            this.buttonRemoveSelectedUser.Size = new System.Drawing.Size(300, 41);
+            this.buttonRemoveSelectedUser.Size = new System.Drawing.Size(300, 50);
             this.buttonRemoveSelectedUser.TabIndex = 6;
             this.buttonRemoveSelectedUser.Text = "Remove Selected User From The Team";
             this.buttonRemoveSelectedUser.UseVisualStyleBackColor = true;
@@ -119,9 +119,9 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button2.Location = new System.Drawing.Point(189, 532);
+            this.button2.Location = new System.Drawing.Point(160, 544);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(300, 41);
+            this.button2.Size = new System.Drawing.Size(300, 50);
             this.button2.TabIndex = 7;
             this.button2.Text = "Back";
             this.button2.UseVisualStyleBackColor = true;
@@ -132,20 +132,20 @@
             this.dataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewUsers.Location = new System.Drawing.Point(310, 80);
             this.dataGridViewUsers.Name = "dataGridViewUsers";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewUsers.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewUsers.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridViewUsers.RowTemplate.Height = 25;
             this.dataGridViewUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewUsers.Size = new System.Drawing.Size(300, 350);
             this.dataGridViewUsers.TabIndex = 8;
             // 
-            // EditTeamPageUserControl
+            // EditTeamPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -157,7 +157,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelTeamName);
             this.Controls.Add(this.dataGridViewTeamUsers);
-            this.Name = "EditTeamPageUserControl";
+            this.Name = "EditTeamPage";
             this.Size = new System.Drawing.Size(620, 600);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTeamUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).EndInit();

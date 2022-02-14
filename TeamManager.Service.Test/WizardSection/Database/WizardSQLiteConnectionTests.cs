@@ -13,7 +13,7 @@ namespace TeamManager.Service.Test.WizardSection
     public class WizardSQLiteConnectionTests
     {
         [Fact]
-        public void GetManager_GetsManager()
+        public void GetManagers_ManagersExistInDB_GetsManagers()
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
@@ -23,28 +23,24 @@ namespace TeamManager.Service.Test.WizardSection
             WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);
 
             // Insert manager
-            Manager expectedManager = new Manager(HelperMethods.SQLiteDB.HelperMethods.validManagerUserName, HelperMethods.SQLiteDB.HelperMethods.validManagerPassword)
-            {
-                ID = 1
-            };
+            Manager expectedManager = new Manager(HelperMethods.SQLiteDB.HelperMethods.validManagerUserName, HelperMethods.SQLiteDB.HelperMethods.validManagerPassword);
+
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
             {
                 cnn.Insert(expectedManager);
             }
 
             // Act
-            Manager actualManager = dataAccess.GetManager(HelperMethods.SQLiteDB.HelperMethods.validManagerUserName);
+            var allManagers = dataAccess.GetManagers();
 
             // Assert
-            Assert.Equal(expectedManager.UserName, actualManager.UserName);
-            Assert.Equal(expectedManager.Password, actualManager.Password);
-            Assert.Equal(expectedManager.ID, actualManager.ID);
+            Assert.Contains(allManagers, m => m.UserName == expectedManager.UserName && m.Password == expectedManager.Password);
 
             helperMethods.DeleteDB(dbFilePath);
         }
 
         [Fact]
-        public void GetManager_CantGetManager()
+        public void GetManager_NoManagerExistsInDB_ReturnsEmptyList()
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
@@ -54,10 +50,10 @@ namespace TeamManager.Service.Test.WizardSection
             WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);
 
             // Act
-            Manager manager = dataAccess.GetManager("invalidName");
+            var allManagers = dataAccess.GetManagers();
 
             // Assert
-            Assert.Null(manager);
+            Assert.Empty(allManagers);
 
             helperMethods.DeleteDB(dbFilePath);
         }
@@ -76,12 +72,18 @@ namespace TeamManager.Service.Test.WizardSection
             string managerName = "Managername";
 
             Purpose purpose = new Purpose(managerName, purposeText);
-            dataAccess.SavePurpose(purpose);
 
             // Act
-            List<Purpose> purposes = dataAccess.GetPurposes(managerName);
+            dataAccess.SavePurpose(purpose);
 
             // Assert
+            List<Purpose> purposes;
+            
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                purposes = cnn.GetAll<Purpose>().ToList();
+            }
+
             Assert.Contains(purposeText, purposes.Select(p => p.PurposeText).ToList());
 
             helperMethods.DeleteDB(dbFilePath);

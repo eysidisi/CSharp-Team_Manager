@@ -11,7 +11,7 @@ namespace TeamManager.Service.Test.ManagerSection
     public class UserPageServiceTests
     {
         [Fact]
-        public void GetUsers_GetsUsers()
+        public void GetUsers_UserExistsInDB_GetsUsers()
         {
             // Arrange
             var connection = new Mock<IManagerDatabaseConnection>();
@@ -30,7 +30,23 @@ namespace TeamManager.Service.Test.ManagerSection
         }
 
         [Fact]
-        public void DeleteUser_DeletesUser()
+        public void GetUsers_NoUserExistsInDB_GetsEmptyList()
+        {
+            // Arrange
+            var connection = new Mock<IManagerDatabaseConnection>();
+            UserPageService userPageService = new UserPageService(connection.Object);
+
+            connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
+
+            // Act
+            var actualUsers = userPageService.GetUsers();
+
+            // Assert
+            Assert.Empty(actualUsers);
+        }
+
+        [Fact]
+        public void DeleteUser_UserExistsInDB_DeletesUser()
         {
             // Arrange
             User user = new User();
@@ -39,13 +55,12 @@ namespace TeamManager.Service.Test.ManagerSection
 
             UserPageService userPageService = new UserPageService(connection.Object);
 
-            // Act
-
-            // Assert
+            // Act && Assert
             userPageService.DeleteUser(user);
         }
+
         [Fact]
-        public void DeleteUser_CantDeleteUser()
+        public void DeleteUser_UserDoesntExistInDB_CantDeleteUser()
         {
             // Arrange
             User user = new User();
@@ -54,11 +69,8 @@ namespace TeamManager.Service.Test.ManagerSection
 
             UserPageService userPageService = new UserPageService(connection.Object);
 
-            // Act
-
-            // Assert
+            // Act && Assert
             Assert.Throws<ArgumentException>(() => userPageService.DeleteUser(user));
         }
-
     }
 }

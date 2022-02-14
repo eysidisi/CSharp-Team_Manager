@@ -12,14 +12,18 @@ namespace TeamManager.Service.WizardSection
             this.databaseConnection = databaseConnection;
         }
 
-        public bool CheckIfManagerExists(Manager manager)
+        public Manager GetManager(Manager managerToFind)
         {
-            Manager managerFromDB = databaseConnection.GetManager(manager.UserName);
+            var allManagers = databaseConnection.GetManagers();
 
-            if (managerFromDB == null || managerFromDB.Password != manager.Password)
-                return false;
+            Manager? manager = allManagers.Find(m => m.UserName == managerToFind.UserName && m.Password == managerToFind.Password);
 
-            return true;
+            if (manager == null)
+            {
+                throw new ArgumentException("Can't find the manager! Check the entered info!");
+            }
+
+            return manager;
         }
     }
 }

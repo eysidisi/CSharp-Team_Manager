@@ -24,6 +24,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
             InitializeComponent();
             pageService = new TeamDetailsPageService(connection);
             this.team = team;
+            labelTeamName.Text= team.Name;
             FillDataGrid();
         }
 

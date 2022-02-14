@@ -53,16 +53,23 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonDeleteUser_Click(object sender, EventArgs e)
         {
-            User userToDelete = GetSelectedUser();
-
-            DialogResult d = MessageBox.Show($"Do you want to delete user '{userToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (d == DialogResult.No)
+            try
             {
-                return;
-            }
+                User userToDelete = GetSelectedUser();
 
-            userPageService.DeleteUser(userToDelete);
-            (dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView).Delete();
+                DialogResult d = MessageBox.Show($"Do you want to delete user '{userToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (d == DialogResult.No)
+                {
+                    return;
+                }
+
+                userPageService.DeleteUser(userToDelete);
+                (dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView).Delete();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private User GetSelectedUser()
@@ -74,8 +81,15 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonAddUser_Click(object sender, EventArgs e)
         {
-            HideAllItems();
-            OpenNewUserPage();
+            try
+            {
+                HideAllItems();
+                OpenNewUserPage();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void HideAllItems()
@@ -88,9 +102,16 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void buttonUserDetails_Click(object sender, EventArgs e)
         {
-            User selectedUser = GetSelectedUser();
-            HideAllItems();
-            OpenNewUserDetailsPage(selectedUser);
+            try
+            {
+                User selectedUser = GetSelectedUser();
+                HideAllItems();
+                OpenNewUserDetailsPage(selectedUser);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void OpenNewUserDetailsPage(User selectedUser)

@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewUsers = new System.Windows.Forms.DataGridView();
             this.buttonDeleteUser = new System.Windows.Forms.Button();
             this.buttonAddUser = new System.Windows.Forms.Button();
             this.buttonUserDetails = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,15 +43,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewUsers.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewUsers.Location = new System.Drawing.Point(3, 3);
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewUsers.DefaultCellStyle = dataGridViewCellStyle7;
+            this.dataGridViewUsers.Location = new System.Drawing.Point(2, 60);
             this.dataGridViewUsers.Name = "dataGridViewUsers";
             this.dataGridViewUsers.ReadOnly = true;
             this.dataGridViewUsers.RowTemplate.Height = 25;
@@ -61,7 +62,7 @@
             // buttonDeleteUser
             // 
             this.buttonDeleteUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonDeleteUser.Location = new System.Drawing.Point(175, 456);
+            this.buttonDeleteUser.Location = new System.Drawing.Point(175, 475);
             this.buttonDeleteUser.Name = "buttonDeleteUser";
             this.buttonDeleteUser.Size = new System.Drawing.Size(150, 50);
             this.buttonDeleteUser.TabIndex = 1;
@@ -72,7 +73,7 @@
             // buttonAddUser
             // 
             this.buttonAddUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonAddUser.Location = new System.Drawing.Point(175, 400);
+            this.buttonAddUser.Location = new System.Drawing.Point(175, 419);
             this.buttonAddUser.Name = "buttonAddUser";
             this.buttonAddUser.Size = new System.Drawing.Size(150, 50);
             this.buttonAddUser.TabIndex = 2;
@@ -83,7 +84,7 @@
             // buttonUserDetails
             // 
             this.buttonUserDetails.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonUserDetails.Location = new System.Drawing.Point(175, 512);
+            this.buttonUserDetails.Location = new System.Drawing.Point(175, 531);
             this.buttonUserDetails.Name = "buttonUserDetails";
             this.buttonUserDetails.Size = new System.Drawing.Size(150, 50);
             this.buttonUserDetails.TabIndex = 3;
@@ -91,18 +92,30 @@
             this.buttonUserDetails.UseVisualStyleBackColor = true;
             this.buttonUserDetails.Click += new System.EventHandler(this.buttonUserDetails_Click);
             // 
-            // UserPageUserControl
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(220, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 28);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Users";
+            // 
+            // UserPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonUserDetails);
             this.Controls.Add(this.dataGridViewUsers);
             this.Controls.Add(this.buttonDeleteUser);
             this.Controls.Add(this.buttonAddUser);
-            this.Name = "UserPageUserControl";
+            this.Name = "UserPage";
             this.Size = new System.Drawing.Size(500, 600);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -112,5 +125,6 @@
         private Button buttonDeleteUser;
         private Button buttonAddUser;
         private Button buttonUserDetails;
+        private Label label1;
     }
 }

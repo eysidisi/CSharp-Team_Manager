@@ -32,7 +32,7 @@
             this.textBoxTeamName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonSaveTeam = new System.Windows.Forms.Button();
-            this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonBack = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,7 +42,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.textBoxTeamName);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.Location = new System.Drawing.Point(3, 17);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(614, 240);
@@ -72,33 +72,33 @@
             // buttonSaveTeam
             // 
             this.buttonSaveTeam.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonSaveTeam.Location = new System.Drawing.Point(244, 305);
+            this.buttonSaveTeam.Location = new System.Drawing.Point(235, 305);
             this.buttonSaveTeam.Name = "buttonSaveTeam";
-            this.buttonSaveTeam.Size = new System.Drawing.Size(120, 50);
+            this.buttonSaveTeam.Size = new System.Drawing.Size(150, 50);
             this.buttonSaveTeam.TabIndex = 1;
             this.buttonSaveTeam.Text = "Save Team";
             this.buttonSaveTeam.UseVisualStyleBackColor = true;
             this.buttonSaveTeam.Click += new System.EventHandler(this.buttonSaveTeam_Click);
             // 
-            // buttonCancel
+            // buttonBack
             // 
-            this.buttonCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonCancel.Location = new System.Drawing.Point(244, 361);
-            this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(120, 50);
-            this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "Cancel/Back";
-            this.buttonCancel.UseVisualStyleBackColor = true;
-            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            this.buttonBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonBack.Location = new System.Drawing.Point(235, 361);
+            this.buttonBack.Name = "buttonBack";
+            this.buttonBack.Size = new System.Drawing.Size(150, 50);
+            this.buttonBack.TabIndex = 2;
+            this.buttonBack.Text = "Back";
+            this.buttonBack.UseVisualStyleBackColor = true;
+            this.buttonBack.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // NewTeamPageUserControl
+            // NewTeamPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.buttonBack);
             this.Controls.Add(this.buttonSaveTeam);
             this.Controls.Add(this.groupBox1);
-            this.Name = "NewTeamPageUserControl";
+            this.Name = "NewTeamPage";
             this.Size = new System.Drawing.Size(620, 600);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -112,6 +112,6 @@
         private TextBox textBoxTeamName;
         private Label label1;
         private Button buttonSaveTeam;
-        private Button buttonCancel;
+        private Button buttonBack;
     }
 }

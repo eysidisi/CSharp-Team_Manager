@@ -1,4 +1,6 @@
 using Moq;
+using System;
+using System.Collections.Generic;
 using TeamManager.Service.Models;
 using TeamManager.Service.WizardSection;
 using TeamManager.Service.WizardSection.Database;
@@ -22,16 +24,12 @@ namespace TeamManager.Service.Test.WizardSection
             };
 
             var connection = new Mock<IWizardDatabaseConnection>();
-            connection.Setup(x => x.GetManager(It.Is<string>(m => m == userName))).
-                                                                Returns(manager);
+            connection.Setup(x => x.GetManagers()).Returns(new List<Manager>() { manager });
 
-            LoginPageService managerInfo = new LoginPageService(connection.Object);
+            LoginPageService loginPageService = new LoginPageService(connection.Object);
 
-            // Act
-            bool result = managerInfo.CheckIfManagerExists(manager);
-
-            // Assert
-            Assert.True(result);
+            // Act && Assert
+            var actualManager = loginPageService.GetManager(manager);
         }
         [Fact]
         public void CheckManagerInfo_ValidUserNameInvalidPassword()
@@ -54,39 +52,40 @@ namespace TeamManager.Service.Test.WizardSection
             };
 
             var connection = new Mock<IWizardDatabaseConnection>();
-            connection.Setup(x => x.GetManager(userName)).Returns(managerInDB);
+            connection.Setup(x => x.GetManagers()).Returns(new List<Manager>() { managerInDB });
 
-            LoginPageService managerInfo = new LoginPageService(connection.Object);
+            LoginPageService loginPageService = new LoginPageService(connection.Object);
 
-            // Act
-            bool result = managerInfo.CheckIfManagerExists(manager);
-
-            // Assert
-            Assert.False(result);
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => loginPageService.GetManager(manager));
         }
         [Fact]
         public void CheckManagerInfo_InvalidUserNameValidPassword()
         {
             // Arrange
-            string userName = "InvalidName";
+            string invalidUserName = "InvalidName";
+            string validUserName = "ValidName";
             string password = "CorrectPassword";
 
-            Manager manager = new Manager()
+            Manager invalidManager = new Manager()
             {
-                UserName = userName,
+                UserName = invalidUserName,
+                Password = password
+            };
+
+            Manager validManager = new Manager()
+            {
+                UserName = validUserName,
                 Password = password
             };
 
             var connection = new Mock<IWizardDatabaseConnection>();
-            connection.Setup(x => x.GetManager(userName)).Returns<Manager>(null);
+            connection.Setup(x => x.GetManagers()).Returns(new List<Manager>() { validManager });
 
-            LoginPageService managerInfo = new LoginPageService(connection.Object);
+            LoginPageService loginPageService = new LoginPageService(connection.Object);
 
-            // Act
-            bool result = managerInfo.CheckIfManagerExists(manager);
-
-            // Assert
-            Assert.False(result);
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => loginPageService.GetManager(invalidManager));
         }
     }
 }

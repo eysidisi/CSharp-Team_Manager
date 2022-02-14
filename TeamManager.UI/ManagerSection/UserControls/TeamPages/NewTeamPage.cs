@@ -42,7 +42,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
             }
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void buttonBack_Click(object sender, EventArgs e)
         {
             OnBackButtonClicked?.Invoke(this);
         }

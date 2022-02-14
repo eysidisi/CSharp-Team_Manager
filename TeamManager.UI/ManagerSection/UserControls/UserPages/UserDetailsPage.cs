@@ -24,6 +24,7 @@ namespace TeamManager.UI.ManagerSection.UserControls.UserPages
             InitializeComponent();
             userDetailsPageService = new UserDetailsPageService(connection);
             this.user = user;
+            labelUserName.Text = user.Name;
             FillUserDatatable();
         }
 

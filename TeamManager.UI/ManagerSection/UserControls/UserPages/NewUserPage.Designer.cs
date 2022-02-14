@@ -129,7 +129,7 @@
             this.groupBoxUserInfo.Controls.Add(this.label4);
             this.groupBoxUserInfo.Controls.Add(this.label2);
             this.groupBoxUserInfo.Controls.Add(this.label3);
-            this.groupBoxUserInfo.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBoxUserInfo.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBoxUserInfo.Location = new System.Drawing.Point(3, 3);
             this.groupBoxUserInfo.Margin = new System.Windows.Forms.Padding(0);
             this.groupBoxUserInfo.Name = "groupBoxUserInfo";
@@ -166,7 +166,7 @@
             this.textBoxSurname.Size = new System.Drawing.Size(128, 29);
             this.textBoxSurname.TabIndex = 8;
             // 
-            // NewUserPageUserControl
+            // NewUserPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -174,7 +174,7 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "NewUserPageUserControl";
+            this.Name = "NewUserPage";
             this.Size = new System.Drawing.Size(500, 600);
             this.groupBoxUserInfo.ResumeLayout(false);
             this.groupBoxUserInfo.PerformLayout();

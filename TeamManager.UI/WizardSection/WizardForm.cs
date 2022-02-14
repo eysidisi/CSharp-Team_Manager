@@ -1,3 +1,4 @@
+using TeamManager.Service.Models;
 using TeamManager.Service.WizardSection.Database;
 using TeamManager.UI.ManagerSection;
 using TeamManager.UI.WizardSection.UserControls;
@@ -27,15 +28,15 @@ namespace TeamManager.UI.WizardSection
             loginPageUserControl.OnSuccessfulLogin += OnSuccessfulLogin;
         }
 
-        private void OnSuccessfulLogin(string managerUserName)
+        private void OnSuccessfulLogin(Manager manager)
         {
             panelCenter.Controls.Remove(loginPageUserControl);
-            AdjustPurposePage(managerUserName);
+            AdjustPurposePage(manager);
         }
 
-        private void AdjustPurposePage(string managerUserName)
+        private void AdjustPurposePage(Manager manager)
         {
-            purposePageUserControl = new PurposePage(connection, managerUserName);
+            purposePageUserControl = new PurposePage(connection, manager);
             purposePageUserControl.OnSuccessfulPurposeEnter += OnSuccessfulPurposeEnter;
             panelCenter.Controls.Add(purposePageUserControl);
         }

@@ -10,7 +10,7 @@ namespace TeamManager.Service.Test.WizardSection
     public class PurposePageServiceTests
     {
         [Fact]
-        public void SavePurposeOfVisitToTheDB()
+        public void SavePurposeOfVisit_EmptyDB_SavesPurpose()
         {
             // Arrange
             var connection = new Mock<IWizardDatabaseConnection>();

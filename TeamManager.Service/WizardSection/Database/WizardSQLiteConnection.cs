@@ -23,25 +23,11 @@ namespace TeamManager.Service.WizardSection.Database
             }
         }
 
-        public List<Purpose> GetPurposes(string userName)
+        public List<Manager> GetManagers()
         {
-            string query = $"SELECT * From Purposes where UserName = @UserName";
-
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                var output = cnn.Query<Purpose>(query, new Purpose() { UserName = userName });
-                return output.ToList();
-            }
-        }
-
-        public Manager GetManager(string userName)
-        {
-            string query = $"SELECT * From Managers where UserName = @UserName";
-
-            using (IDbConnection cnn = new SQLiteConnection(connString))
-            {
-                var output = cnn.Query<Manager>(query, new Manager() { UserName = userName });
-                return output.FirstOrDefault();
+               return cnn.GetAll<Manager>().ToList();
             }
         }
     }
