@@ -64,7 +64,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         {
             try
             {
-                User selectedUser = GetUserToAdd();
+                User selectedUser = GetSelectedUser(dataGridViewUsers);
                 DialogResult d = MessageBox.Show($"Do you want to add user '{selectedUser.Name}' to the team?", "Add", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (d == DialogResult.No)
                 {
@@ -80,19 +80,31 @@ namespace TeamManager.UI.ManagerSection.UserControls
             }
         }
 
-        private User GetUserToAdd()
+        private User GetSelectedUser(DataGridView dataGridView)
         {
-            DataRowView selectedRow = dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView;
+            if (dataGridView.SelectedRows.Count < 1)
+            {
+                throw new Exception("No user is selected! Please select a user first!");
+            }
+
+            DataRowView selectedRow = dataGridView.SelectedRows[0].DataBoundItem as DataRowView;
             int selectedUserId = (int)selectedRow["ID"];
             var allUsers = editTeamPageService.GetUsers();
-            return allUsers.Find(u => u.ID == selectedUserId);
+            var selectedUser = allUsers.Find(u => u.ID == selectedUserId);
+
+            if (selectedUser == null)
+            {
+                throw new Exception("Can't find the selected user! Please refresh the page!");
+            }
+
+            return selectedUser;
         }
 
         private void buttonRemoveSelectedUser_Click(object sender, EventArgs e)
         {
             try
             {
-                User selectedUser = GetUserToRemove();
+                User selectedUser = GetSelectedUser(dataGridViewTeamUsers);
                 DialogResult d = MessageBox.Show($"Do you want to remove user '{selectedUser.Name}' from the team?", "Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (d == DialogResult.No)
                 {
@@ -108,17 +120,15 @@ namespace TeamManager.UI.ManagerSection.UserControls
             }
         }
 
-        private User GetUserToRemove()
-        {
-            DataRowView selectedRow = dataGridViewTeamUsers.SelectedRows[0].DataBoundItem as DataRowView;
-            int selectedUserId = (int)selectedRow["ID"];
-            var allUsers = editTeamPageService.GetUsers();
-            return allUsers.Find(u => u.ID == selectedUserId);
-        }
-
         private void buttonBack_Click(object sender, EventArgs e)
         {
             OnBackButtonClicked?.Invoke(this);
+        }
+
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            FillUsersTable();
+            FillTeamTable();
         }
     }
 }

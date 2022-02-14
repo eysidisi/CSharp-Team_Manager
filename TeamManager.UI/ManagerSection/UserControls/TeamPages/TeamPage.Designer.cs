@@ -40,6 +40,8 @@
             // 
             // dataGridViewTeams
             // 
+            this.dataGridViewTeams.AllowUserToAddRows = false;
+            this.dataGridViewTeams.AllowUserToDeleteRows = false;
             this.dataGridViewTeams.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewTeams.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;

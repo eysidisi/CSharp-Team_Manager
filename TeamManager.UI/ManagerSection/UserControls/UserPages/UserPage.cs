@@ -10,7 +10,6 @@ namespace TeamManager.UI.ManagerSection.UserControls
     {
         UserPageService userPageService;
         DataTable usersDataTable;
-        List<User> allUsers;
         IManagerDatabaseConnection connection;
 
         public UserPage(IManagerDatabaseConnection connection)
@@ -23,7 +22,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         private void FillDataGrid()
         {
-            allUsers = userPageService.GetUsers();
+            var allUsers = userPageService.GetUsers();
             usersDataTable = HelperFunctions.ConvertToDatatable(allUsers);
             dataGridViewUsers.DataSource = usersDataTable;
             ResizeColumns(dataGridViewUsers);
@@ -65,7 +64,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         {
             try
             {
-                User userToDelete = GetSelectedUser();
+                User userToDelete = GetSelectedUser(dataGridViewUsers);
 
                 DialogResult d = MessageBox.Show($"Do you want to delete user '{userToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (d == DialogResult.No)
@@ -74,6 +73,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
                 }
 
                 userPageService.DeleteUser(userToDelete);
+
                 (dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView).Delete();
             }
             catch (Exception ex)
@@ -82,11 +82,24 @@ namespace TeamManager.UI.ManagerSection.UserControls
             }
         }
 
-        private User GetSelectedUser()
+        private User GetSelectedUser(DataGridView dataGridView)
         {
-            DataRowView selectedRow = dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView;
-            int selectedUserId = (int)selectedRow["ID"];
-            return allUsers.Find(u => u.ID == selectedUserId);
+            if (dataGridView.SelectedRows.Count < 1)
+            {
+                throw new Exception("No item is selected! Please select an item first!");
+            }
+
+            DataRowView selectedRow = dataGridView.SelectedRows[0].DataBoundItem as DataRowView;
+            int selectedItemID = (int)selectedRow["ID"];
+            var allUsers = userPageService.GetUsers();
+            var selectedItem = allUsers.Find(u => u.ID == selectedItemID);
+
+            if (selectedItem == null)
+            {
+                throw new Exception("Can't find the selected item! Please refresh the page!");
+            }
+
+            return selectedItem;
         }
 
         private void buttonAddUser_Click(object sender, EventArgs e)
@@ -114,7 +127,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         {
             try
             {
-                User selectedUser = GetSelectedUser();
+                User selectedUser = GetSelectedUser(dataGridViewUsers);
                 HideAllItems();
                 OpenNewUserDetailsPage(selectedUser);
             }

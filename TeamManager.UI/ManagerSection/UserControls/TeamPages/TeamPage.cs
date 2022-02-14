@@ -38,7 +38,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         {
             try
             {
-                Team teamToDelete = GetSelectedTeam();
+                Team teamToDelete = GetSelectedTeam(dataGridViewTeams);
                 
                 DialogResult d = MessageBox.Show($"Do you want to delete team '{teamToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (d == DialogResult.No)
@@ -56,12 +56,24 @@ namespace TeamManager.UI.ManagerSection.UserControls
 
         }
 
-        private Team GetSelectedTeam()
+        private Team GetSelectedTeam(DataGridView dataGridView)
         {
-            DataRowView selectedRow = dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView;
-            int selectedTeamID = (int)selectedRow["ID"];
+            if (dataGridView.SelectedRows.Count < 1)
+            {
+                throw new Exception("No item is selected! Please select an item first!");
+            }
+
+            DataRowView selectedRow = dataGridView.SelectedRows[0].DataBoundItem as DataRowView;
+            int selectedItemID = (int)selectedRow["ID"];
             var allTeams = teamPageService.GetAllTeams();
-            return allTeams.Find(t => t.ID == selectedTeamID);
+            var selectedItem = allTeams.Find(u => u.ID == selectedItemID);
+
+            if (selectedItem == null)
+            {
+                throw new Exception("Can't find the selected item! Please refresh the page!");
+            }
+
+            return selectedItem;
         }
 
         private void buttonAddNewTeam_Click(object sender, EventArgs e)
@@ -105,7 +117,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         {
             try
             {
-                Team team = GetSelectedTeam();
+                Team team = GetSelectedTeam(dataGridViewTeams);
                 var teamDetailsPageUserControl = new TeamDetailsPage(connection, team);
                 teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
                 HideAllItems();
@@ -127,7 +139,7 @@ namespace TeamManager.UI.ManagerSection.UserControls
         {
             try
             {
-                Team team = GetSelectedTeam();
+                Team team = GetSelectedTeam(dataGridViewTeams);
                 var editTeamPageUserControl = new EditTeamPage(connection, team);
                 editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
                 HideAllItems();

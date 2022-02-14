@@ -33,7 +33,7 @@ namespace TeamManager.UI.ManagerSection.UserControls.UserPages
             var allTeams = userDetailsPageService.GetTeamsThatUserIn(user);
             var usersDataTable = HelperFunctions.ConvertToDatatable(allTeams);
             dataGridViewTeams.DataSource = usersDataTable;
-            dataGridViewTeams.AutoResizeColumns();
+            ResizeColumns(dataGridViewTeams);
         }
         private void ResizeColumns(DataGridView dataGrid)
         {
