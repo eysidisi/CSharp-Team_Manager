@@ -41,9 +41,7 @@ namespace TeamManager.Service.Test.Management
             var newUserPageService = new NewUserPageService(connection.Object);
             User user = new User();
 
-            // Act
-
-            // Assert
+            // Act && Assert
             Assert.Throws<ArgumentException>(() => newUserPageService.SaveNewUser(user));
         }
     }

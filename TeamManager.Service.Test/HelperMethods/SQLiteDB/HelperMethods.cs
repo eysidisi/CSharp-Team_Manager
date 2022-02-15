@@ -49,7 +49,7 @@ namespace TeamManager.Service.Test.HelperMethods.SQLiteDB
 	                                'Surname'	TEXT,
 	                                'CreationDate'	TEXT,
 	                                'PhoneNumber'	INTEGER,
-	                                'Title'	INTEGER,
+	                                'Title'	TEXT,
                                     PRIMARY KEY('ID' AUTOINCREMENT));";
 
                 SQLiteCommand command = new SQLiteCommand(userTableSQL, conn);
@@ -57,9 +57,9 @@ namespace TeamManager.Service.Test.HelperMethods.SQLiteDB
                 command.Dispose();
 
                 string managersTableSQL = @"CREATE TABLE 'Managers' (
+	                                    'ID'	INTEGER NOT NULL UNIQUE,
 	                                    'UserName'	TEXT NOT NULL UNIQUE,
 	                                    'Password'	TEXT NOT NULL,
-	                                    'ID'	INTEGER NOT NULL UNIQUE,
 	                                    PRIMARY KEY('ID' AUTOINCREMENT));";
                 command = new SQLiteCommand(managersTableSQL, conn);
                 command.ExecuteNonQuery();

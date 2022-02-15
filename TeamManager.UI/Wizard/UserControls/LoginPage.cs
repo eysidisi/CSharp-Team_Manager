@@ -15,7 +15,7 @@ namespace TeamManager.UI.Wizard.UserControls
             loginPageService = new LoginPageService(databaseConnection);
         }
 
-        private void buttonNext_Click(object sender, EventArgs e)
+        private void buttonEnter_Click(object sender, EventArgs e)
         {
             try
             {

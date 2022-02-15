@@ -35,6 +35,7 @@ namespace TeamManager.UI.Management.UserControls
 
                 newTeamPageService.SaveTeam(team);
                 MessageBox.Show($"Team {team.Name} saved succesfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                buttonBack.PerformClick();
             }
             catch (Exception ex)
             {

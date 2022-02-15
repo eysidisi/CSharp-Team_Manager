@@ -59,6 +59,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTeams.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewTeams.Location = new System.Drawing.Point(3, 50);
+            this.dataGridViewTeams.MultiSelect = false;
             this.dataGridViewTeams.Name = "dataGridViewTeams";
             this.dataGridViewTeams.RowTemplate.Height = 25;
             this.dataGridViewTeams.Size = new System.Drawing.Size(614, 350);

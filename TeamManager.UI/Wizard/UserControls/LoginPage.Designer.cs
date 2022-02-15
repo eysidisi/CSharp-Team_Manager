@@ -82,7 +82,7 @@
             this.buttonEnter.TabIndex = 4;
             this.buttonEnter.Text = "Enter";
             this.buttonEnter.UseVisualStyleBackColor = true;
-            this.buttonEnter.Click += new System.EventHandler(this.buttonNext_Click);
+            this.buttonEnter.Click += new System.EventHandler(this.buttonEnter_Click);
             // 
             // LoginPage
             // 

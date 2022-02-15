@@ -7,6 +7,10 @@ namespace TeamManager
 {
     internal class Program
     {
+        /// <summary>
+        /// This project is just used for creating demo DBs with different sizes
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             HelperMethods helperMethods = new HelperMethods();
@@ -16,13 +20,13 @@ namespace TeamManager
             var largeDbPath = helperMethods.CreateTestDB_ReturnFilePath();
 
             // Small DB
-            CreateDB(smallDbPath, 100, 100, 1);
+            CreateDB(smallDbPath, numOfManagers: 100, numOfUsers: 100, numberOfTeams: 1);
 
             // Medium DB
-            CreateDB(mediumDbPath, 1000, 1000, 10);
+            CreateDB(mediumDbPath, numOfManagers: 1000, numOfUsers: 1000, numberOfTeams: 10);
 
             // Large DB
-            CreateDB(largeDbPath, 10000, 10000, 100);
+            CreateDB(largeDbPath, numOfManagers: 10000, numOfUsers: 10000, numberOfTeams: 100);
         }
 
         private static void CreateDB(string dbPath, int numOfManagers, int numOfUsers, int numberOfTeams)

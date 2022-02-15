@@ -26,6 +26,7 @@ namespace TeamManager.UI.Management.UserControls
                 user.Title = textBoxTitle.Text;
                 newUserPageService.SaveNewUser(user);
                 MessageBox.Show($"User {user.Name} saved succesfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                buttonCancel.PerformClick();
             }
             catch (Exception ex)
             {

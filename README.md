@@ -1,24 +1,4 @@
 <div id="top"></div>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
@@ -27,12 +7,13 @@
   <!-- <a href="https://github.com/github_username/repo_name">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a> -->
+  
 
 <h3 align="center">Team Manager</h3>
 
   <p align="center">
     A team management system
-    <br />
+    <!-- <br />
     <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
     <br />
@@ -40,14 +21,13 @@
     ·
     <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a> -->
   </p>
 </div>
 
 
 
 <!-- TABLE OF CONTENTS -->
-<details>
   <summary>Table of Contents</summary>
   <ol>
     <li>
@@ -65,12 +45,8 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
-</details>
 
 
 
@@ -78,24 +54,20 @@
 ## About The Project
 
 This project is created as a dummy team management system. You can add/remove/view users and teams. You can also add/remove users to/from the teams and change the relationship between users and teams.
- It has two main parts namely "Wizard" and "Management". Wizard section is the    : `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email`, `email_client`, `project_title`, `project_description`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 ### Built With
 * [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
 * [.Net 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/)
 * [Winforms](https://docs.microsoft.com/en-us/dotnet/desktop/winforms/overview/?view=netdesktop-6.0/)
 * [XUnit](https://xunit.net//)
-* [SQLite](https://www.sqlite.org/index.html/)
+* [Moq](https://github.com/moq/moq4)
+* [SQLite](https://www.sqlite.org/index.html)
 * [Dapper](https://github.com/DapperLib/Dapper/)
 
 
-
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 
 <!-- GETTING STARTED -->
@@ -103,7 +75,7 @@ This project is created as a dummy team management system. You can add/remove/vi
 
 ### Prerequisites
 
-To run the project properly Visual Studio 2022 is recommended. 
+To run the project properly using Visual Studio 2022 is recommended. 
 
 
 ### Installation
@@ -114,43 +86,47 @@ To run the project properly Visual Studio 2022 is recommended.
    ```
 2. Open solution using Visual Studio
 
+3. Set TeamManager.UI as startup project.
+
+4. Run the application
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Project has two main parts. Namely, "Wizard" and "Management". When you run it, It starts with  the Wizard window.
+The project has two main parts. Namely, "Wizard" and "Management". When you run it, It starts with  the Wizard window.
 
 ## Wizard
 This is where a manager logs in to the system. It asks for a username and a password. 
 
 ![loginpage-screenshot]
 
-When the manager is authonticated It also asks for the purpose of usage.
+When the manager is authenticated It also asks for the purpose of usage.
 
 ![purposepage-screenshot]
 
-After saving the purpose of the manager Wizard form opens Management Form and hides itself.
+After saving the purpose of the manager Wizard form opens Management Form.
 
 ## Management
-Management form comes with two panels on the same page. One is for the team management and the other is for the user management. 
+The management form comes with two panels on the same page. One is for team management and the other is for user management. 
 ![management-screenshot]
 
 ### Checking details of Users and Teams
-After selecting the desired user or team you can see the details about user/team by using "Team Details" or "User Details" buttons.
+After selecting the desired user or team you can see the details about the user/team by using the "Team Details" or "User Details" buttons.
 ![detailspage-screenshot]
 
 ### Adding/Removing Users and Teams
 
-Using these panels you can add new users and teams by entering the required information or you can delete users and teams with no user presented
+You can add new users and teams by entering the required information or you can delete users and teams with no user presented
 ![addingpage-screenshot]
 
 ### Editing Teams
-You can add members to a team or remove members from a team by using "Edit Team" button.
+You can add members to a team or remove members from a team by using the "Edit Team" button.
 ![editteampage-screenshot]
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+<!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -159,20 +135,16 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+- [ ] Add ability to query users and teams by their name and creation date range
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 <!-- CONTACT -->
 ## Contact
 
 Ali İhsan ELMAS - a.ihsan.elmas@gmail.com
+
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -183,15 +155,6 @@ Ali İhsan ELMAS - a.ihsan.elmas@gmail.com
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/github_username/repo_name.svg?style=for-the-badge
-[contributors-url]: https://github.com/github_username/repo_name/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
-[forks-url]: https://github.com/github_username/repo_name/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
-[stars-url]: https://github.com/github_username/repo_name/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
-[license-shield]: https://img.shields.io/github/license/github_username/repo_name.svg?style=for-the-badge
-[license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/eysidisi/
 [product-screenshot]: images/Wizard/LogInPage.PNG
