@@ -11,7 +11,7 @@ namespace TeamManager.Service.Test.Wizard
     public class LoginPageServiceTests
     {
         [Fact]
-        public void CheckManagerInfo_ValidUserNameValidPassword()
+        public void GetManager_ValidUserNameValidPassword_ReturnsManager()
         {
             // Arrange
             string userName = "CorrectName";
@@ -32,7 +32,7 @@ namespace TeamManager.Service.Test.Wizard
             var actualManager = loginPageService.GetManager(manager);
         }
         [Fact]
-        public void CheckManagerInfo_ValidUserNameInvalidPassword()
+        public void GetManager_ValidUserNameInvalidPassword_CantReturnManager()
         {
             // Arrange
             string userName = "CorrectName";
@@ -60,7 +60,7 @@ namespace TeamManager.Service.Test.Wizard
             Assert.Throws<ArgumentException>(() => loginPageService.GetManager(manager));
         }
         [Fact]
-        public void CheckManagerInfo_InvalidUserNameValidPassword()
+        public void GetManager_InvalidUserNameValidPassword_CantReturnManager()
         {
             // Arrange
             string invalidUserName = "InvalidName";
