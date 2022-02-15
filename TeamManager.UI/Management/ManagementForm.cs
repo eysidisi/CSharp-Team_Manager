@@ -3,9 +3,9 @@ using TeamManager.UI.Management.UserControls;
 
 namespace TeamManager.UI.Management
 {
-    public partial class ManagerForm : Form
+    public partial class ManagementForm : Form
     {
-        public ManagerForm(string connectionString)
+        public ManagementForm(string connectionString)
         {
             InitializeComponent();
             this.CenterToScreen();

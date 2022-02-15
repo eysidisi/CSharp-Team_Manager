@@ -48,7 +48,7 @@ namespace TeamManager.UI.Wizard
         {
             panelCenter.Controls.Remove(purposePageUserControl);
             this.Hide();
-            var managerForm = new ManagerForm(connectionString);
+            var managerForm = new ManagementForm(connectionString);
             managerForm.Closed += (s, args) => this.Close();
             managerForm.Show();
         }

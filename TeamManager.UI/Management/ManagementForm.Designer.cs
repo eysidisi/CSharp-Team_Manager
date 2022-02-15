@@ -1,6 +1,6 @@
 ﻿namespace TeamManager.UI.Management
 {
-    partial class ManagerForm
+    partial class ManagementForm
     {
         /// <summary>
         /// Required designer variable.
@@ -48,15 +48,15 @@
             this.panelTeamPage.Size = new System.Drawing.Size(620, 600);
             this.panelTeamPage.TabIndex = 1;
             // 
-            // ManagerForm
+            // ManagementForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 741);
             this.Controls.Add(this.panelTeamPage);
             this.Controls.Add(this.panelUserDetails);
-            this.Name = "ManagerForm";
-            this.Text = "ManagerForm";
+            this.Name = "ManagementForm";
+            this.Text = "Management";
             this.ResumeLayout(false);
 
         }
