@@ -111,19 +111,23 @@ After saving the purpose of the manager Wizard form opens Management Form.
 
 ## Management
 The management form comes with two panels on the same page. One is for team management and the other is for user management. 
+
 ![management-screenshot]
 
 ### Checking details of Users and Teams
 After selecting the desired user or team you can see the details about the user/team by using the "Team Details" or "User Details" buttons.
+
 ![detailspage-screenshot]
 
 ### Adding/Removing Users and Teams
 
 You can add new users and teams by entering the required information or you can delete users and teams with no user presented
+
 ![addingpage-screenshot]
 
 ### Editing Teams
 You can add members to a team or remove members from a team by using the "Edit Team" button.
+
 ![editteampage-screenshot]
 
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
