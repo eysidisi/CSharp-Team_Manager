@@ -58,7 +58,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTeams.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewTeams.Location = new System.Drawing.Point(3, 60);
+            this.dataGridViewTeams.Location = new System.Drawing.Point(3, 50);
             this.dataGridViewTeams.Name = "dataGridViewTeams";
             this.dataGridViewTeams.RowTemplate.Height = 25;
             this.dataGridViewTeams.Size = new System.Drawing.Size(614, 350);
@@ -77,7 +77,7 @@
             // buttonBack
             // 
             this.buttonBack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonBack.Location = new System.Drawing.Point(234, 416);
+            this.buttonBack.Location = new System.Drawing.Point(235, 416);
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(150, 50);
             this.buttonBack.TabIndex = 2;

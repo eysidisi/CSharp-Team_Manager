@@ -45,11 +45,11 @@
             // buttonSave
             // 
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonSave.Location = new System.Drawing.Point(154, 356);
+            this.buttonSave.Location = new System.Drawing.Point(146, 406);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(150, 50);
             this.buttonSave.TabIndex = 0;
-            this.buttonSave.Text = "Save";
+            this.buttonSave.Text = "Save User";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
@@ -65,7 +65,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonCancel.Location = new System.Drawing.Point(310, 356);
+            this.buttonCancel.Location = new System.Drawing.Point(302, 406);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(150, 50);
             this.buttonCancel.TabIndex = 2;
@@ -134,7 +134,7 @@
             this.groupBoxUserInfo.Margin = new System.Windows.Forms.Padding(0);
             this.groupBoxUserInfo.Name = "groupBoxUserInfo";
             this.groupBoxUserInfo.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBoxUserInfo.Size = new System.Drawing.Size(615, 350);
+            this.groupBoxUserInfo.Size = new System.Drawing.Size(615, 400);
             this.groupBoxUserInfo.TabIndex = 8;
             this.groupBoxUserInfo.TabStop = false;
             this.groupBoxUserInfo.Text = "New User Info";

@@ -77,8 +77,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 This project is created as a dummy team management system. You can add/remove/view users and teams. You can also add/remove users to/from the teams and change the relationship between users and teams.
  It has two main parts namely "Wizard" and "Management". Wizard section is the    : `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email`, `email_client`, `project_title`, `project_description`
 
@@ -90,6 +88,7 @@ This project is created as a dummy team management system. You can add/remove/vi
 * [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
 * [.Net 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/)
 * [Winforms](https://docs.microsoft.com/en-us/dotnet/desktop/winforms/overview/?view=netdesktop-6.0/)
+* [XUnit](https://xunit.net//)
 * [SQLite](https://www.sqlite.org/index.html/)
 * [Dapper](https://github.com/DapperLib/Dapper/)
 
@@ -123,10 +122,33 @@ To run the project properly Visual Studio 2022 is recommended.
 
 Project has two main parts. Namely, "Wizard" and "Management". When you run it, It starts with  the Wizard window.
 
-### Wizard
-This is where a manager logs in to the system. It asks for a username and a password. When the manager is authonticated It also asks for the purpose of usage.
+## Wizard
+This is where a manager logs in to the system. It asks for a username and a password. 
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+![loginpage-screenshot]
+
+When the manager is authonticated It also asks for the purpose of usage.
+
+![purposepage-screenshot]
+
+After saving the purpose of the manager Wizard form opens Management Form and hides itself.
+
+## Management
+Management form comes with two panels on the same page. One is for the team management and the other is for the user management. 
+![management-screenshot]
+
+### Checking details of Users and Teams
+After selecting the desired user or team you can see the details about user/team by using "Team Details" or "User Details" buttons.
+![detailspage-screenshot]
+
+### Adding/Removing Users and Teams
+
+Using these panels you can add new users and teams by entering the required information or you can delete users and teams with no user presented
+![addingpage-screenshot]
+
+### Editing Teams
+You can add members to a team or remove members from a team by using "Edit Team" button.
+![editteampage-screenshot]
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -147,53 +169,14 @@ See the [open issues](https://github.com/github_username/repo_name/issues) for a
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Ali İhsan ELMAS - a.ihsan.elmas@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
@@ -211,4 +194,10 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [license-url]: https://github.com/github_username/repo_name/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/eysidisi/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/Wizard/LogInPage.PNG
+[loginpage-screenshot]: images/Wizard/LogInPage.PNG
+[purposepage-screenshot]: images/Wizard/PurposePage.PNG
+[management-screenshot]: images/Management/ManagementWindow.PNG
+[addingpage-screenshot]: images/Management/AddingPage.PNG
+[detailspage-screenshot]: images/Management/DetailsPage.PNG
+[editteampage-screenshot]: images/Management/EditTeamPage.PNG

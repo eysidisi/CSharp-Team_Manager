@@ -61,7 +61,7 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewUsers.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewUsers.Location = new System.Drawing.Point(2, 60);
+            this.dataGridViewUsers.Location = new System.Drawing.Point(2, 50);
             this.dataGridViewUsers.Name = "dataGridViewUsers";
             this.dataGridViewUsers.ReadOnly = true;
             this.dataGridViewUsers.RowHeadersVisible = false;
@@ -83,7 +83,7 @@
             // buttonBack
             // 
             this.buttonBack.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonBack.Location = new System.Drawing.Point(238, 416);
+            this.buttonBack.Location = new System.Drawing.Point(234, 416);
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(150, 50);
             this.buttonBack.TabIndex = 2;

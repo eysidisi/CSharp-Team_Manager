@@ -53,7 +53,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTeams.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewTeams.Location = new System.Drawing.Point(0, 60);
+            this.dataGridViewTeams.Location = new System.Drawing.Point(0, 50);
             this.dataGridViewTeams.Name = "dataGridViewTeams";
             this.dataGridViewTeams.ReadOnly = true;
             this.dataGridViewTeams.RowHeadersVisible = false;

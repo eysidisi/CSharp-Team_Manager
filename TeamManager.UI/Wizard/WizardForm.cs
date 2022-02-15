@@ -8,8 +8,8 @@ namespace TeamManager.UI.Wizard
 {
     public partial class WizardForm : Form
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["TestSmallDB"].ConnectionString;
-        //string connectionString = ConfigurationManager.ConnectionStrings["TestMediumDB"].ConnectionString;
+        //string connectionString = ConfigurationManager.ConnectionStrings["TestSmallDB"].ConnectionString;
+        string connectionString = ConfigurationManager.ConnectionStrings["TestMediumDB"].ConnectionString;
         //string connectionString = ConfigurationManager.ConnectionStrings["TestLargeDB"].ConnectionString;
 
         IWizardDatabaseConnection connection;

@@ -43,9 +43,9 @@
             this.groupBox1.Controls.Add(this.textBoxTeamName);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox1.Location = new System.Drawing.Point(3, 17);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(614, 350);
+            this.groupBox1.Size = new System.Drawing.Size(614, 400);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "New Team Info";
@@ -53,7 +53,7 @@
             // textBoxTeamName
             // 
             this.textBoxTeamName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxTeamName.Location = new System.Drawing.Point(486, 94);
+            this.textBoxTeamName.Location = new System.Drawing.Point(486, 119);
             this.textBoxTeamName.Name = "textBoxTeamName";
             this.textBoxTeamName.Size = new System.Drawing.Size(122, 26);
             this.textBoxTeamName.TabIndex = 1;
@@ -63,7 +63,7 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(6, 100);
+            this.label1.Location = new System.Drawing.Point(6, 125);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 20);
             this.label1.TabIndex = 0;
@@ -72,7 +72,7 @@
             // buttonSaveTeam
             // 
             this.buttonSaveTeam.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonSaveTeam.Location = new System.Drawing.Point(145, 373);
+            this.buttonSaveTeam.Location = new System.Drawing.Point(138, 409);
             this.buttonSaveTeam.Name = "buttonSaveTeam";
             this.buttonSaveTeam.Size = new System.Drawing.Size(150, 50);
             this.buttonSaveTeam.TabIndex = 1;
@@ -83,7 +83,7 @@
             // buttonBack
             // 
             this.buttonBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonBack.Location = new System.Drawing.Point(313, 373);
+            this.buttonBack.Location = new System.Drawing.Point(306, 409);
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(150, 50);
             this.buttonBack.TabIndex = 2;

@@ -52,7 +52,7 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewUsers.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewUsers.Location = new System.Drawing.Point(2, 60);
+            this.dataGridViewUsers.Location = new System.Drawing.Point(2, 50);
             this.dataGridViewUsers.Name = "dataGridViewUsers";
             this.dataGridViewUsers.ReadOnly = true;
             this.dataGridViewUsers.RowHeadersVisible = false;
@@ -64,7 +64,7 @@
             // buttonDeleteUser
             // 
             this.buttonDeleteUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonDeleteUser.Location = new System.Drawing.Point(235, 415);
+            this.buttonDeleteUser.Location = new System.Drawing.Point(234, 415);
             this.buttonDeleteUser.Name = "buttonDeleteUser";
             this.buttonDeleteUser.Size = new System.Drawing.Size(150, 50);
             this.buttonDeleteUser.TabIndex = 1;
