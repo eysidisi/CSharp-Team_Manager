@@ -1,5 +1,5 @@
-using TeamManager.UI.ManagerSection;
-using TeamManager.UI.WizardSection;
+using TeamManager.UI.Management;
+using TeamManager.UI.Wizard;
 
 namespace TeamManager.UI
 {
