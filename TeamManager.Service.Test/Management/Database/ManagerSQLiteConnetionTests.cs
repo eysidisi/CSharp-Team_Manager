@@ -259,6 +259,59 @@ namespace TeamManager.Service.Test.Management
         }
 
         [Fact]
+        public void GetAllUserIDToTeamID_NoUserIDToTeamIDExistsInTheDB_ReturnsEmptyList()
+        {
+            //Arrange
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
+
+            // Act
+            var savedTeams = dataAccess.GetAllUserIDToTeamID();
+
+            // Assert
+            Assert.Empty(savedTeams);
+
+            helperMethods.DeleteDB(dbFilePath);
+        }
+
+        [Fact]
+        public void GetAllUserIDToTeamID_UserIDToTeamIDExistsInTheDB_GetsAllUserIDToTeamID()
+        {
+            //Arrange
+            HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
+            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+
+            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
+
+            int teamID = 1;
+            int userID = 1;
+
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID()
+            {
+                TeamID = teamID,
+                UserID = userID
+            };
+
+            using (IDbConnection cnn = new SQLiteConnection(connectionString))
+            {
+                cnn.Insert(userIDToTeamID);
+            }
+
+            // Act
+            var savedUserIDToTeamIDs = dataAccess.GetAllUserIDToTeamID();
+
+            // Assert
+            Assert.Contains(savedUserIDToTeamIDs, t => t.UserID == userID && t.TeamID == teamID);
+
+            helperMethods.DeleteDB(dbFilePath);
+        }
+
+
+        [Fact]
         public void SaveUserIDToTeamID_EmptyDB_SavesUserIDToTeamID()
         {
             //Arrange
@@ -335,5 +388,6 @@ namespace TeamManager.Service.Test.Management
             userIDToTeamID.ID = 3;
             Assert.False(dataAccess.DeleteUserIDToTeamID(userIDToTeamID));
         }
+
     }
 }

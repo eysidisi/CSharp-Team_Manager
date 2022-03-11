@@ -46,7 +46,7 @@ namespace TeamManager.Service.Test.Management
         }
 
         [Fact]
-        public void DeleteUser_UserExistsInDB_DeletesUser()
+        public void DeleteUser_UserExistsInDBUserIsInNoTeam_DeletesUser()
         {
             // Arrange
             User user = new User();
@@ -58,6 +58,37 @@ namespace TeamManager.Service.Test.Management
 
             // Act && Assert
             userPageService.DeleteUser(user);
+        }
+
+        [Fact]
+        public void DeleteUser_UserExistsInDBUserIsInTeam_DeletesUser()
+        {
+            // Arrange
+            User user = new User()
+            {
+                ID = 1,
+                Name = "user"
+            };
+
+            var userIDToTeamID = new UserIDToTeamID()
+            {
+                TeamID = 1,
+                UserID = 1
+            };
+
+
+            var connection = new Mock<IManagerDatabaseConnection>();
+
+            connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
+
+            UserPageService userPageService = new UserPageService(connection.Object);
+
+            // Act 
+            userPageService.DeleteUser(user);
+
+            // Assert
+            connection.Verify(c => c.DeleteUserIDToTeamID(userIDToTeamID));
         }
 
         [Fact]

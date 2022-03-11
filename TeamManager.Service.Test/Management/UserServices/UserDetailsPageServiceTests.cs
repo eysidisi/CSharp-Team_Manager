@@ -67,7 +67,39 @@ namespace TeamManager.Service.Test.Management.UserServices
         }
 
         [Fact]
-        public void GetUsersTeams_UserIsNotInAnyTeams_GetsEmptyList()
+        public void GetTeamsThatUserIn_NoUserIDToTeamIDExists_GetsEmptyList()
+        {
+            // Arange 
+            var connection = new Mock<IManagerDatabaseConnection>();
+
+            var userDetailsPageService = new UserDetailsPageService(connection.Object);
+
+            User user1 = new User()
+            {
+                ID = 1
+            };
+
+            User user2 = new User()
+            {
+                ID = 2
+            };
+
+            Team team1 = new Team() { ID = 1, Name = "team1" };
+            Team team2 = new Team() { ID = 2, Name = "team2" };
+            
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
+
+            // Act
+            List<Team> teamsThatUser1IsIn = userDetailsPageService.GetTeamsThatUserIn(user1);
+
+            // Assert
+            Assert.Empty(teamsThatUser1IsIn);
+        }
+
+
+        [Fact]
+        public void GetTeamsThatUserIn_UserIsNotInAnyTeams_GetsEmptyList()
         {
             // Arange 
             var connection = new Mock<IManagerDatabaseConnection>();

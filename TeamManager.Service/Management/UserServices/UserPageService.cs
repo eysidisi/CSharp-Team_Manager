@@ -27,6 +27,8 @@ namespace TeamManager.Service.Management
             // Delete all user to team connections
             var allUserIDToTeamIDs = connection.GetAllUserIDToTeamID();
             var userToTeamIDs = allUserIDToTeamIDs.Where(a => a.UserID == user.ID).ToList();
+
+
             foreach (var userToTeamID in userToTeamIDs)
             {
                 connection.DeleteUserIDToTeamID(userToTeamID);

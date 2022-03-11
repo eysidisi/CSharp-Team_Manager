@@ -24,7 +24,7 @@ namespace TeamManager.Service.Wizard
         {
             if (CheckIfPurposeIsValid(purpose) == false)
             {
-                throw new ArgumentException("Purpuse is not valid!");
+                throw new ArgumentException("Purpose is not valid!");
             }
             connection.SavePurpose(purpose);
         }
