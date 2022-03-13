@@ -9,7 +9,9 @@ namespace TeamManager.Service.Management.Database
     public class ManagerSQLiteConnetion : IManagerDatabaseConnection
     {
         string connString;
-
+        List<User> users = null;
+        List<Team> teams = null;
+        List<UserIDToTeamID> userIDsToTeamIDs = null;
         public ManagerSQLiteConnetion(string connString)
         {
             this.connString = connString;
@@ -20,6 +22,7 @@ namespace TeamManager.Service.Management.Database
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
                 cnn.Insert(user);
+                users.Add(user);
             }
         }
 
@@ -27,16 +30,30 @@ namespace TeamManager.Service.Management.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                return cnn.Delete(user);
+                if (cnn.Delete(user) == false)
+                {
+                    return false;
+                }
+
+                else
+                {
+                    users.Remove(user);
+                    return true;
+                }
             }
         }
 
         public List<User> GetAllUsers()
         {
-            using (IDbConnection cnn = new SQLiteConnection(connString))
+            if (users == null)
             {
-                return cnn.GetAll<User>().ToList();
+                using (IDbConnection cnn = new SQLiteConnection(connString))
+                {
+                    users = cnn.GetAll<User>().ToList();
+                }
             }
+
+            return users;
         }
 
         public void SaveTeam(Team team)
@@ -44,31 +61,49 @@ namespace TeamManager.Service.Management.Database
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
                 cnn.Insert(team);
+                teams.Add(team);
             }
         }
 
         public List<Team> GetAllTeams()
         {
-            using (IDbConnection cnn = new SQLiteConnection(connString))
+            if (teams == null)
             {
-                return cnn.GetAll<Team>().ToList();
+                using (IDbConnection cnn = new SQLiteConnection(connString))
+                {
+                    teams = cnn.GetAll<Team>().ToList();
+                }
             }
+
+            return teams;
         }
 
         public bool DeleteTeam(Team team)
         {
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                return cnn.Delete(team);
+                if (cnn.Delete(team) == false)
+                {
+                    return false;
+                }
+                else
+                {
+                    teams.Remove(team);
+                    return true;
+                }
             }
         }
 
         public List<UserIDToTeamID> GetAllUserIDToTeamID()
         {
-            using (IDbConnection cnn = new SQLiteConnection(connString))
+            if (userIDsToTeamIDs == null)
             {
-                return cnn.GetAll<UserIDToTeamID>().ToList();
+                using (IDbConnection cnn = new SQLiteConnection(connString))
+                {
+                    userIDsToTeamIDs = cnn.GetAll<UserIDToTeamID>().ToList();
+                }
             }
+            return userIDsToTeamIDs;
         }
 
         public void SaveUserIDToTeamID(UserIDToTeamID userIDToTeamID)
@@ -76,6 +111,7 @@ namespace TeamManager.Service.Management.Database
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
                 cnn.Insert(userIDToTeamID);
+                userIDsToTeamIDs.Add(userIDToTeamID);
             }
         }
 
@@ -83,7 +119,15 @@ namespace TeamManager.Service.Management.Database
         {
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
-                return cnn.Delete(userIDToTeamID);
+                if (cnn.Delete(userIDToTeamID) == false)
+                {
+                    return false;
+                }
+                else
+                {
+                    userIDsToTeamIDs.Remove(userIDToTeamID);
+                    return true;
+                }
             }
         }
     }
