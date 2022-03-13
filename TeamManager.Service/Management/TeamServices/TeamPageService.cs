@@ -23,17 +23,10 @@ namespace TeamManager.Service.Management
             {
                 throw new ArgumentException("Can't delete the team! Team has members!");
             }
+
             if (connection.DeleteTeam(team) == false)
             {
                 throw new ArgumentException("Can't delete the team!");
-            }
-
-            // Delete all user to team connections
-            var allUserIDToTeamIDs = connection.GetAllUserIDToTeamID();
-            var userToTeamIDs = allUserIDToTeamIDs.Where(a => a.TeamID == team.ID);
-            foreach (var userToTeamID in userToTeamIDs)
-            {
-                connection.DeleteUserIDToTeamID(userToTeamID);
             }
         }
 

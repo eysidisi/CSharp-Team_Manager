@@ -54,6 +54,7 @@ namespace TeamManager.Service.Test.Management
             // Assert
             Assert.Empty(actualTeams);
         }
+
         [Fact]
         public void DeleteTeam_TeamExistInDB_DeletesTeam()
         {
@@ -72,6 +73,28 @@ namespace TeamManager.Service.Test.Management
 
             // Act && Assert
             teamPageService.DeleteTeam(team);
+        }
+
+        [Fact]
+        public void DeleteTeam_TeamHasMembers_DeletesTeam()
+        {
+            // Arrange
+            Team team = new Team()
+            {
+                ID = 1,
+                Name = "Team1",
+                CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+            };
+
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { TeamID = 1, UserID = 1 };
+
+            var connection = new Mock<IManagerDatabaseConnection>();
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
+
+            TeamPageService teamPageService = new TeamPageService(connection.Object);
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));
         }
 
         [Fact]

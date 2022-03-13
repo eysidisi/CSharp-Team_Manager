@@ -40,7 +40,7 @@ namespace TeamManager.Service.Management.TeamServices
             var teams = connection.GetAllTeams();
             var userIDToTeamIDs = connection.GetAllUserIDToTeamID();
 
-            if (users == null || teams == null || userIDToTeamIDs == null)
+            if (users.Count == 0 || teams.Count == 0 || userIDToTeamIDs.Count == 0)
             {
                 return new List<User>();
             }
@@ -72,12 +72,6 @@ namespace TeamManager.Service.Management.TeamServices
         {
             var allUserIDsToTeamIDs = connection.GetAllUserIDToTeamID();
 
-            // No entry
-            if (allUserIDsToTeamIDs == null)
-            {
-                return null;
-            }
-
             UserIDToTeamID? copyItem = allUserIDsToTeamIDs.Find(u => u.UserID == userIDToTeamID.UserID && u.TeamID == userIDToTeamID.TeamID);
 
             return copyItem;
@@ -88,7 +82,7 @@ namespace TeamManager.Service.Management.TeamServices
             var allUserIDsToTeamIDs = connection.GetAllUserIDToTeamID();
 
             // No entry
-            if (allUserIDsToTeamIDs == null)
+            if (allUserIDsToTeamIDs.Count == 0)
             {
                 return false;
             }

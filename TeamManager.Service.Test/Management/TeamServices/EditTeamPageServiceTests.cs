@@ -110,8 +110,77 @@ namespace TeamManager.Service.Test.Management.TeamServices
             connection.Setup(c => c.DeleteUserIDToTeamID(userIDToTeamID)).Returns(true);
 
             // Act && Assert
-            Assert.Throws<ArgumentException>(() => 
+            Assert.Throws<ArgumentException>(() =>
             editTeamPage.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom));
         }
+
+        [Fact]
+        public void GetUsersInTeam_TeamHasNoUsers_ReturnsEmptyList()
+        {
+            // Arrange
+            var connection = new Mock<IManagerDatabaseConnection>();
+            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
+
+            Team team1 = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
+            Team team2 = new Team() { ID = 2, Name = "team2", CreationDate = "1234" };
+            User user = new User() { ID = 1, Name = "user", CreationDate = "1234" };
+
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = user.ID, TeamID = team2.ID };
+            List<UserIDToTeamID> userIDsToTeamIDs = new List<UserIDToTeamID>() { userIDToTeamID };
+
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
+            connection.Setup(c => c.GetAllUsers()).Returns(new List<User>() { user });
+            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
+
+            // Act 
+            var users = editTeamPage.GetUsersInTeam(team1);
+
+            // Assert
+            Assert.Empty(users);
+        }
+
+        [Fact]
+        public void GetUsersInTeam_NoUserExistsInDB_ReturnsEmptyList()
+        {
+            // Arrange
+            var connection = new Mock<IManagerDatabaseConnection>();
+            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
+
+            Team team1 = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
+            Team team2 = new Team() { ID = 2, Name = "team2", CreationDate = "1234" };
+
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
+            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
+
+            // Act 
+            var users = editTeamPage.GetUsersInTeam(team1);
+
+            // Assert
+            Assert.Empty(users);
+        }
+
+        [Fact]
+        public void GetUsersInTeam_NoUserIsInTeams_ReturnsEmptyList()
+        {
+            // Arrange
+            var connection = new Mock<IManagerDatabaseConnection>();
+            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
+
+            Team team1 = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
+            Team team2 = new Team() { ID = 2, Name = "team2", CreationDate = "1234" };
+            User user = new User() { ID = 1, Name = "asda" };
+
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            connection.Setup(c => c.GetAllUsers()).Returns(new List<User>() { user });
+            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
+
+            // Act 
+            var users = editTeamPage.GetUsersInTeam(team1);
+
+            // Assert
+            Assert.Empty(users);
+        }
+
     }
 }
