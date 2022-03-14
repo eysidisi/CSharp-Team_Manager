@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.Service.Test", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.UI", "TeamManager.UI\TeamManager.UI.csproj", "{A29468D7-F844-4134-9C95-8C127EB8398F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.Console", "TeamManager.Console\TeamManager.Console.csproj", "{B92D7173-76E3-4E9F-A52B-FABA3BB68255}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.Console", "TeamManager.Console\TeamManager.Console.csproj", "{B92D7173-76E3-4E9F-A52B-FABA3BB68255}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.Service.IntegrationTest", "TeamManager.Service.IntegrationTest\TeamManager.Service.IntegrationTest.csproj", "{7799D285-1349-49B5-9F1D-1729CF746F52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B92D7173-76E3-4E9F-A52B-FABA3BB68255}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B92D7173-76E3-4E9F-A52B-FABA3BB68255}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B92D7173-76E3-4E9F-A52B-FABA3BB68255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7799D285-1349-49B5-9F1D-1729CF746F52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7799D285-1349-49B5-9F1D-1729CF746F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7799D285-1349-49B5-9F1D-1729CF746F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7799D285-1349-49B5-9F1D-1729CF746F52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
