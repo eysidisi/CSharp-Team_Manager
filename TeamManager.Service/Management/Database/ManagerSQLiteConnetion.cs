@@ -22,7 +22,11 @@ namespace TeamManager.Service.Management.Database
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
                 cnn.Insert(user);
-                users.Add(user);
+
+                if (users != null)
+                {
+                    users.Add(user);
+                }
             }
         }
 
@@ -37,7 +41,10 @@ namespace TeamManager.Service.Management.Database
 
                 else
                 {
-                    users.Remove(user);
+                    if (users != null)
+                    {
+                        users.Remove(user);
+                    }
                     return true;
                 }
             }
@@ -61,7 +68,10 @@ namespace TeamManager.Service.Management.Database
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
                 cnn.Insert(team);
-                teams.Add(team);
+                if (teams != null)
+                {
+                    teams.Add(team);
+                }
             }
         }
 
@@ -88,7 +98,10 @@ namespace TeamManager.Service.Management.Database
                 }
                 else
                 {
-                    teams.Remove(team);
+                    if (teams != null)
+                    {
+                        teams.Remove(team);
+                    }
                     return true;
                 }
             }
@@ -111,7 +124,10 @@ namespace TeamManager.Service.Management.Database
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
                 cnn.Insert(userIDToTeamID);
-                userIDsToTeamIDs.Add(userIDToTeamID);
+                if (userIDsToTeamIDs != null)
+                {
+                    userIDsToTeamIDs.Add(userIDToTeamID);
+                }
             }
         }
 
@@ -125,7 +141,10 @@ namespace TeamManager.Service.Management.Database
                 }
                 else
                 {
-                    userIDsToTeamIDs.Remove(userIDToTeamID);
+                    if (userIDsToTeamIDs != null)
+                    {
+                        userIDsToTeamIDs.Remove(userIDToTeamID);
+                    }
                     return true;
                 }
             }
