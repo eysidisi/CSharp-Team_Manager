@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace TeamManager.Service.IntegrationTest.DB.SQLite
+namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
     public class NewUserPageServiceTests
     {
@@ -19,38 +19,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite
         {
             // Arrange
             HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
-            NewUserPageService newUserPageService = new NewUserPageService(connection);
-
-            User user = new User() { Name = "userName", Surname = "userSurname" };
-
-            // Act
-            newUserPageService.SaveNewUser(user);
-
-            // Assert
-            List<User> users;
-
-            using (var cnn = new SQLiteConnection(connString))
-            {
-                users = cnn.GetAll<User>().ToList();
-            }
-
-            Assert.Contains(users, u => u.Name == user.Name && u.Surname == user.Surname);
-
-            helperMethods.DeleteDB(dbPath);
-        }
-
-        [Fact]
-        public void SaveNewUser_NotEmptyDB_SavesNewUser()
-        {
-            throw new NotImplementedException();
-
-            // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateTestDB_ReturnFilePath();
+            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
             string connString = $"Data Source={dbPath}";
 
             ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);

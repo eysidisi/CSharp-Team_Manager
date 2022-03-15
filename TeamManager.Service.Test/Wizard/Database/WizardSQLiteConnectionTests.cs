@@ -17,7 +17,7 @@ namespace TeamManager.Service.Test.Wizard
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);
@@ -44,7 +44,7 @@ namespace TeamManager.Service.Test.Wizard
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);
@@ -63,7 +63,7 @@ namespace TeamManager.Service.Test.Wizard
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);

@@ -18,7 +18,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -48,7 +48,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -76,7 +76,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -101,7 +101,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -135,7 +135,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -180,7 +180,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -199,7 +199,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -230,7 +230,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -263,7 +263,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -282,7 +282,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -316,7 +316,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -345,7 +345,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);
@@ -369,7 +369,7 @@ namespace TeamManager.Service.Test.Management
         {
             //Arrange
             HelperMethods.SQLiteDB.HelperMethods helperMethods = new HelperMethods.SQLiteDB.HelperMethods();
-            string dbFilePath = helperMethods.CreateTestDB_ReturnFilePath();
+            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
             ManagerSQLiteConnetion dataAccess = new ManagerSQLiteConnetion(connectionString);

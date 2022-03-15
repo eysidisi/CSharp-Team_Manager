@@ -15,9 +15,9 @@ namespace TeamManager
         {
             HelperMethods helperMethods = new HelperMethods();
 
-            var smallDbPath = helperMethods.CreateTestDB_ReturnFilePath();
-            var mediumDbPath = helperMethods.CreateTestDB_ReturnFilePath();
-            var largeDbPath = helperMethods.CreateTestDB_ReturnFilePath();
+            var smallDbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
+            var mediumDbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
+            var largeDbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             // Small DB
             CreateDB(smallDbPath, numOfManagers: 100, numOfUsers: 100, numberOfTeams: 1);

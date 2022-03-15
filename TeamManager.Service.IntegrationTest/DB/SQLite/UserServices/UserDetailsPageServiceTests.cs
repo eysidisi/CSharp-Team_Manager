@@ -8,7 +8,7 @@ using TeamManager.Service.Models;
 using TeamManager.Service.Test.HelperMethods.SQLiteDB;
 using Xunit;
 
-namespace TeamManager.Service.IntegrationTest.DB.SQLite
+namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
     public class UserDetailsPageServiceTests
     {
@@ -17,7 +17,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite
         {
             // Arrange
             HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateTestDB_ReturnFilePath();
+            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
             string connString = $"Data Source={dbPath}";
 
             ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
@@ -37,7 +37,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite
         {
             // Arrange
             HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateTestDB_ReturnFilePath();
+            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
             string connString = $"Data Source={dbPath}";
 
             ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);

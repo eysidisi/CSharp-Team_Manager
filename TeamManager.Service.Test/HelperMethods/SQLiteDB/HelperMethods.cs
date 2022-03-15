@@ -22,7 +22,7 @@ namespace TeamManager.Service.Test.HelperMethods.SQLiteDB
         /// Creates a test DB and returns connection string
         /// </summary>
         /// <returns></returns>
-        public string CreateTestDB_ReturnFilePath()
+        public string CreateEmptyTestDB_ReturnFilePath()
         {
             int currentDbNum;
             lock (syncObj)

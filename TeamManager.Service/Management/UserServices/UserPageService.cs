@@ -24,10 +24,13 @@ namespace TeamManager.Service.Management
                 throw new ArgumentException("Can't delete the user!");
             }
 
-            // Delete all user to team connections
+            DeleteAllUserIDToTeamIDEntries(user);
+        }
+
+        private void DeleteAllUserIDToTeamIDEntries(User user)
+        {
             var allUserIDToTeamIDs = connection.GetAllUserIDToTeamID();
             var userToTeamIDs = allUserIDToTeamIDs.Where(a => a.UserID == user.ID).ToList();
-
 
             foreach (var userToTeamID in userToTeamIDs)
             {
