@@ -101,5 +101,76 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             helperMethods.DeleteDB(dbPath);
         }
+
+        [Fact]
+        public void DeleteTeam_DBHasNoTeams_ThrowsException()
+        {
+            // Arrange
+            HelperMethods helperMethods = new HelperMethods();
+            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
+            string connString = $"Data Source={dbPath}";
+
+            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 0 };
+
+            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            TeamPageService teamPageService = new TeamPageService(connection);
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(teamToDelete));
+
+            helperMethods.DeleteDB(dbPath);
+        }
+
+        [Fact]
+        public void DeleteTeam_DBDoesNotHaveThatTeam_ThrowsException()
+        {
+            // Arrange
+            HelperMethods helperMethods = new HelperMethods();
+            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
+            string connString = $"Data Source={dbPath}";
+
+            Team teamToAdd = new Team() { Name = "teamToAdd", ID = 1 };
+            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 0 };
+
+            using (var cnn = new SQLiteConnection(connString))
+            {
+                cnn.Insert(teamToAdd);
+            }
+
+
+            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            TeamPageService teamPageService = new TeamPageService(connection);
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(teamToDelete));
+
+            helperMethods.DeleteDB(dbPath);
+        }
+
+        [Fact]
+        public void DeleteTeam_TeamHasUsers_ThrowsException()
+        {
+            // Arrange
+            HelperMethods helperMethods = new HelperMethods();
+            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
+            string connString = $"Data Source={dbPath}";
+
+            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = 1, UserID = 1 };
+
+            using (var cnn = new SQLiteConnection(connString))
+            {
+                cnn.Insert(teamToDelete);
+                cnn.Insert(userIDToTeamID);
+            }
+
+            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            TeamPageService teamPageService = new TeamPageService(connection);
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(teamToDelete));
+
+            helperMethods.DeleteDB(dbPath);
+        }
     }
 }
