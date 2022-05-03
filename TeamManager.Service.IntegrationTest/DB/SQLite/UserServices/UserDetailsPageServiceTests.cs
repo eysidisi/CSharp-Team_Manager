@@ -1,4 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using TeamManager.Service.Management;
@@ -10,17 +11,12 @@ using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
-    public class UserDetailsPageServiceTests
+    public class UserDetailsPageServiceTests : SQLiteIntegrationTestsBase
     {
         [Fact]
         public void GetTeamsThatUserIn_EmptyDB_ReturnsEmptyList()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             UserDetailsPageService userDetailsPageService = new UserDetailsPageService(connection);
 
             User user = new User();
@@ -36,11 +32,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void GetTeamsThatUserIn_UserIsInATeam_ReturnsEmptyList()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             UserDetailsPageService userDetailsPageService = new UserDetailsPageService(connection);
 
             Team team = new Team() { ID = 1, Name = "team" };

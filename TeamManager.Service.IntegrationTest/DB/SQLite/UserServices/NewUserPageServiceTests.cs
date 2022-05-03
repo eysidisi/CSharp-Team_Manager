@@ -12,17 +12,12 @@ using System;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
-    public class NewUserPageServiceTests
+    public class NewUserPageServiceTests:SQLiteIntegrationTestsBase
     {
         [Fact]
         public void SaveNewUser_EmptyDB_SavesNewUser()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             NewUserPageService newUserPageService = new NewUserPageService(connection);
 
             User user = new User() { Name = "userName", Surname = "userSurname" };
@@ -39,8 +34,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             }
 
             Assert.Contains(users, u => u.Name == user.Name && u.Surname == user.Surname);
-
-            helperMethods.DeleteDB(dbPath);
         }
     }
 }

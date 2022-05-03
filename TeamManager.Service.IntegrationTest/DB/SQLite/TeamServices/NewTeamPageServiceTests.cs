@@ -14,18 +14,12 @@ using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 {
-    public class NewTeamPageServiceTests
+    public class NewTeamPageServiceTests:SQLiteIntegrationTestsBase
     {
         [Fact]
         public void SaveTeam_NoTeamExistsInDB_AddsTeam()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
-
             NewTeamPageService newTeamPageService = new NewTeamPageService(connection);
 
             Team team = new Team() { Name = "Team1" };
@@ -42,8 +36,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             }
 
             Assert.Contains(teams, t => t.Name == team.Name);
-
-            helperMethods.DeleteDB(dbPath);
         }
     }
 }

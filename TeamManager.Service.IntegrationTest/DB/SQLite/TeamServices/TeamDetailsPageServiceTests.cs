@@ -13,16 +13,12 @@ using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 {
-    public class TeamDetailsPageServiceTests
+    public class TeamDetailsPageServiceTests:SQLiteIntegrationTestsBase
     {
         [Fact]
         public void GetUsersInTeam_TeamHasUsers_ReturnsUsers()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             Team teamToAdd = new Team() { Name = "teamToDelete", ID = 1 };
             User expectedUser = new User() { Name = "User", ID = 1 };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = 1, UserID = 1 };
@@ -40,18 +36,12 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam(teamToAdd);
             Assert.Contains(actualUsers, u => u.Name == expectedUser.Name);
-
-            helperMethods.DeleteDB(dbPath);
         }
 
         [Fact]
         public void GetUsersInTeam_TeamHasNoUsers_ReturnsEmptyList()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             Team teamToAdd = new Team() { Name = "teamToDelete", ID = 1 };
 
             using (var cnn = new SQLiteConnection(connString))
@@ -73,10 +63,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void GetUsersInTeam_NoTeamExistsInDB_ReturnsEmptyList()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             Team team = new Team() { Name = "teamToDelete", ID = 1 };
 
             ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
@@ -85,18 +71,12 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam(team);
             Assert.Empty(actualUsers);
-
-            helperMethods.DeleteDB(dbPath);
         }
 
         [Fact]
         public void GetUsersInTeam_NoSuchTeamExistsInDB_ReturnsEmptyList()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             Team teamNotInDB = new Team() { Name = "team1", ID = 1 };
             Team teamInDB = new Team() { Name = "team2", ID = 2 };
 
@@ -111,18 +91,12 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam(teamNotInDB);
             Assert.Empty(actualUsers);
-
-            helperMethods.DeleteDB(dbPath);
         }
 
         [Fact]
         public void GetUsersInTeam_NoSuchTeamExistsInDBOtherTeamsWithUsersExist_ReturnsEmptyList()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             Team teamNotInDB = new Team() { Name = "team1", ID = 1 };
             Team teamInDB = new Team() { Name = "team2", ID = 2 };
             User userInTeamInDB = new User() { ID = 1, Name = "user" };
@@ -141,8 +115,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam(teamNotInDB);
             Assert.Empty(actualUsers);
-
-            helperMethods.DeleteDB(dbPath);
         }
     }
 }

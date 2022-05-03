@@ -14,17 +14,12 @@ using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
-    public class UserPageServiceTests
+    public class UserPageServiceTests : SQLiteIntegrationTestsBase
     {
         [Fact]
         public void GetUsers_NoUserIsInDB_ReturnsEmptyList()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             UserPageService userPageService = new UserPageService(connection);
 
             // Act
@@ -38,11 +33,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void GetUsers_UserIsInDB_ReturnsUser()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             UserPageService userPageService = new UserPageService(connection);
 
             User user = new User() { Name = "user1", Surname = "surname1" };
@@ -51,7 +41,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             {
                 cnn.Insert(user);
             }
-
 
             // Act
             var users = userPageService.GetUsers();
@@ -64,11 +53,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void DeleteUser_NoUserIsInDB_ReturnsUser()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             UserPageService userPageService = new UserPageService(connection);
 
             User user = new User() { Name = "user1", Surname = "surname1" };
@@ -81,11 +65,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void DeleteUser_UserIsInDB_ReturnsUser()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             UserPageService userPageService = new UserPageService(connection);
 
             User user = new User() { Name = "user1", Surname = "surname1" };

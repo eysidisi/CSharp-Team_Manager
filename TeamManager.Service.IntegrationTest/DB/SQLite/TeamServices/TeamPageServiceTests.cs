@@ -13,16 +13,12 @@ using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 {
-    public class TeamPageServiceTests
+    public class TeamPageServiceTests:SQLiteIntegrationTestsBase
     {
         [Fact]
         public void GetAllTeams_DBHasNoTeams_ReturnsEmptyList()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
@@ -31,18 +27,12 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             // Assert
             Assert.Empty(teams);
-
-            helperMethods.DeleteDB(dbPath);
         }
 
         [Fact]
         public void GetAllTeams_DBHasTeams_ReturnsTeams()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             List<Team> expectedTeams = new List<Team>()
             {
                 new Team(){Name="team1"},
@@ -65,18 +55,12 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             {
                 Assert.Contains(actualTeams, a => a.Name == expectedTeam.Name);
             }
-
-            helperMethods.DeleteDB(dbPath);
         }
 
         [Fact]
         public void DeleteTeam_DBHasTheTeam_DeletesTeam()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             Team teamToDelete = new Team() { Name = "teamToDelete", ID = 0 };
 
             using (var cnn = new SQLiteConnection(connString))
@@ -98,18 +82,12 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             }
 
             Assert.DoesNotContain(teamsLeftInDB, t => t.Name == teamToDelete.Name);
-
-            helperMethods.DeleteDB(dbPath);
         }
 
         [Fact]
         public void DeleteTeam_DBHasNoTeams_ThrowsException()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             Team teamToDelete = new Team() { Name = "teamToDelete", ID = 0 };
 
             ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
@@ -117,18 +95,12 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(teamToDelete));
-
-            helperMethods.DeleteDB(dbPath);
         }
 
         [Fact]
         public void DeleteTeam_DBDoesNotHaveThatTeam_ThrowsException()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             Team teamToAdd = new Team() { Name = "teamToAdd", ID = 1 };
             Team teamToDelete = new Team() { Name = "teamToDelete", ID = 0 };
 
@@ -143,18 +115,12 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(teamToDelete));
-
-            helperMethods.DeleteDB(dbPath);
         }
 
         [Fact]
         public void DeleteTeam_TeamHasUsers_ThrowsException()
         {
             // Arrange
-            HelperMethods helperMethods = new HelperMethods();
-            var dbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            string connString = $"Data Source={dbPath}";
-
             Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = 1, UserID = 1 };
 
@@ -169,8 +135,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(teamToDelete));
-
-            helperMethods.DeleteDB(dbPath);
         }
     }
 }
