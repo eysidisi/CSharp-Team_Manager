@@ -19,6 +19,16 @@ namespace TeamManager.Service.Management.TeamServices
 
         public void AddUserToTheTeam(User user, Team team)
         {
+            if (CheckIfUserExistsInDB(user) == false)
+            {
+                throw new ArgumentException("User doesn't exist in the DB!");
+            }
+
+            if (CheckIfTeamExistsInDB(team) == false)
+            {
+                throw new ArgumentException("Team doesn't exist in the DB!");
+            }
+
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { UserID = user.ID, TeamID = team.ID };
 
             if (CheckIfUserIsInTheTeam(userIDToTeamID))
@@ -28,6 +38,8 @@ namespace TeamManager.Service.Management.TeamServices
 
             connection.SaveUserIDToTeamID(userIDToTeamID);
         }
+
+
 
         public List<User> GetUsers()
         {
@@ -95,6 +107,16 @@ namespace TeamManager.Service.Management.TeamServices
             }
 
             return false;
+        }
+
+        private bool CheckIfUserExistsInDB(User user)
+        {
+            return connection.GetAllUsers().Find(u => u.ID == user.ID) != null ? true : false;
+        }
+
+        private bool CheckIfTeamExistsInDB(Team team)
+        {
+            return connection.GetAllTeams().Find(t => t.ID == team.ID) != null ? true : false;
         }
     }
 }
