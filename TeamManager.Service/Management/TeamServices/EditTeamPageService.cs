@@ -39,8 +39,6 @@ namespace TeamManager.Service.Management.TeamServices
             connection.SaveUserIDToTeamID(userIDToTeamID);
         }
 
-
-
         public List<User> GetUsers()
         {
             return connection.GetAllUsers();
@@ -48,11 +46,15 @@ namespace TeamManager.Service.Management.TeamServices
 
         public List<User> GetUsersInTeam(Team team)
         {
+            if (CheckIfTeamExistsInDB(team) == false)
+            {
+                throw new ArgumentException("Team doesn't exist in DB!");
+            }
+
             var users = connection.GetAllUsers();
-            var teams = connection.GetAllTeams();
             var userIDToTeamIDs = connection.GetAllUserIDToTeamID();
 
-            if (users.Count == 0 || teams.Count == 0 || userIDToTeamIDs.Count == 0)
+            if (users.Count == 0 || userIDToTeamIDs.Count == 0)
             {
                 return new List<User>();
             }
