@@ -64,17 +64,22 @@ namespace TeamManager.Service.Management.TeamServices
             return users.Where(u => userIDsBelongedToTeam.Contains(u.ID)).ToList();
         }
 
-        public void RemoveUserFromTheTeam(User userToRemove, Team teamToRemoveFrom)
+        public void RemoveUserFromTheTeam(User userToRemove, Team teamToRemoveUserFrom)
         {
             if (CheckIfUserExistsInDB(userToRemove) == false)
             {
                 throw new ArgumentException("User doesn't exist in the DB!");
             }
 
+            if (CheckIfTeamExistsInDB(teamToRemoveUserFrom) == false)
+            {
+                throw new ArgumentException("Team doesn't exist in the DB!");
+            }
+
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID()
             {
                 UserID = userToRemove.ID,
-                TeamID = teamToRemoveFrom.ID
+                TeamID = teamToRemoveUserFrom.ID
             };
 
             if (CheckIfUserIsInTheTeam(userIDToTeamID) == false)
