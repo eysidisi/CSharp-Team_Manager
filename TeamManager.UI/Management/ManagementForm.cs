@@ -9,7 +9,7 @@ namespace TeamManager.UI.Management
         {
             InitializeComponent();
             this.CenterToScreen();
-            var connection = new ManagerSQLiteConnetion(connectionString);
+            var connection = new ManagementSQLiteConnetion(connectionString);
             CreateUserPage(connection);
             CreateTeamPage(connection);
         }

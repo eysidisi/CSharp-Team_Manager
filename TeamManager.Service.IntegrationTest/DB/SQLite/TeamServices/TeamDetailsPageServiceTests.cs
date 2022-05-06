@@ -30,7 +30,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(userIDToTeamID);
             }
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
 
             // Act 
@@ -49,7 +49,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(teamToAdd);
             }
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
 
             // Act 
@@ -63,7 +63,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             Team team = new Team() { Name = "team", ID = 1 };
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
 
             // Act 
@@ -83,7 +83,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(teamInDB);
             }
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
 
             // Act 
@@ -107,7 +107,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(userIDToTeamID);
             }
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
 
             // Act 

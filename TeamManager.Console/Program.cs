@@ -13,7 +13,7 @@ namespace TeamManager
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            HelperMethods helperMethods = new HelperMethods();
+            SQLiteHelperMethods helperMethods = new SQLiteHelperMethods();
 
             var smallDbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
             var mediumDbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();

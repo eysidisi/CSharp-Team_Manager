@@ -19,7 +19,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void GetAllTeams_DBHasNoTeams_ReturnsEmptyList()
         {
             // Arrange
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act
@@ -44,7 +44,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(expectedTeams);
             }
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act
@@ -65,7 +65,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(teamToDelete);
             }
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act
@@ -87,7 +87,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act && Assert
@@ -107,7 +107,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             }
 
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act && Assert
@@ -127,7 +127,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(userIDToTeamID);
             }
 
-            ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
+            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act && Assert

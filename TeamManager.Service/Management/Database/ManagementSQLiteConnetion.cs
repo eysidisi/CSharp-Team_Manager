@@ -6,13 +6,13 @@ using TeamManager.Service.Models;
 
 namespace TeamManager.Service.Management.Database
 {
-    public class ManagerSQLiteConnetion : IManagerDatabaseConnection
+    public class ManagementSQLiteConnetion : IManagerDatabaseConnection
     {
         string connString;
         List<User> users = null;
         List<Team> teams = null;
         List<UserIDToTeamID> userIDsToTeamIDs = null;
-        public ManagerSQLiteConnetion(string connString)
+        public ManagementSQLiteConnetion(string connString)
         {
             this.connString = connString;
         }
