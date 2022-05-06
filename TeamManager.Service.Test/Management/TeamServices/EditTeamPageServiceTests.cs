@@ -105,8 +105,10 @@ namespace TeamManager.Service.Test.Management.TeamServices
 
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = userToRemove.ID, TeamID = teamToRemoveFrom.ID };
             List<UserIDToTeamID> userIDsToTeamIDs = new List<UserIDToTeamID>() { userIDToTeamID };
+            List<User> users = new List<User>() { userToRemove };
 
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
+            connection.Setup(c => c.GetAllUsers()).Returns(users);
             connection.Setup(c => c.DeleteUserIDToTeamID(userIDToTeamID)).Returns(true);
 
             // Act && Assert
@@ -127,8 +129,10 @@ namespace TeamManager.Service.Test.Management.TeamServices
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = userToRemove.ID, TeamID = team2.ID };
             List<UserIDToTeamID> userIDsToTeamIDs = new List<UserIDToTeamID>() { userIDToTeamID };
 
+            List<User> users = new List<User>() { userToRemove };
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
             connection.Setup(c => c.DeleteUserIDToTeamID(userIDToTeamID)).Returns(true);
+            connection.Setup(c => c.GetAllUsers()).Returns(users);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() =>

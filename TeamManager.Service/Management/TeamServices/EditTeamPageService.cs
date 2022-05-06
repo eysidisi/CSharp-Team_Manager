@@ -66,6 +66,11 @@ namespace TeamManager.Service.Management.TeamServices
 
         public void RemoveUserFromTheTeam(User userToRemove, Team teamToRemoveFrom)
         {
+            if (CheckIfUserExistsInDB(userToRemove) == false)
+            {
+                throw new ArgumentException("User doesn't exist in the DB!");
+            }
+
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID()
             {
                 UserID = userToRemove.ID,
