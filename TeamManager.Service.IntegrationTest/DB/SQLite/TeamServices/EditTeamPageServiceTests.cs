@@ -216,5 +216,101 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Act && Assert
             Assert.Throws<ArgumentException>(() => editTeamPageService.GetUsersInTeam(teamDoesntExist));
         }
+
+        [Fact]
+        public void RemoveUserFromTheTeam_UserIsInTheTeam_RemovesUser()
+        {
+            // Arrange
+            EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
+            User user1 = new User() { Name = "user1", ID = 1 };
+            User user2 = new User() { Name = "user2", ID = 2 };
+
+            Team team = new Team() { Name = "team", ID = 1 };
+            UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = team.ID, UserID = user1.ID };
+            UserIDToTeamID user2IDToTeamID = new UserIDToTeamID() { ID = 2, TeamID = team.ID, UserID = user2.ID };
+
+            using (var con = new SQLiteConnection(connString))
+            {
+                con.Insert(team);
+                con.Insert(user1);
+                con.Insert(user2);
+                con.Insert(user1IDToTeamID);
+                con.Insert(user2IDToTeamID);
+            }
+
+            // Act 
+            editTeamPageService.RemoveUserFromTheTeam(user1, team);
+
+            // Assert
+            List<UserIDToTeamID> actualUserToTeamIDs;
+            using (var con = new SQLiteConnection(connString))
+            {
+                actualUserToTeamIDs = con.GetAll<UserIDToTeamID>().ToList();
+            }
+
+            Assert.DoesNotContain(user1IDToTeamID, actualUserToTeamIDs);
+        }
+
+        [Fact]
+        public void RemoveUserFromTheTeam_UserIsNotInTheTeam_ThrowsException()
+        {
+            // Arrange
+            EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
+            User user1 = new User() { Name = "user1", ID = 1 };
+            User user2 = new User() { Name = "user2", ID = 2 };
+
+            Team team = new Team() { Name = "team", ID = 1 };
+            UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = team.ID, UserID = user1.ID };
+
+            using (var con = new SQLiteConnection(connString))
+            {
+                con.Insert(team);
+                con.Insert(user1IDToTeamID);
+            }
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => editTeamPageService.RemoveUserFromTheTeam(user2, team));
+        }
+
+        [Fact]
+        public void RemoveUserFromTheTeam_UserDoesntExistInDB_ThrowsException()
+        {
+            // Arrange
+            EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
+            User user1 = new User() { Name = "user1", ID = 1 };
+
+            Team team = new Team() { Name = "team", ID = 1 };
+            UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = team.ID, UserID = user1.ID };
+
+            using (var con = new SQLiteConnection(connString))
+            {
+                con.Insert(team);
+                con.Insert(user1IDToTeamID);
+            }
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => editTeamPageService.RemoveUserFromTheTeam(user1, team));
+        }
+
+        [Fact]
+        public void RemoveUserFromTheTeam_TeamDoesntExistInDB_ThrowsException()
+        {
+            // Arrange
+            EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
+            User user1 = new User() { Name = "user1", ID = 1 };
+
+            Team team = new Team() { Name = "team", ID = 1 };
+            UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = team.ID, UserID = user1.ID };
+
+            using (var con = new SQLiteConnection(connString))
+            {
+                con.Insert(user1IDToTeamID);
+                con.Insert(user1);
+            }
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => editTeamPageService.RemoveUserFromTheTeam(user1, team));
+        }
+
     }
 }
