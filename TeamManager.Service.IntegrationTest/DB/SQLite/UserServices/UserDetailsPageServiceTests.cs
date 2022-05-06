@@ -46,11 +46,10 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             }
 
             // Act
-            var teams = userDetailsPageService.GetTeamsThatUserIn(user);
+            var actualTeams = userDetailsPageService.GetTeamsThatUserIn(user);
 
             // Assert
-            Assert.Single(teams);
-            Assert.Contains(teams, t => t.ID == team.ID && t.Name == team.Name);
+            Assert.Contains(team, actualTeams);
         }
     }
 }

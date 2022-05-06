@@ -19,8 +19,8 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void GetUsersInTeam_TeamHasUsers_ReturnsUsers()
         {
             // Arrange
-            Team teamToAdd = new Team() { Name = "teamToDelete", ID = 1 };
-            User expectedUser = new User() { Name = "User", ID = 1 };
+            Team teamToAdd = new Team() { Name = "team", ID = 1 };
+            User expectedUser = new User() { Name = "user", ID = 1 };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = 1, UserID = 1 };
 
             using (var cnn = new SQLiteConnection(connString))
@@ -42,7 +42,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void GetUsersInTeam_TeamHasNoUsers_ReturnsEmptyList()
         {
             // Arrange
-            Team teamToAdd = new Team() { Name = "teamToDelete", ID = 1 };
+            Team teamToAdd = new Team() { Name = "team", ID = 1 };
 
             using (var cnn = new SQLiteConnection(connString))
             {
@@ -55,15 +55,13 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam(teamToAdd);
             Assert.Empty(actualUsers);
-
-            helperMethods.DeleteDB(dbPath);
         }
 
         [Fact]
         public void GetUsersInTeam_NoTeamExistsInDB_ReturnsEmptyList()
         {
             // Arrange
-            Team team = new Team() { Name = "teamToDelete", ID = 1 };
+            Team team = new Team() { Name = "team", ID = 1 };
 
             ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);

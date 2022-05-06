@@ -35,7 +35,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             // Arrange
             UserPageService userPageService = new UserPageService(connection);
 
-            User user = new User() { Name = "user1", Surname = "surname1" };
+            User user = new User() { Name = "user", Surname = "surname" };
 
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
@@ -43,10 +43,10 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             }
 
             // Act
-            var users = userPageService.GetUsers();
+            var actualUsers = userPageService.GetUsers();
 
             // Assert
-            Assert.Contains(users, u => u.Name == user.Name && u.Surname == user.Surname);
+            Assert.Contains(user, actualUsers);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             // Arrange
             UserPageService userPageService = new UserPageService(connection);
 
-            User user = new User() { Name = "user1", Surname = "surname1" };
+            User user = new User() { Name = "user", Surname = "surname" };
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => userPageService.DeleteUser(user));
@@ -67,7 +67,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             // Arrange
             UserPageService userPageService = new UserPageService(connection);
 
-            User user = new User() { Name = "user1", Surname = "surname1" };
+            User user = new User() { Name = "user", Surname = "surname" };
 
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {

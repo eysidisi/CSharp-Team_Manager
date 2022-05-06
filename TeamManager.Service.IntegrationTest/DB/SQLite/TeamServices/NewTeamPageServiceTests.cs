@@ -14,7 +14,7 @@ using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 {
-    public class NewTeamPageServiceTests:SQLiteIntegrationTestsBase
+    public class NewTeamPageServiceTests : SQLiteIntegrationTestsBase
     {
         [Fact]
         public void SaveTeam_NoTeamExistsInDB_AddsTeam()
@@ -22,20 +22,20 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             NewTeamPageService newTeamPageService = new NewTeamPageService(connection);
 
-            Team team = new Team() { Name = "Team1" };
+            Team team = new Team() { Name = "Team1", ID = 1 };
 
             // Act
             newTeamPageService.SaveTeam(team);
 
             // Assert
-            List<Team> teams;
+            List<Team> actualTeams;
 
             using (var cnn = new SQLiteConnection(connString))
             {
-                teams = cnn.GetAll<Team>().ToList();
+                actualTeams = cnn.GetAll<Team>().ToList();
             }
 
-            Assert.Contains(teams, t => t.Name == team.Name);
+            Assert.Contains(team, actualTeams);
         }
     }
 }

@@ -19,8 +19,8 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
 
-            Team team = new Team() { Name = "Team1", ID = 1 };
-            User user = new User() { Name = "User1", ID = 1 };
+            Team team = new Team() { Name = "team", ID = 1 };
+            User user = new User() { Name = "user", ID = 1 };
 
             using (var cnn = new SQLiteConnection(connString))
             {
@@ -43,26 +43,26 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         }
 
         [Fact]
-        public void AddUserToTheTeam_NoTeamOrUserExistsInDB_CantAdd()
+        public void AddUserToTheTeam_NoTeamOrUserExistsInDB_ThrowsException()
         {
             // Arrange
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
 
-            Team team = new Team() { Name = "Team1", ID = 1 };
-            User user = new User() { Name = "User1", ID = 1 };
+            Team team = new Team() { Name = "team", ID = 1 };
+            User user = new User() { Name = "user", ID = 1 };
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => editTeamPageService.AddUserToTheTeam(user, team));
         }
 
         [Fact]
-        public void AddUserToTheTeam_TeamExistUserDoesntInDB_CantAdd()
+        public void AddUserToTheTeam_TeamExistUserDoesntInDB_ThrowsException()
         {
             // Arrange
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
 
-            Team team = new Team() { Name = "Team1", ID = 1 };
-            User user = new User() { Name = "User1", ID = 1 };
+            Team team = new Team() { Name = "team", ID = 1 };
+            User user = new User() { Name = "user", ID = 1 };
 
             using (var con = new SQLiteConnection(connString))
             {
@@ -74,13 +74,13 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         }
 
         [Fact]
-        public void AddUserToTheTeam_UserExistTeamDoesntInDB_CantAdd()
+        public void AddUserToTheTeam_UserExistTeamDoesntInDB_ThrowsException()
         {
             // Arrange
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
 
-            Team team = new Team() { Name = "Team1", ID = 1 };
-            User user = new User() { Name = "User1", ID = 1 };
+            Team team = new Team() { Name = "team", ID = 1 };
+            User user = new User() { Name = "user", ID = 1 };
 
             using (var con = new SQLiteConnection(connString))
             {
@@ -92,13 +92,13 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         }
 
         [Fact]
-        public void AddUserToTheTeam_UserIsAlreadyInTheTeam_CantAdd()
+        public void AddUserToTheTeam_UserIsAlreadyInTheTeam_ThrowsException()
         {
             // Arrange
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
 
-            Team team = new Team() { Name = "Team1", ID = 1 };
-            User user = new User() { Name = "User1", ID = 1 };
+            Team team = new Team() { Name = "team", ID = 1 };
+            User user = new User() { Name = "user", ID = 1 };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = 1, TeamID = 1 };
 
             using (var con = new SQLiteConnection(connString))
@@ -117,21 +117,20 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         {
             // Arrange
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
-            User user1 = new User() { Name = "user1" };
-            User user2 = new User() { Name = "user2" };
+            User user1 = new User() { Name = "user1", ID = 1 };
+            User user2 = new User() { Name = "user2", ID = 2 };
+            List<User> expecteUsers = new List<User>() { user1, user2 };
 
             using (var con = new SQLiteConnection(connString))
             {
-                con.Insert(user1);
-                con.Insert(user2);
+                con.Insert(expecteUsers);
             }
 
             // Act
             var actualUsers = editTeamPageService.GetUsers();
 
             // Assert
-            Assert.Contains(actualUsers, u => u.Name == user1.Name);
-            Assert.Contains(actualUsers, u => u.Name == user2.Name);
+            Assert.Equal(expecteUsers, actualUsers);
         }
 
         [Fact]
@@ -140,8 +139,11 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
 
-            // Act && Assert
-            Assert.Empty(editTeamPageService.GetUsers());
+            // Act
+            var actualUsers = editTeamPageService.GetUsers();
+
+            // Assert
+            Assert.Empty(actualUsers);
         }
 
         [Fact]
@@ -180,13 +182,13 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         {
             // Arrange
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
-            User user1 = new User() { Name = "user1", ID = 1 };
+            User user = new User() { Name = "user1", ID = 1 };
 
             Team team = new Team() { Name = "team", ID = 1 };
 
             using (var con = new SQLiteConnection(connString))
             {
-                con.Insert(user1);
+                con.Insert(user);
                 con.Insert(team);
             }
 
@@ -202,14 +204,14 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         {
             // Arrange
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
-            User user1 = new User() { Name = "user1", ID = 1 };
+            User user = new User() { Name = "user1", ID = 1 };
 
             Team teamExists = new Team() { Name = "teamExists", ID = 1 };
             Team teamDoesntExist = new Team() { Name = "teamDoesntExist", ID = 2 };
 
             using (var con = new SQLiteConnection(connString))
             {
-                con.Insert(user1);
+                con.Insert(user);
                 con.Insert(teamExists);
             }
 

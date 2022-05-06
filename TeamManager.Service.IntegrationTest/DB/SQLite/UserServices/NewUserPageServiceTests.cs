@@ -20,20 +20,20 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             // Arrange
             NewUserPageService newUserPageService = new NewUserPageService(connection);
 
-            User user = new User() { Name = "userName", Surname = "userSurname" };
+            User user = new User() { Name = "userName", Surname = "userSurname" ,ID=1};
 
             // Act
             newUserPageService.SaveNewUser(user);
 
             // Assert
-            List<User> users;
+            List<User> actualUsers;
 
             using (var cnn = new SQLiteConnection(connString))
             {
-                users = cnn.GetAll<User>().ToList();
+                actualUsers = cnn.GetAll<User>().ToList();
             }
 
-            Assert.Contains(users, u => u.Name == user.Name && u.Surname == user.Surname);
+            Assert.Contains(user,actualUsers);
         }
     }
 }

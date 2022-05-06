@@ -13,7 +13,7 @@ using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 {
-    public class TeamPageServiceTests:SQLiteIntegrationTestsBase
+    public class TeamPageServiceTests : SQLiteIntegrationTestsBase
     {
         [Fact]
         public void GetAllTeams_DBHasNoTeams_ReturnsEmptyList()
@@ -35,8 +35,8 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             List<Team> expectedTeams = new List<Team>()
             {
-                new Team(){Name="team1"},
-                new Team(){Name="team2"}
+                new Team(){Name="team1",ID=1},
+                new Team(){Name="team2",ID=2}
             };
 
             using (var cnn = new SQLiteConnection(connString))
@@ -51,10 +51,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             var actualTeams = teamPageService.GetAllTeams();
 
             // Assert
-            foreach (var expectedTeam in expectedTeams)
-            {
-                Assert.Contains(actualTeams, a => a.Name == expectedTeam.Name);
-            }
+            Assert.Equal(expectedTeams, actualTeams);
         }
 
         [Fact]
@@ -81,14 +78,14 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 teamsLeftInDB = cnn.GetAll<Team>().ToList();
             }
 
-            Assert.DoesNotContain(teamsLeftInDB, t => t.Name == teamToDelete.Name);
+            Assert.DoesNotContain(teamToDelete,teamsLeftInDB);
         }
 
         [Fact]
         public void DeleteTeam_DBHasNoTeams_ThrowsException()
         {
             // Arrange
-            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 0 };
+            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
 
             ManagerSQLiteConnetion connection = new ManagerSQLiteConnetion(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
@@ -102,7 +99,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         {
             // Arrange
             Team teamToAdd = new Team() { Name = "teamToAdd", ID = 1 };
-            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 0 };
+            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 2 };
 
             using (var cnn = new SQLiteConnection(connString))
             {
