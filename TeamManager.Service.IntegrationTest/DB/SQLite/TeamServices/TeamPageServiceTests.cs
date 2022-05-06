@@ -61,7 +61,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void DeleteTeam_DBHasTheTeam_DeletesTeam()
         {
             // Arrange
-            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 0 };
+            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
 
             using (var cnn = new SQLiteConnection(connString))
             {
