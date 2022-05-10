@@ -8,8 +8,8 @@ namespace TeamManager.UI.Management.UserControls
     public partial class TeamPage : UserControl
     {
         TeamPageService teamPageService;
-        IManagerDatabaseConnection connection;
-        public TeamPage(IManagerDatabaseConnection connection)
+        IManagementDatabaseConnection connection;
+        public TeamPage(IManagementDatabaseConnection connection)
         {
             InitializeComponent();
             this.connection = connection;

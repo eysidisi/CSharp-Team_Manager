@@ -19,7 +19,7 @@ namespace TeamManager.UI.Management.UserControls
         Team team;
         public Action<TeamDetailsPage> OnBackButtonClicked;
 
-        public TeamDetailsPage(IManagerDatabaseConnection connection,Team team)
+        public TeamDetailsPage(IManagementDatabaseConnection connection,Team team)
         {
             InitializeComponent();
             pageService = new TeamDetailsPageService(connection);

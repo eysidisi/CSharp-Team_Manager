@@ -18,7 +18,7 @@ namespace TeamManager.Service.Test.Management.UserServices
         public void GetTeamsThatUserIn_OneTeamInDB_GetsTeams()
         {
             // Arange 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             var userDetailsPageService = new UserDetailsPageService(connection.Object);
 
@@ -45,7 +45,7 @@ namespace TeamManager.Service.Test.Management.UserServices
         public void GetTeamsThatUserIn_NoTeamExists_GetsEmptyList()
         {
             // Arange 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             var userDetailsPageService = new UserDetailsPageService(connection.Object);
 
@@ -70,7 +70,7 @@ namespace TeamManager.Service.Test.Management.UserServices
         public void GetTeamsThatUserIn_NoUserIDToTeamIDExists_GetsEmptyList()
         {
             // Arange 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             var userDetailsPageService = new UserDetailsPageService(connection.Object);
 
@@ -102,7 +102,7 @@ namespace TeamManager.Service.Test.Management.UserServices
         public void GetTeamsThatUserIn_UserIsNotInAnyTeams_GetsEmptyList()
         {
             // Arange 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             var userDetailsPageService = new UserDetailsPageService(connection.Object);
 

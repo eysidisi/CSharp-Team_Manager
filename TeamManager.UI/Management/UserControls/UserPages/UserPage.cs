@@ -10,9 +10,9 @@ namespace TeamManager.UI.Management.UserControls
     {
         UserPageService userPageService;
         DataTable usersDataTable;
-        IManagerDatabaseConnection connection;
+        IManagementDatabaseConnection connection;
 
-        public UserPage(IManagerDatabaseConnection connection)
+        public UserPage(IManagementDatabaseConnection connection)
         {
             InitializeComponent();
             userPageService = new UserPageService(connection);

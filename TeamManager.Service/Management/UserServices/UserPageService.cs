@@ -5,9 +5,9 @@ namespace TeamManager.Service.Management
 {
     public class UserPageService
     {
-        private IManagerDatabaseConnection connection;
+        private IManagementDatabaseConnection connection;
 
-        public UserPageService(IManagerDatabaseConnection connection)
+        public UserPageService(IManagementDatabaseConnection connection)
         {
             this.connection = connection;
         }

@@ -20,7 +20,7 @@ namespace TeamManager.UI.Management.UserControls
         EditTeamPageService editTeamPageService;
         public Action<EditTeamPage> OnBackButtonClicked;
 
-        public EditTeamPage(IManagerDatabaseConnection connection, Team teamToEdit)
+        public EditTeamPage(IManagementDatabaseConnection connection, Team teamToEdit)
         {
             InitializeComponent();
             this.teamToEdit = teamToEdit;

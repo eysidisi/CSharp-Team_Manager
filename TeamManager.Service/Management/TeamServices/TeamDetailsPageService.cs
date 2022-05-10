@@ -10,9 +10,9 @@ namespace TeamManager.Service.Management
 {
     public class TeamDetailsPageService
     {
-        IManagerDatabaseConnection connection;
+        IManagementDatabaseConnection connection;
 
-        public TeamDetailsPageService(IManagerDatabaseConnection connection)
+        public TeamDetailsPageService(IManagementDatabaseConnection connection)
         {
             this.connection = connection;
         }

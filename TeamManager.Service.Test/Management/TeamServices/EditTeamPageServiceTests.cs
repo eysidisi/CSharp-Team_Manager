@@ -17,7 +17,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void AddUserToTheTeam_DBHasOtherUsersAddedToTeams_AddsUser()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
 
             Team team1 = new Team() { ID = 1, Name = "team1", CreationDate = "1234" };
@@ -42,7 +42,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void AddUserToTheTeam_NoEntryInDB_CantAddUser()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
             EditTeamPageService editTeamPageService = new EditTeamPageService(connection.Object);
 
@@ -57,7 +57,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void AddUserToTheTeam_UserIsAlreadyInTheTeam_CantAddUser()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
 
             Team teamToAdd = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -78,7 +78,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void AddUserToTheTeam_UserExistsInDBTeamDoesNot_CantAddUser()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
 
             Team teamToAddTheUser = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -97,7 +97,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void RemoveUserFromTheTeam_UserIsInTheTeam_RemovesUser()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
 
             Team teamToRemoveFrom = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -121,7 +121,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void RemoveUserFromTheTeam_UserIsNotInTheTeam_CantRemoveUser()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
 
             Team teamToRemoveFrom = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -147,7 +147,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void GetUsersInTeam_TeamHasNoUsers_ReturnsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
 
             Team team1 = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -172,7 +172,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void GetUsersInTeam_NoUserExistsInDB_ReturnsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
 
             Team team1 = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -193,7 +193,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void GetUsersInTeam_NoUserIsInTeams_ReturnsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
 
             Team team1 = new Team() { ID = 1, Name = "team", CreationDate = "1234" };

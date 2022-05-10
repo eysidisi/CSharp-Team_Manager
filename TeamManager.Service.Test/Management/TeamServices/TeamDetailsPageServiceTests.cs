@@ -28,7 +28,7 @@ namespace TeamManager.Service.Test.Management
             List<User> users = new List<User>() { user1, user2 };
             List<Team> teams = new List<Team>() { team1,team2 };
 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUsers()).Returns(users);
             connection.Setup(c => c.GetAllTeams()).Returns(teams);
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDToTeamIDs);
@@ -48,7 +48,7 @@ namespace TeamManager.Service.Test.Management
             // Arrange
             Team team1 = new Team() { Name = "Team1" };
 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
             TeamDetailsPageService teamDetailsPage = new TeamDetailsPageService(connection.Object);
             List<User> expectedUsers = new List<User>();
@@ -71,7 +71,7 @@ namespace TeamManager.Service.Test.Management
             List<User> users = new List<User>() { user1, user2 };
             List<Team> teams= new List<Team>() { team1 };
 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUsers()).Returns(users);
             connection.Setup(c => c.GetAllTeams()).Returns(teams);
 

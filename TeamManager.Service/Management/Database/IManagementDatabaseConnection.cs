@@ -2,7 +2,7 @@
 
 namespace TeamManager.Service.Management.Database
 {
-    public interface IManagerDatabaseConnection
+    public interface IManagementDatabaseConnection
     {
         List<User> GetAllUsers();
         void SaveUser(User user);

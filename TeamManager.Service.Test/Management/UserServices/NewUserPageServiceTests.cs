@@ -17,7 +17,7 @@ namespace TeamManager.Service.Test.Management
         public void AddUser_ValidUser_AddsUser()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             var newUserPageService = new NewUserPageService(connection.Object);
             User user = new User()
@@ -36,7 +36,7 @@ namespace TeamManager.Service.Test.Management
         public void AddUser_InvalidUser_CantAddUser()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             var newUserPageService = new NewUserPageService(connection.Object);
             User user = new User();

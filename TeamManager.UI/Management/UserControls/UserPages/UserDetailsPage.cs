@@ -19,7 +19,7 @@ namespace TeamManager.UI.Management.UserControls.UserPages
         UserDetailsPageService userDetailsPageService;
         User user;
         public Action<UserControl> OnBackButtonClicked;
-        public UserDetailsPage(IManagerDatabaseConnection connection, User user)
+        public UserDetailsPage(IManagementDatabaseConnection connection, User user)
         {
             InitializeComponent();
             userDetailsPageService = new UserDetailsPageService(connection);

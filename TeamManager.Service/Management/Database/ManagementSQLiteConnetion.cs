@@ -6,7 +6,7 @@ using TeamManager.Service.Models;
 
 namespace TeamManager.Service.Management.Database
 {
-    public class ManagementSQLiteConnetion : IManagerDatabaseConnection
+    public class ManagementSQLiteConnetion : IManagementDatabaseConnection
     {
         string connString;
         List<User> users = null;

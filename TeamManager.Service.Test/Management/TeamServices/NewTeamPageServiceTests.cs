@@ -22,7 +22,7 @@ namespace TeamManager.Service.Test.Management
                 Name = "Team1",
                 CreationDate = "123"
             };
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team> { });
             NewTeamPageService newTeamPageService = new NewTeamPageService(connection.Object);
 
@@ -39,7 +39,7 @@ namespace TeamManager.Service.Test.Management
                 Name = "Team1",
                 CreationDate = "123"
             };
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { newTeam });
 
             NewTeamPageService newTeamPageService = new NewTeamPageService(connection.Object);
@@ -56,7 +56,7 @@ namespace TeamManager.Service.Test.Management
             {
                 CreationDate = "123"
             };
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             NewTeamPageService newTeamPageService = new NewTeamPageService(connection.Object);
 

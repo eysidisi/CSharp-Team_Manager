@@ -14,7 +14,7 @@ namespace TeamManager.Service.Test.Management
         public void GetUsers_UserExistsInDB_GetsUsers()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             UserPageService userPageService = new UserPageService(connection.Object);
 
             User user = new User();
@@ -33,7 +33,7 @@ namespace TeamManager.Service.Test.Management
         public void GetUsers_NoUserExistsInDB_GetsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             UserPageService userPageService = new UserPageService(connection.Object);
 
             connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
@@ -50,7 +50,7 @@ namespace TeamManager.Service.Test.Management
         {
             // Arrange
             User user = new User();
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
@@ -77,7 +77,7 @@ namespace TeamManager.Service.Test.Management
             };
 
 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
@@ -96,7 +96,7 @@ namespace TeamManager.Service.Test.Management
         {
             // Arrange
             User user = new User();
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(false);
 
             UserPageService userPageService = new UserPageService(connection.Object);

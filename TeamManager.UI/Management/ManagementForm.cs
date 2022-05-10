@@ -14,13 +14,13 @@ namespace TeamManager.UI.Management
             CreateTeamPage(connection);
         }
 
-        private void CreateTeamPage(IManagerDatabaseConnection connection)
+        private void CreateTeamPage(IManagementDatabaseConnection connection)
         {
             TeamPage teamPage = new TeamPage(connection);
             panelTeamPage.Controls.Add(teamPage);
         }
 
-        private void CreateUserPage(IManagerDatabaseConnection connection)
+        private void CreateUserPage(IManagementDatabaseConnection connection)
         {
             UserPage userPageUser = new UserPage(connection);
             panelUserDetails.Controls.Add(userPageUser);

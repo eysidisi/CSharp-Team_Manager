@@ -14,7 +14,7 @@ namespace TeamManager.Service.Test.Management
         public void GetAllTeams_TeamsExistInDB_GetsTeams()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             List<Team> expectedTeams = new List<Team>()
             {
@@ -42,7 +42,7 @@ namespace TeamManager.Service.Test.Management
         public void GetAllTeams_TeamsDontExistInDB_ReturnsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
 
             connection.Setup(x => x.GetAllTeams()).Returns(new List<Team>());
 
@@ -65,7 +65,7 @@ namespace TeamManager.Service.Test.Management
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(true);
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
@@ -88,7 +88,7 @@ namespace TeamManager.Service.Test.Management
 
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { TeamID = 1, UserID = 1 };
 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
 
             TeamPageService teamPageService = new TeamPageService(connection.Object);
@@ -107,7 +107,7 @@ namespace TeamManager.Service.Test.Management
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
-            var connection = new Mock<IManagerDatabaseConnection>();
+            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(false);
 
             TeamPageService teamPageService = new TeamPageService(connection.Object);

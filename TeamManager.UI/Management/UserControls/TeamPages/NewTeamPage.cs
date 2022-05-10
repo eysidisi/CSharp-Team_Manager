@@ -18,7 +18,7 @@ namespace TeamManager.UI.Management.UserControls
         NewTeamPageService newTeamPageService;
         public Action<NewTeamPage> OnBackButtonClicked;
 
-        public NewTeamPage(IManagerDatabaseConnection connection)
+        public NewTeamPage(IManagementDatabaseConnection connection)
         {
             InitializeComponent();
             newTeamPageService = new NewTeamPageService(connection);
