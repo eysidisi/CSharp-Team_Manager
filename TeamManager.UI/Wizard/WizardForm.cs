@@ -20,7 +20,7 @@ namespace TeamManager.UI.Wizard
         {
             InitializeComponent();
             this.CenterToScreen();
-            connection = new WizardSQLiteConnection(connectionString);
+            connection = new WizardDatabaseManagerSQLite(connectionString);
             AdjustLoginPage();
         }
 

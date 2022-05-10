@@ -20,7 +20,7 @@ namespace TeamManager.Service.Test.Wizard
             string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
-            WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);
+            WizardDatabaseManagerSQLite dataAccess = new WizardDatabaseManagerSQLite(connectionString);
 
             // Insert manager
             Manager expectedManager = new Manager(HelperMethods.SQLiteDB.SQLiteHelperMethods.ValidManagerUserName, HelperMethods.SQLiteDB.SQLiteHelperMethods.ValidManagerPassword);
@@ -47,7 +47,7 @@ namespace TeamManager.Service.Test.Wizard
             string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
-            WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);
+            WizardDatabaseManagerSQLite dataAccess = new WizardDatabaseManagerSQLite(connectionString);
 
             // Act
             var allManagers = dataAccess.GetManagers();
@@ -66,7 +66,7 @@ namespace TeamManager.Service.Test.Wizard
             string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
 
             string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
-            WizardSQLiteConnection dataAccess = new WizardSQLiteConnection(connectionString);
+            WizardDatabaseManagerSQLite dataAccess = new WizardDatabaseManagerSQLite(connectionString);
 
             string purposeText = "A purpose text";
             string managerName = "Managername";
