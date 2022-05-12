@@ -16,16 +16,22 @@ namespace TeamManager.UI.Management.UserControls.UserPages
 {
     public partial class UserDetailsPage : UserControl
     {
+        public Action<UserControl> OnBackButtonClicked;
         UserDetailsPageService userDetailsPageService;
         User user;
-        public Action<UserControl> OnBackButtonClicked;
+
         public UserDetailsPage(IManagementDatabaseConnection connection, User user)
         {
             InitializeComponent();
+            InitializeVariables(connection, user);
+            FillUserDatatable();
+        }
+
+        private void InitializeVariables(IManagementDatabaseConnection connection, User user)
+        {
             userDetailsPageService = new UserDetailsPageService(connection);
             this.user = user;
             labelUserName.Text = user.Name;
-            FillUserDatatable();
         }
 
         private void FillUserDatatable()

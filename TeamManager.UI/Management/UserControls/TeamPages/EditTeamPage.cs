@@ -64,15 +64,7 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                User selectedUser = GetSelectedUser(dataGridViewUsers);
-                DialogResult d = MessageBox.Show($"Do you want to add user '{selectedUser.Name}' to the team?", "Add", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (d == DialogResult.No)
-                {
-                    return;
-                }
-
-                editTeamPageService.AddUserToTheTeam(selectedUser, teamToEdit);
-                FillTeamTable();
+                TryToAddSelectedUser();
             }
             catch (Exception ex)
             {
@@ -80,7 +72,20 @@ namespace TeamManager.UI.Management.UserControls
             }
         }
 
-        private User GetSelectedUser(DataGridView dataGridView)
+        private void TryToAddSelectedUser()
+        {
+            User selectedUser = TryToGetSelectedUserInDataGridView(dataGridViewUsers);
+            
+            DialogResult d = MessageBox.Show($"Do you want to add user '{selectedUser.Name}' to the team?", "Add", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+         
+            if (d == DialogResult.Yes)
+            {
+                editTeamPageService.AddUserToTheTeam(selectedUser, teamToEdit);
+                FillTeamTable();
+            }
+        }
+
+        private User TryToGetSelectedUserInDataGridView(DataGridView dataGridView)
         {
             if (dataGridView.SelectedRows.Count < 1)
             {
@@ -104,19 +109,21 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                User selectedUser = GetSelectedUser(dataGridViewTeamUsers);
-                DialogResult d = MessageBox.Show($"Do you want to remove user '{selectedUser.Name}' from the team?", "Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (d == DialogResult.No)
-                {
-                    return;
-                }
-
-                editTeamPageService.RemoveUserFromTheTeam(selectedUser, teamToEdit);
-                FillTeamTable();
+                TryToRemoveSelectedUser();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void TryToRemoveSelectedUser()
+        {
+            User selectedUser = TryToGetSelectedUserInDataGridView(dataGridViewTeamUsers);
+            DialogResult d = MessageBox.Show($"Do you want to remove user '{selectedUser.Name}' from the team?", "Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (d == DialogResult.Yes)
+            {
+                editTeamPageService.RemoveUserFromTheTeam(selectedUser, teamToEdit);
+                FillTeamTable();
             }
         }
 

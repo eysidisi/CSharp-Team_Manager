@@ -15,10 +15,15 @@ namespace TeamManager.UI.Management.UserControls
         public UserPage(IManagementDatabaseConnection connection)
         {
             InitializeComponent();
-            userPageService = new UserPageService(connection);
-            this.connection = connection;
+            InitializeVariables(connection);
             AdjustPaginationComponent();
             DisplayUsersInPage(1);
+        }
+
+        private void InitializeVariables(IManagementDatabaseConnection connection)
+        {
+            userPageService = new UserPageService(connection);
+            this.connection = connection;
         }
 
         private void AdjustPaginationComponent()
@@ -85,21 +90,22 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                User userToDelete = GetSelectedUser(dataGridViewUsers);
-
-                DialogResult d = MessageBox.Show($"Do you want to delete user '{userToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (d == DialogResult.No)
-                {
-                    return;
-                }
-
-                userPageService.DeleteUser(userToDelete);
-
-                (dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView).Delete();
+                TryToDeleteSelectedUser();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void TryToDeleteSelectedUser()
+        {
+            User userToDelete = GetSelectedUser(dataGridViewUsers);
+            DialogResult d = MessageBox.Show($"Do you want to delete user '{userToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (d == DialogResult.Yes)
+            {
+                userPageService.DeleteUser(userToDelete);
+                (dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView).Delete();
             }
         }
 

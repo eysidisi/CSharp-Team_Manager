@@ -28,14 +28,8 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                Team team = new Team()
-                {
-                    Name = textBoxTeamName.Text,
-                };
-
-                newTeamPageService.SaveTeam(team);
-                MessageBox.Show($"Team {team.Name} saved succesfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                buttonBack.PerformClick();
+                TryToSaveTeam();
+                ReturnPreviousPage();
             }
             catch (Exception ex)
             {
@@ -43,9 +37,25 @@ namespace TeamManager.UI.Management.UserControls
             }
         }
 
-        private void buttonBack_Click(object sender, EventArgs e)
+        private void TryToSaveTeam()
+        {
+            Team team = new Team()
+            {
+                Name = textBoxTeamName.Text,
+            };
+
+            newTeamPageService.SaveTeam(team);
+            MessageBox.Show($"Team {team.Name} saved succesfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ReturnPreviousPage()
         {
             OnBackButtonClicked?.Invoke(this);
+        }
+
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            ReturnPreviousPage();
         }
     }
 }

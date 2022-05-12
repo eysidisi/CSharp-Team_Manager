@@ -15,8 +15,8 @@ namespace TeamManager.UI.Management.UserControls
             InitializeComponent();
             this.connection = connection;
             teamPageService = new TeamPageService(connection);
-            DisplayTeamsInPage(1);
             AdjustPaginationComponent();
+            DisplayTeamsInPage(1);
         }
 
         private void ResizeColumns(DataGridView dataGrid)
@@ -45,7 +45,8 @@ namespace TeamManager.UI.Management.UserControls
         private void DisplayTeamsInPage(int pageNum)
         {
             int startingIndexInList = ((pageNum - 1) * NumOfTeamsPerPage);
-            Range range = new Range(startingIndexInList, startingIndexInList + NumOfTeamsPerPage);
+            int endingIndexInList = startingIndexInList + NumOfTeamsPerPage;
+            Range range = new Range(startingIndexInList, endingIndexInList);
             var teamsToDisplay = teamPageService.GetAllTeams().Take(range).ToList();
             DisplayTeams(teamsToDisplay);
         }
@@ -60,25 +61,28 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                Team teamToDelete = GetSelectedTeam(dataGridViewTeams);
-
-                DialogResult d = MessageBox.Show($"Do you want to delete team '{teamToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (d == DialogResult.No)
-                {
-                    return;
-                }
-
-                teamPageService.DeleteTeam(teamToDelete);
-                (dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView).Delete();
+                TryToDeleteSelectedTeam();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
-        private Team GetSelectedTeam(DataGridView dataGridView)
+        private void TryToDeleteSelectedTeam()
+        {
+            Team teamToDelete = GetSelectedTeamInDataGridView(dataGridViewTeams);
+            
+            DialogResult d = MessageBox.Show($"Do you want to delete team '{teamToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (d == DialogResult.Yes)
+            {
+                teamPageService.DeleteTeam(teamToDelete);
+                (dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView).Delete();
+            }
+        }
+
+        private Team GetSelectedTeamInDataGridView(DataGridView dataGridView)
         {
             if (dataGridView.SelectedRows.Count < 1)
             {
@@ -138,7 +142,7 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                Team team = GetSelectedTeam(dataGridViewTeams);
+                Team team = GetSelectedTeamInDataGridView(dataGridViewTeams);
                 var teamDetailsPageUserControl = new TeamDetailsPage(connection, team);
                 teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
                 HideAllItems();
@@ -161,7 +165,7 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                Team team = GetSelectedTeam(dataGridViewTeams);
+                Team team = GetSelectedTeamInDataGridView(dataGridViewTeams);
                 var editTeamPageUserControl = new EditTeamPage(connection, team);
                 editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
                 HideAllItems();

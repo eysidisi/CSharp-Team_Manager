@@ -19,14 +19,8 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                User user = new User();
-                user.Name = textBoxName.Text;
-                user.Surname = textBoxSurname.Text;
-                user.PhoneNumber = textBoxPhoneNumber.Text;
-                user.Title = textBoxTitle.Text;
-                newUserPageService.SaveNewUser(user);
-                MessageBox.Show($"User {user.Name} saved succesfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                buttonCancel.PerformClick();
+                TryToSaveNewUser();
+                ReturnPreviousPage();
             }
             catch (Exception ex)
             {
@@ -34,7 +28,29 @@ namespace TeamManager.UI.Management.UserControls
             }
         }
 
+        private void TryToSaveNewUser()
+        {
+            User user = GetNewUserInformation();
+            newUserPageService.SaveNewUser(user);
+            MessageBox.Show($"User {user.Name} saved succesfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private User GetNewUserInformation()
+        {
+            User user = new User();
+            user.Name = textBoxName.Text;
+            user.Surname = textBoxSurname.Text;
+            user.PhoneNumber = textBoxPhoneNumber.Text;
+            user.Title = textBoxTitle.Text;
+            return user;
+        }
+
         private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            ReturnPreviousPage();
+        }
+
+        private void ReturnPreviousPage()
         {
             OnCancelClick?.Invoke(this);
         }

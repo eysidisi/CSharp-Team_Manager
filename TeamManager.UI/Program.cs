@@ -6,9 +6,9 @@ namespace TeamManager.UI
 {
     internal static class Program
     {
-        //static string connectionString = ConfigurationManager.ConnectionStrings["TestSmallDB"].ConnectionString;
+        static string connectionString = ConfigurationManager.ConnectionStrings["TestSmallDB"].ConnectionString;
         //static string connectionString = ConfigurationManager.ConnectionStrings["TestMediumDB"].ConnectionString;
-        static string connectionString = ConfigurationManager.ConnectionStrings["TestLargeDB"].ConnectionString;
+        //static string connectionString = ConfigurationManager.ConnectionStrings["TestLargeDB"].ConnectionString;
 
         /// <summary>
         ///  The main entry point for the application.

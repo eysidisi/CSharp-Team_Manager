@@ -15,17 +15,22 @@ namespace TeamManager.UI.Management.UserControls
 {
     public partial class TeamDetailsPage : UserControl
     {
+        public Action<TeamDetailsPage> OnBackButtonClicked;
         TeamDetailsPageService pageService;
         Team team;
-        public Action<TeamDetailsPage> OnBackButtonClicked;
 
         public TeamDetailsPage(IManagementDatabaseConnection connection,Team team)
         {
             InitializeComponent();
+            InitializeVariables(connection, team);
+            FillDataGrid();
+        }
+
+        private void InitializeVariables(IManagementDatabaseConnection connection, Team team)
+        {
             pageService = new TeamDetailsPageService(connection);
             this.team = team;
-            labelTeamName.Text= team.Name;
-            FillDataGrid();
+            labelTeamName.Text = team.Name;
         }
 
         private void FillDataGrid()
