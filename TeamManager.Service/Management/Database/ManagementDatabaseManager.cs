@@ -26,8 +26,14 @@ namespace TeamManager.Service.Management.Database
 
             if (users != null)
             {
-                users.Add(user);
+                InsertUser(user);
             }
+        }
+
+        private void InsertUser(User user)
+        {
+            users.Add(user);
+            users = users.OrderBy(u => u.ID).ToList();
         }
 
         public bool DeleteUser(User user)
@@ -51,10 +57,16 @@ namespace TeamManager.Service.Management.Database
         {
             if (users == null)
             {
-                users = dbConnection.GetAll<User>().ToList();
+                FillUsersList();
             }
 
             return users;
+        }
+
+        private void FillUsersList()
+        {
+            users = dbConnection.GetAll<User>().ToList();
+            users = users.OrderBy(u => u.ID).ToList();
         }
 
         public void SaveTeam(Team team)
@@ -62,18 +74,30 @@ namespace TeamManager.Service.Management.Database
             dbConnection.Insert(team);
             if (teams != null)
             {
-                teams.Add(team);
+                InsertTeam(team);
             }
+        }
+
+        private void InsertTeam(Team team)
+        {
+            teams.Add(team);
+            teams = teams.OrderBy(t => t.ID).ToList();
         }
 
         public List<Team> GetAllTeams()
         {
             if (teams == null)
             {
-                teams = dbConnection.GetAll<Team>().ToList();
+                FillTeamsList();
             }
 
             return teams;
+        }
+
+        private void FillTeamsList()
+        {
+            teams = dbConnection.GetAll<Team>().ToList();
+            teams = teams.OrderBy(t => t.ID).ToList();
         }
 
         public bool DeleteTeam(Team team)

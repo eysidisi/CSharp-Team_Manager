@@ -8,8 +8,8 @@ namespace TeamManager.UI.Management.UserControls
 {
     public partial class UserPage : UserControl
     {
+        const int NumOfUsersPerPage = 10;
         UserPageService userPageService;
-        DataTable usersDataTable;
         IManagementDatabaseConnection connection;
 
         public UserPage(IManagementDatabaseConnection connection)
@@ -17,13 +17,34 @@ namespace TeamManager.UI.Management.UserControls
             InitializeComponent();
             userPageService = new UserPageService(connection);
             this.connection = connection;
-            FillDataGrid();
+            AdjustPaginationComponent();
+            DisplayUsersInPage(1);
         }
 
-        private void FillDataGrid()
+        private void AdjustPaginationComponent()
         {
-            var allUsers = userPageService.GetUsers();
-            usersDataTable = HelperFunctions.ConvertToDatatable(allUsers);
+            int maxNumOfPages = (int)Math.Ceiling(userPageService.GetUsers().Count / ((double)NumOfUsersPerPage));
+            maxNumOfPages = Math.Max(maxNumOfPages, 1);
+            paginationComponent.SetMaxPageNum(maxNumOfPages);
+            paginationComponent.OnCurrentPageNumChanged += PageNumChanged;
+        }
+
+        private void PageNumChanged(int pageNum)
+        {
+            DisplayUsersInPage(pageNum);
+        }
+
+        private void DisplayUsersInPage(int pageNum)
+        {
+            int startingIndexInList = ((pageNum - 1) * NumOfUsersPerPage);
+            Range range = new Range(startingIndexInList, startingIndexInList + NumOfUsersPerPage);
+            var usersToDisplay = userPageService.GetUsers().Take(range).ToList();
+            DisplayUsersInDataGridView(usersToDisplay);
+        }
+
+        private void DisplayUsersInDataGridView(List<User> usersToShowInPage)
+        {
+            var usersDataTable = HelperFunctions.ConvertToDatatable(usersToShowInPage);
             dataGridViewUsers.DataSource = usersDataTable;
             ResizeColumns(dataGridViewUsers);
         }
@@ -48,7 +69,7 @@ namespace TeamManager.UI.Management.UserControls
         private void OnBackButtonClicked(UserControl userControl)
         {
             userControl.Dispose();
-            FillDataGrid();
+            DisplayUsersInPage(paginationComponent.CurrentPageNumber);
             ExposeAllItems();
         }
 

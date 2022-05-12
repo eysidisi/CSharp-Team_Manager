@@ -17,8 +17,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void AddUserToTheTeam_UserAndTeamExists_AddsUserToTheTeam()
         {
             // Arrange
-            EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
-
             Team team = new Team() { Name = "team", ID = 1 };
             User user = new User() { Name = "user", ID = 1 };
 
@@ -27,6 +25,8 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(team);
                 cnn.Insert(user);
             }
+
+            EditTeamPageService editTeamPageService = new EditTeamPageService(connection);
 
             // Act
             editTeamPageService.AddUserToTheTeam(user, team);

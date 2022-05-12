@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridViewUsers = new System.Windows.Forms.DataGridView();
             this.buttonDeleteUser = new System.Windows.Forms.Button();
             this.buttonAddUser = new System.Windows.Forms.Button();
             this.buttonUserDetails = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.paginationComponent = new TeamManager.UI.Management.Pagination.PaginationComponent();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,14 +45,14 @@
             this.dataGridViewUsers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewUsers.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewUsers.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewUsers.Location = new System.Drawing.Point(2, 50);
             this.dataGridViewUsers.MultiSelect = false;
             this.dataGridViewUsers.Name = "dataGridViewUsers";
@@ -76,7 +77,7 @@
             // buttonAddUser
             // 
             this.buttonAddUser.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonAddUser.Location = new System.Drawing.Point(79, 415);
+            this.buttonAddUser.Location = new System.Drawing.Point(3, 415);
             this.buttonAddUser.Name = "buttonAddUser";
             this.buttonAddUser.Size = new System.Drawing.Size(150, 50);
             this.buttonAddUser.TabIndex = 2;
@@ -87,7 +88,7 @@
             // buttonUserDetails
             // 
             this.buttonUserDetails.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonUserDetails.Location = new System.Drawing.Point(391, 415);
+            this.buttonUserDetails.Location = new System.Drawing.Point(467, 415);
             this.buttonUserDetails.Name = "buttonUserDetails";
             this.buttonUserDetails.Size = new System.Drawing.Size(150, 50);
             this.buttonUserDetails.TabIndex = 3;
@@ -105,10 +106,19 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Users";
             // 
+            // paginationComponent
+            // 
+            this.paginationComponent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.paginationComponent.Location = new System.Drawing.Point(3, 471);
+            this.paginationComponent.Name = "paginationComponent";
+            this.paginationComponent.Size = new System.Drawing.Size(614, 96);
+            this.paginationComponent.TabIndex = 5;
+            // 
             // UserPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.paginationComponent);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonUserDetails);
             this.Controls.Add(this.dataGridViewUsers);
@@ -129,5 +139,6 @@
         private Button buttonAddUser;
         private Button buttonUserDetails;
         private Label label1;
+        private Pagination.PaginationComponent paginationComponent;
     }
 }

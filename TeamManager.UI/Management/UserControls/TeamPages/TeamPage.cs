@@ -7,6 +7,7 @@ namespace TeamManager.UI.Management.UserControls
 {
     public partial class TeamPage : UserControl
     {
+        const int NumOfTeamsPerPage = 10;
         TeamPageService teamPageService;
         IManagementDatabaseConnection connection;
         public TeamPage(IManagementDatabaseConnection connection)
@@ -14,15 +15,8 @@ namespace TeamManager.UI.Management.UserControls
             InitializeComponent();
             this.connection = connection;
             teamPageService = new TeamPageService(connection);
-            FillTeamsTable();
-        }
-
-        private void FillTeamsTable()
-        {
-            var teams = teamPageService.GetAllTeams();
-            var teamsDataTable = HelperFunctions.ConvertToDatatable(teams);
-            dataGridViewTeams.DataSource = teamsDataTable;
-            ResizeColumns(dataGridViewTeams);
+            DisplayTeamsInPage(1);
+            AdjustPaginationComponent();
         }
 
         private void ResizeColumns(DataGridView dataGrid)
@@ -35,12 +29,39 @@ namespace TeamManager.UI.Management.UserControls
             }
         }
 
+        private void AdjustPaginationComponent()
+        {
+            int maxNumOfPages = (int)Math.Ceiling(teamPageService.GetAllTeams().Count / ((double)NumOfTeamsPerPage));
+            maxNumOfPages = Math.Max(maxNumOfPages, 1);
+            paginationComponent.SetMaxPageNum(maxNumOfPages);
+            paginationComponent.OnCurrentPageNumChanged += PageNumChanged;
+        }
+
+        private void PageNumChanged(int pageNum)
+        {
+            DisplayTeamsInPage(pageNum);
+        }
+
+        private void DisplayTeamsInPage(int pageNum)
+        {
+            int startingIndexInList = ((pageNum - 1) * NumOfTeamsPerPage);
+            Range range = new Range(startingIndexInList, startingIndexInList + NumOfTeamsPerPage);
+            var teamsToDisplay = teamPageService.GetAllTeams().Take(range).ToList();
+            DisplayTeams(teamsToDisplay);
+        }
+        private void DisplayTeams(List<Team> teamsToShowInPage)
+        {
+            var teamsDataTable = HelperFunctions.ConvertToDatatable(teamsToShowInPage);
+            dataGridViewTeams.DataSource = teamsDataTable;
+            ResizeColumns(dataGridViewTeams);
+        }
+
         private void buttonDeleteTeam_Click(object sender, EventArgs e)
         {
             try
             {
                 Team teamToDelete = GetSelectedTeam(dataGridViewTeams);
-                
+
                 DialogResult d = MessageBox.Show($"Do you want to delete team '{teamToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (d == DialogResult.No)
                 {
@@ -92,7 +113,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void OpenNewTeamPage()
         {
-           var newTeamPageUserControl = new NewTeamPage(connection);
+            var newTeamPageUserControl = new NewTeamPage(connection);
             newTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(newTeamPageUserControl);
         }
@@ -133,7 +154,7 @@ namespace TeamManager.UI.Management.UserControls
         {
             pageToClose.Dispose();
             ExposeAllItems();
-            FillTeamsTable();
+            DisplayTeamsInPage(paginationComponent.CurrentPageNumber);
         }
 
         private void buttonEditTeam_Click(object sender, EventArgs e)

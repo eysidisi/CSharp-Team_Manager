@@ -35,6 +35,7 @@
             this.buttonTeamDetails = new System.Windows.Forms.Button();
             this.buttonEditTeam = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.paginationComponent = new TeamManager.UI.Management.Pagination.PaginationComponent();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTeams)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,10 +118,19 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Teams";
             // 
+            // paginationComponent
+            // 
+            this.paginationComponent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.paginationComponent.Location = new System.Drawing.Point(3, 471);
+            this.paginationComponent.Name = "paginationComponent";
+            this.paginationComponent.Size = new System.Drawing.Size(611, 99);
+            this.paginationComponent.TabIndex = 7;
+            // 
             // TeamPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.paginationComponent);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonEditTeam);
             this.Controls.Add(this.buttonTeamDetails);
@@ -143,5 +153,6 @@
         private Button buttonTeamDetails;
         private Button buttonEditTeam;
         private Label label1;
+        private Pagination.PaginationComponent paginationComponent;
     }
 }
