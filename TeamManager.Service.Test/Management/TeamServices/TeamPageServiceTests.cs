@@ -10,12 +10,19 @@ namespace TeamManager.Service.Test.Management
 {
     public class TeamPageServiceTests
     {
+        Mock<IManagementDatabaseConnection> connection;
+        TeamPageService teamPageService;
+
+        public TeamPageServiceTests()
+        {
+            connection = new Mock<IManagementDatabaseConnection>();
+            teamPageService = new TeamPageService(connection.Object);
+        }
+
         [Fact]
         public void GetAllTeams_TeamsExistInDB_GetsTeams()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-
             List<Team> expectedTeams = new List<Team>()
             {
                 new Team()
@@ -30,8 +37,6 @@ namespace TeamManager.Service.Test.Management
 
             connection.Setup(x => x.GetAllTeams()).Returns(expectedTeams);
 
-            TeamPageService teamPageService = new TeamPageService(connection.Object);
-
             // Act
             List<Team> actualTeams = teamPageService.GetAllTeams();
 
@@ -42,11 +47,7 @@ namespace TeamManager.Service.Test.Management
         public void GetAllTeams_TeamsDontExistInDB_ReturnsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-
             connection.Setup(x => x.GetAllTeams()).Returns(new List<Team>());
-
-            TeamPageService teamPageService = new TeamPageService(connection.Object);
 
             // Act
             List<Team> actualTeams = teamPageService.GetAllTeams();
@@ -59,24 +60,24 @@ namespace TeamManager.Service.Test.Management
         public void DeleteTeam_TeamExistInDB_DeletesTeam()
         {
             // Arrange
-            Team team = new Team()
+            Team expectedTeamToDelete = new Team()
             {
                 Name = "Team1",
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
-            var connection = new Mock<IManagementDatabaseConnection>();
-            connection.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(true);
+            connection.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == expectedTeamToDelete))).Returns(true);
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
-            TeamPageService teamPageService = new TeamPageService(connection.Object);
+            // Act 
+            teamPageService.DeleteTeam(expectedTeamToDelete);
 
-            // Act && Assert
-            teamPageService.DeleteTeam(team);
+            // Assert
+            connection.Verify(c => c.DeleteTeam(It.Is<Team>(actualTeamToDelete => actualTeamToDelete.Equals(expectedTeamToDelete))));
         }
 
         [Fact]
-        public void DeleteTeam_TeamHasMembers_DeletesTeam()
+        public void DeleteTeam_TeamHasMembers_ThrowsException()
         {
             // Arrange
             Team team = new Team()
@@ -88,17 +89,14 @@ namespace TeamManager.Service.Test.Management
 
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { TeamID = 1, UserID = 1 };
 
-            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
-
-            TeamPageService teamPageService = new TeamPageService(connection.Object);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));
         }
 
         [Fact]
-        public void DeleteTeam_TeamDoesntExistInDB_CantDeleteTeam()
+        public void DeleteTeam_TeamDoesntExistInDB_ThrowsException()
         {
             // Arrange
             Team team = new Team()
@@ -107,10 +105,7 @@ namespace TeamManager.Service.Test.Management
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
-            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(false);
-
-            TeamPageService teamPageService = new TeamPageService(connection.Object);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));

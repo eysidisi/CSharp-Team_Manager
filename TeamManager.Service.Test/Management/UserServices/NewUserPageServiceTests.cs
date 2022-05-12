@@ -13,14 +13,21 @@ namespace TeamManager.Service.Test.Management
 {
     public class NewUserPageServiceTests
     {
+        Mock<IManagementDatabaseConnection> connection;
+
+        NewUserPageService newUserPageService;
+
+        public NewUserPageServiceTests()
+        {
+            connection = new Mock<IManagementDatabaseConnection>();
+            newUserPageService = new NewUserPageService(connection.Object);
+        }
+
         [Fact]
         public void AddUser_ValidUser_AddsUser()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-
-            var newUserPageService = new NewUserPageService(connection.Object);
-            User user = new User()
+            User expectedUserToSave = new User()
             {
                 Name = "name",
                 CreationDate = "123",
@@ -29,16 +36,17 @@ namespace TeamManager.Service.Test.Management
                 Title = "title"
             };
 
-            // Act && Assert
-            newUserPageService.SaveNewUser(user);
+            // Act 
+            newUserPageService.SaveNewUser(expectedUserToSave);
+
+            // Assert
+            connection.Verify(c => c.SaveUser(It.Is<User>(actualUserToSave => actualUserToSave.Equals(expectedUserToSave))));
         }
+
         [Fact]
-        public void AddUser_InvalidUser_CantAddUser()
+        public void AddUser_InvalidUser_ThrowsException()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-
-            var newUserPageService = new NewUserPageService(connection.Object);
             User user = new User();
 
             // Act && Assert

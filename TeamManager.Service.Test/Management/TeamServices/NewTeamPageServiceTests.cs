@@ -13,25 +13,37 @@ namespace TeamManager.Service.Test.Management
 {
     public class NewTeamPageServiceTests
     {
+        Mock<IManagementDatabaseConnection> connection;
+        NewTeamPageService newTeamPageService;
+
+        public NewTeamPageServiceTests()
+        {
+            connection = new Mock<IManagementDatabaseConnection>();
+            newTeamPageService = new NewTeamPageService(connection.Object);
+        }
+
         [Fact]
         public void SaveTeam_EmptyDB_SavesTeam()
         {
             // Arrange
-            Team newTeam = new Team()
+            Team teamToSave = new Team()
             {
+                ID = 1,
                 Name = "Team1",
                 CreationDate = "123"
             };
-            var connection = new Mock<IManagementDatabaseConnection>();
-            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team> { });
-            NewTeamPageService newTeamPageService = new NewTeamPageService(connection.Object);
 
-            // Act && Assert
-            newTeamPageService.SaveTeam(newTeam);
+            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team> { });
+
+            // Act 
+            newTeamPageService.SaveTeam(teamToSave);
+
+            // Assert
+            connection.Verify(c => c.SaveTeam(It.Is<Team>(actualSavedTeam => actualSavedTeam.Equals(teamToSave))));
         }
 
         [Fact]
-        public void SaveTeam_TeamAlreadyExists_CantSaveTeam()
+        public void SaveTeam_TeamAlreadyExists_ThrowsException()
         {
             // Arrange
             Team newTeam = new Team()
@@ -39,26 +51,21 @@ namespace TeamManager.Service.Test.Management
                 Name = "Team1",
                 CreationDate = "123"
             };
-            var connection = new Mock<IManagementDatabaseConnection>();
+            
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { newTeam });
-
-            NewTeamPageService newTeamPageService = new NewTeamPageService(connection.Object);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => newTeamPageService.SaveTeam(newTeam));
         }
 
         [Fact]
-        public void SaveTeam_InvalidTeam_CantSaveTeam()
+        public void SaveTeam_InvalidTeam_ThrowsException()
         {
             // Arrange
             Team newTeam = new Team()
             {
                 CreationDate = "123"
             };
-            var connection = new Mock<IManagementDatabaseConnection>();
-
-            NewTeamPageService newTeamPageService = new NewTeamPageService(connection.Object);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => newTeamPageService.SaveTeam(newTeam));

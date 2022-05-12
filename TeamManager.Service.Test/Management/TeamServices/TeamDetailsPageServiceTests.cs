@@ -13,8 +13,17 @@ namespace TeamManager.Service.Test.Management
 {
     public class TeamDetailsPageServiceTests
     {
+        Mock<IManagementDatabaseConnection> connection;
+        TeamDetailsPageService teamDetailsPage;
+
+        public TeamDetailsPageServiceTests()
+        {
+            connection = new Mock<IManagementDatabaseConnection>();
+            teamDetailsPage = new TeamDetailsPageService(connection.Object);
+        }
+
         [Fact]
-        public void GetUsersInTheTeam_GetsUsers()
+        public void GetUsersInTheTeam_TeamsExistInDB_GetsUsers()
         {
             // Arrange
             User user1 = new User() { ID = 1, Name = "ali" };
@@ -26,14 +35,12 @@ namespace TeamManager.Service.Test.Management
 
             List<UserIDToTeamID> userIDToTeamIDs = new List<UserIDToTeamID>() { userIDToTeamID1, userIDToTeamID2 };
             List<User> users = new List<User>() { user1, user2 };
-            List<Team> teams = new List<Team>() { team1,team2 };
+            List<Team> teams = new List<Team>() { team1, team2 };
 
-            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUsers()).Returns(users);
             connection.Setup(c => c.GetAllTeams()).Returns(teams);
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDToTeamIDs);
 
-            TeamDetailsPageService teamDetailsPage = new TeamDetailsPageService(connection.Object);
             List<User> expectedUsers = new List<User>() { user1 };
 
             // Act
@@ -42,26 +49,23 @@ namespace TeamManager.Service.Test.Management
             // Assert
             Assert.Equal(expectedUsers, actualUsers);
         }
+        
         [Fact]
-        public void GetUsersInTheTeam_NoUsersInTheDB()
+        public void GetUsersInTheTeam_NoUsersInTheDB_ReturnsEmptyList()
         {
             // Arrange
             Team team1 = new Team() { Name = "Team1" };
-
-            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
-            TeamDetailsPageService teamDetailsPage = new TeamDetailsPageService(connection.Object);
-            List<User> expectedUsers = new List<User>();
 
             // Act
             List<User> actualUsers = teamDetailsPage.GetUsersInTeam(team1);
 
             // Assert
-            Assert.Equal(expectedUsers, actualUsers);
+            Assert.Empty(actualUsers);
         }
 
         [Fact]
-        public void GetUsersInTheTeam_NoUsersInTheTeam()
+        public void GetUsersInTheTeam_NoUsersInTheTeam_ReturnsEmptyList()
         {
             // Arrange
             User user1 = new User() { Name = "ali" };
@@ -69,20 +73,16 @@ namespace TeamManager.Service.Test.Management
             Team team1 = new Team() { Name = "Team1" };
 
             List<User> users = new List<User>() { user1, user2 };
-            List<Team> teams= new List<Team>() { team1 };
+            List<Team> teams = new List<Team>() { team1 };
 
-            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUsers()).Returns(users);
             connection.Setup(c => c.GetAllTeams()).Returns(teams);
-
-            TeamDetailsPageService teamDetailsPage = new TeamDetailsPageService(connection.Object);
-            List<User> expectedUsers = new List<User>();
 
             // Act
             List<User> actualUsers = teamDetailsPage.GetUsersInTeam(team1);
 
             // Assert
-            Assert.Equal(expectedUsers, actualUsers);
+            Assert.Empty(actualUsers);
         }
     }
 }

@@ -13,13 +13,18 @@ namespace TeamManager.Service.Test.Management.TeamServices
 {
     public class EditTeamPageServiceTests
     {
+        Mock<IManagementDatabaseConnection> connection;
+        EditTeamPageService editTeamPageService;
+        public EditTeamPageServiceTests()
+        {
+            connection = new Mock<IManagementDatabaseConnection>();
+            editTeamPageService = new EditTeamPageService(connection.Object);
+        }
+
         [Fact]
         public void AddUserToTheTeam_DBHasOtherUsersAddedToTeams_AddsUser()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
-
             Team team1 = new Team() { ID = 1, Name = "team1", CreationDate = "1234" };
             User user1InTeam1 = new User() { ID = 2, Name = "user", CreationDate = "1234" };
             User userToAddToTeam1 = new User() { ID = 1, Name = "user", CreationDate = "1234" };
@@ -34,17 +39,22 @@ namespace TeamManager.Service.Test.Management.TeamServices
             connection.Setup(c => c.GetAllUsers()).Returns(new List<User>() { userToAddToTeam1, user1InTeam1, user2InTeam2 });
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team> { team1, team2 });
 
-            // Act && Assert
-            editTeamPage.AddUserToTheTeam(userToAddToTeam1, team1);
+            UserIDToTeamID expectedUserToTeamID = new UserIDToTeamID() { ID = 0, TeamID = team1.ID, UserID = userToAddToTeam1.ID };
+
+            // Act 
+            editTeamPageService.AddUserToTheTeam(userToAddToTeam1, team1);
+
+            // Assert
+            connection.Verify(c => 
+            c.SaveUserIDToTeamID(It.Is<UserIDToTeamID>(actualUserToTeamID => 
+            actualUserToTeamID.Equals(expectedUserToTeamID))));
         }
 
         [Fact]
-        public void AddUserToTheTeam_NoEntryInDB_CantAddUser()
+        public void AddUserToTheTeam_NoEntryInDB_ThrowsException()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
-            EditTeamPageService editTeamPageService = new EditTeamPageService(connection.Object);
 
             Team teamToAdd = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
             User userToAdd = new User() { ID = 1, Name = "user", CreationDate = "1234" };
@@ -54,12 +64,9 @@ namespace TeamManager.Service.Test.Management.TeamServices
         }
 
         [Fact]
-        public void AddUserToTheTeam_UserIsAlreadyInTheTeam_CantAddUser()
+        public void AddUserToTheTeam_UserIsAlreadyInTheTeam_ThrowsException()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
-
             Team teamToAdd = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
             User userToAdd = new User() { ID = 1, Name = "user", CreationDate = "1234" };
 
@@ -71,16 +78,13 @@ namespace TeamManager.Service.Test.Management.TeamServices
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team> { teamToAdd });
 
             // Act && Assert
-            Assert.Throws<ArgumentException>(() => editTeamPage.AddUserToTheTeam(userToAdd, teamToAdd));
+            Assert.Throws<ArgumentException>(() => editTeamPageService.AddUserToTheTeam(userToAdd, teamToAdd));
         }
 
         [Fact]
-        public void AddUserToTheTeam_UserExistsInDBTeamDoesNot_CantAddUser()
+        public void AddUserToTheTeam_UserExistsInDBTeamDoesNot_ThrowsException()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
-
             Team teamToAddTheUser = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
             User userToAdd = new User() { ID = 1, Name = "user", CreationDate = "1234" };
 
@@ -89,7 +93,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(Enumerable.Empty<UserIDToTeamID>().ToList());
 
             // Act && Assert
-            Assert.Throws<ArgumentException>(() => editTeamPage.AddUserToTheTeam(userToAdd, teamToAddTheUser));
+            Assert.Throws<ArgumentException>(() => editTeamPageService.AddUserToTheTeam(userToAdd, teamToAddTheUser));
         }
 
 
@@ -97,33 +101,34 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void RemoveUserFromTheTeam_UserIsInTheTeam_RemovesUser()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
-
             Team teamToRemoveFrom = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
             User userToRemove = new User() { ID = 1, Name = "user", CreationDate = "1234" };
 
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = userToRemove.ID, TeamID = teamToRemoveFrom.ID };
             List<UserIDToTeamID> userIDsToTeamIDs = new List<UserIDToTeamID>() { userIDToTeamID };
             List<User> users = new List<User>() { userToRemove };
-            List<Team> teams= new List<Team>() { teamToRemoveFrom };
+            List<Team> teams = new List<Team>() { teamToRemoveFrom };
 
             connection.Setup(c => c.GetAllTeams()).Returns(teams);
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDsToTeamIDs);
             connection.Setup(c => c.GetAllUsers()).Returns(users);
             connection.Setup(c => c.DeleteUserIDToTeamID(userIDToTeamID)).Returns(true);
 
-            // Act && Assert
-            editTeamPage.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom);
+            UserIDToTeamID expectedUserToTeamID = new UserIDToTeamID() { ID = 1, TeamID = teamToRemoveFrom.ID, UserID = userToRemove.ID };
+            
+            // Act
+            editTeamPageService.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom);
+
+            // Assert
+            connection.Verify(c => 
+            c.DeleteUserIDToTeamID(It.Is<UserIDToTeamID>(actualUserToTeamID => 
+            actualUserToTeamID.Equals(expectedUserToTeamID))));
         }
 
         [Fact]
-        public void RemoveUserFromTheTeam_UserIsNotInTheTeam_CantRemoveUser()
+        public void RemoveUserFromTheTeam_UserIsNotInTheTeam_ThrowsException()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
-
             Team teamToRemoveFrom = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
             Team team2 = new Team() { ID = 2, Name = "team2", CreationDate = "1234" };
             User userToRemove = new User() { ID = 1, Name = "user", CreationDate = "1234" };
@@ -140,16 +145,13 @@ namespace TeamManager.Service.Test.Management.TeamServices
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() =>
-            editTeamPage.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom));
+            editTeamPageService.RemoveUserFromTheTeam(userToRemove, teamToRemoveFrom));
         }
 
         [Fact]
         public void GetUsersInTeam_TeamHasNoUsers_ReturnsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
-
             Team team1 = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
             Team team2 = new Team() { ID = 2, Name = "team2", CreationDate = "1234" };
             User user = new User() { ID = 1, Name = "user", CreationDate = "1234" };
@@ -162,7 +164,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
 
             // Act 
-            var users = editTeamPage.GetUsersInTeam(team1);
+            var users = editTeamPageService.GetUsersInTeam(team1);
 
             // Assert
             Assert.Empty(users);
@@ -172,9 +174,6 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void GetUsersInTeam_NoUserExistsInDB_ReturnsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
-
             Team team1 = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
             Team team2 = new Team() { ID = 2, Name = "team2", CreationDate = "1234" };
 
@@ -183,7 +182,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
 
             // Act 
-            var users = editTeamPage.GetUsersInTeam(team1);
+            var users = editTeamPageService.GetUsersInTeam(team1);
 
             // Assert
             Assert.Empty(users);
@@ -193,9 +192,6 @@ namespace TeamManager.Service.Test.Management.TeamServices
         public void GetUsersInTeam_NoUserIsInTeams_ReturnsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            EditTeamPageService editTeamPage = new EditTeamPageService(connection.Object);
-
             Team team1 = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
             Team team2 = new Team() { ID = 2, Name = "team2", CreationDate = "1234" };
             User user = new User() { ID = 1, Name = "asda" };
@@ -205,7 +201,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
 
             // Act 
-            var users = editTeamPage.GetUsersInTeam(team1);
+            var users = editTeamPageService.GetUsersInTeam(team1);
 
             // Assert
             Assert.Empty(users);

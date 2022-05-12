@@ -10,13 +10,19 @@ namespace TeamManager.Service.Test.Management
 {
     public class UserPageServiceTests
     {
+        Mock<IManagementDatabaseConnection> connection;
+        UserPageService userPageService;
+
+        public UserPageServiceTests()
+        {
+            connection = new Mock<IManagementDatabaseConnection>();
+            userPageService = new UserPageService(connection.Object);
+        }
+
         [Fact]
         public void GetUsers_UserExistsInDB_GetsUsers()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            UserPageService userPageService = new UserPageService(connection.Object);
-
             User user = new User();
             var expectedUsers = new List<User>() { user };
 
@@ -33,9 +39,6 @@ namespace TeamManager.Service.Test.Management
         public void GetUsers_NoUserExistsInDB_GetsEmptyList()
         {
             // Arrange
-            var connection = new Mock<IManagementDatabaseConnection>();
-            UserPageService userPageService = new UserPageService(connection.Object);
-
             connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
 
             // Act
@@ -49,40 +52,26 @@ namespace TeamManager.Service.Test.Management
         public void DeleteUser_UserExistsInDBUserIsInNoTeam_DeletesUser()
         {
             // Arrange
-            User user = new User();
-            var connection = new Mock<IManagementDatabaseConnection>();
+            User user = new User() { ID = 1, Name = "user" };
             connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
-            UserPageService userPageService = new UserPageService(connection.Object);
-
-            // Act && Assert
+            // Act 
             userPageService.DeleteUser(user);
+
+            // Assert
+            connection.Verify(c => c.DeleteUser(It.Is<User>(actualDeletedUser => actualDeletedUser.Equals(user))));
         }
 
         [Fact]
         public void DeleteUser_UserExistsInDBUserIsInTeam_DeletesUser()
         {
             // Arrange
-            User user = new User()
-            {
-                ID = 1,
-                Name = "user"
-            };
-
-            var userIDToTeamID = new UserIDToTeamID()
-            {
-                TeamID = 1,
-                UserID = 1
-            };
-
-
-            var connection = new Mock<IManagementDatabaseConnection>();
+            User user = new User() { ID = 1, Name = "user" };
+            var userIDToTeamID = new UserIDToTeamID() { TeamID = 1, UserID = 1 };
 
             connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
-
-            UserPageService userPageService = new UserPageService(connection.Object);
 
             // Act 
             userPageService.DeleteUser(user);
@@ -92,14 +81,11 @@ namespace TeamManager.Service.Test.Management
         }
 
         [Fact]
-        public void DeleteUser_UserDoesntExistInDB_CantDeleteUser()
+        public void DeleteUser_UserDoesntExistInDB_ThrowsException()
         {
             // Arrange
             User user = new User();
-            var connection = new Mock<IManagementDatabaseConnection>();
             connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(false);
-
-            UserPageService userPageService = new UserPageService(connection.Object);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => userPageService.DeleteUser(user));
