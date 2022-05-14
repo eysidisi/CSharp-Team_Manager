@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamManager.Service.Management
+namespace TeamManager.Service.Management.CommonServices
 {
     public class PaginationPageService
     {
         private int maxPageNum;
-        public int CurrentPageNumber {  get; private set; }
+        public int CurrentPageNumber { get; private set; }
 
         public PaginationPageService(int maxPageNum)
         {

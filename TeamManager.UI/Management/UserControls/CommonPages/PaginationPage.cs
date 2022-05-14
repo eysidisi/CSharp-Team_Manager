@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TeamManager.Service.Management;
+using TeamManager.Service.Management.CommonServices;
 
 namespace TeamManager.UI.Management.UserControls
 {
