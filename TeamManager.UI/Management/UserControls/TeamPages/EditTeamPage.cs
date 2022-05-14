@@ -16,9 +16,10 @@ namespace TeamManager.UI.Management.UserControls
 {
     public partial class EditTeamPage : UserControl
     {
+        public Action<EditTeamPage> OnBackButtonClicked;
+        const int NumberOfElementsPerPage = 10;
         Team teamToEdit;
         EditTeamPageService editTeamPageService;
-        public Action<EditTeamPage> OnBackButtonClicked;
 
         public EditTeamPage(IManagementDatabaseConnection connection, Team teamToEdit)
         {
@@ -27,7 +28,7 @@ namespace TeamManager.UI.Management.UserControls
             editTeamPageService = new EditTeamPageService(connection);
             SetHeaderText();
             FillUsersTable();
-            FillTeamTable();
+            FillTeamUsersTable();
         }
 
         private void SetHeaderText()
@@ -35,21 +36,77 @@ namespace TeamManager.UI.Management.UserControls
             labelTeamName.Text = teamToEdit.Name;
         }
 
-        private void FillTeamTable()
+        private void FillTeamUsersTable()
         {
             var allUsersInTheTeam = editTeamPageService.GetUsersInTeam(teamToEdit);
-            var usersDataTable = HelperFunctions.ConvertToDatatable(allUsersInTheTeam);
+            var numberOfMaxPages = CalculateNumberOfMaxPages(allUsersInTheTeam);
+            AdjustPaginationPageTeamUsers(numberOfMaxPages);
+            DisplayTeamUsersInPage(1);
+        }
+
+        private void DisplayTeamUsersInPage(int pageNumber)
+        {
+            var usersInTeam = editTeamPageService.GetUsersInTeam(teamToEdit);
+            Range range = GetCorrectRangeForPage(pageNumber);
+            var usersToDisplay = usersInTeam.Take(range).ToList();
+            var usersDataTable = HelperFunctions.ConvertToDatatable(usersToDisplay);
             dataGridViewTeamUsers.DataSource = usersDataTable;
-            ResizeColumns(dataGridViewTeamUsers);
+            ResizeColumns(dataGridViewAllUsers);
+        }
+
+        private void AdjustPaginationPageTeamUsers(int numberOfMaxPages)
+        {
+            paginationPageTeamUsers.SetMaxPageNum(numberOfMaxPages);
+            paginationPageTeamUsers.OnCurrentPageNumChanged += OnTeamUsersPaginationNumberChanged;
+        }
+
+        private void OnTeamUsersPaginationNumberChanged(int pageNumber)
+        {
+            DisplayTeamUsersInPage(pageNumber);
         }
 
         private void FillUsersTable()
         {
             var allUsers = editTeamPageService.GetUsers();
-            var usersDataTable = HelperFunctions.ConvertToDatatable(allUsers);
-            dataGridViewUsers.DataSource = usersDataTable;
-            ResizeColumns(dataGridViewUsers);
+            var numberOfMaxPages = CalculateNumberOfMaxPages(allUsers);
+            AdjustPaginationPageAllUsers(numberOfMaxPages);
+            DisplayAllUsersInPage(1);
         }
+
+        private void DisplayAllUsersInPage(int pageNumber)
+        {
+            var allUsers = editTeamPageService.GetUsers();
+            Range range = GetCorrectRangeForPage(pageNumber);
+            var usersToDisplay = allUsers.Take(range).ToList();
+            var usersDataTable = HelperFunctions.ConvertToDatatable(usersToDisplay);
+            dataGridViewAllUsers.DataSource = usersDataTable;
+            ResizeColumns(dataGridViewAllUsers);
+        }
+
+        private Range GetCorrectRangeForPage(int pageNumber)
+        {
+            int startingIndex = (pageNumber - 1) * NumberOfElementsPerPage;
+            int endingIndex = startingIndex + NumberOfElementsPerPage;
+            Range range = new Range(startingIndex, endingIndex);
+            return range;
+        }
+
+        private void AdjustPaginationPageAllUsers(int numberOfMaxPages)
+        {
+            paginationPageAllUsers.SetMaxPageNum(numberOfMaxPages);
+            paginationPageAllUsers.OnCurrentPageNumChanged += OnUsersPaginationNumberChanged;
+        }
+
+        private int CalculateNumberOfMaxPages(List<User> allUsers)
+        {
+            return (int)Math.Ceiling((double)allUsers.Count / (NumberOfElementsPerPage));
+        }
+
+        private void OnUsersPaginationNumberChanged(int pageNumber)
+        {
+            DisplayAllUsersInPage(pageNumber);
+        }
+
         private void ResizeColumns(DataGridView dataGrid)
         {
             int width = dataGrid.Width;
@@ -74,14 +131,14 @@ namespace TeamManager.UI.Management.UserControls
 
         private void TryToAddSelectedUser()
         {
-            User selectedUser = TryToGetSelectedUserInDataGridView(dataGridViewUsers);
-            
+            User selectedUser = TryToGetSelectedUserInDataGridView(dataGridViewAllUsers);
+
             DialogResult d = MessageBox.Show($"Do you want to add user '{selectedUser.Name}' to the team?", "Add", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-         
+
             if (d == DialogResult.Yes)
             {
                 editTeamPageService.AddUserToTheTeam(selectedUser, teamToEdit);
-                FillTeamTable();
+                FillTeamUsersTable();
             }
         }
 
@@ -123,7 +180,7 @@ namespace TeamManager.UI.Management.UserControls
             if (d == DialogResult.Yes)
             {
                 editTeamPageService.RemoveUserFromTheTeam(selectedUser, teamToEdit);
-                FillTeamTable();
+                FillTeamUsersTable();
             }
         }
 
@@ -135,7 +192,7 @@ namespace TeamManager.UI.Management.UserControls
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
             FillUsersTable();
-            FillTeamTable();
+            FillTeamUsersTable();
         }
     }
 }
