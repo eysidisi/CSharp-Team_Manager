@@ -1,6 +1,6 @@
-﻿namespace TeamManager.UI.Management.Pagination
+﻿namespace TeamManager.UI.Management.UserControls
 {
-    partial class PaginationComponent
+    partial class PaginationPage
     {
         /// <summary> 
         /// Required designer variable.

@@ -158,7 +158,6 @@ namespace TeamManager.UI.Management.UserControls
         {
             pageToClose.Dispose();
             ExposeAllItems();
-            DisplayTeamsInPage(paginationComponent.CurrentPageNumber);
         }
 
         private void buttonEditTeam_Click(object sender, EventArgs e)

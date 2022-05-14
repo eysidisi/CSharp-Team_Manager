@@ -74,7 +74,6 @@ namespace TeamManager.UI.Management.UserControls
         private void OnBackButtonClicked(UserControl userControl)
         {
             userControl.Dispose();
-            DisplayUsersInPage(paginationComponent.CurrentPageNumber);
             ExposeAllItems();
         }
 

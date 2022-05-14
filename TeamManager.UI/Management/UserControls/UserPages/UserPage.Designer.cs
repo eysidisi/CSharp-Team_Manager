@@ -34,7 +34,7 @@
             this.buttonAddUser = new System.Windows.Forms.Button();
             this.buttonUserDetails = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.paginationComponent = new TeamManager.UI.Management.Pagination.PaginationComponent();
+            this.paginationComponent = new TeamManager.UI.Management.UserControls.PaginationPage();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -139,6 +139,6 @@
         private Button buttonAddUser;
         private Button buttonUserDetails;
         private Label label1;
-        private Pagination.PaginationComponent paginationComponent;
+        private UserControls.PaginationPage paginationComponent;
     }
 }
