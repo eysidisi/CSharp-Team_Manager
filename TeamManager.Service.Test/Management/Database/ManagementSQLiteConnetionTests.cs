@@ -27,30 +27,6 @@ namespace TeamManager.Service.Test.Management
         }
 
         [Fact]
-        public void SaveUser_EmptyDB_SavesUser()
-        {
-            //Arrange
-            var user = new User()
-            {
-                ID = 1,
-                Name = "userName",
-                Surname = "userSurname"
-            };
-
-            // Act
-            managementSQLiteConnetion.SaveUser(user);
-
-            List<User> actualUsers;
-            using (var con = new SQLiteConnection(connectionString))
-            {
-                actualUsers = con.GetAll<User>().ToList();
-            }
-
-            // Assert
-            Assert.Contains(user, actualUsers);
-        }
-
-        [Fact]
         public void DeleteUser_UserExistsInTheDB_DeletesUser()
         {
             //Arrange

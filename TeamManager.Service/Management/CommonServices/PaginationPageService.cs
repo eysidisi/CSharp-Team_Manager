@@ -17,7 +17,7 @@ namespace TeamManager.Service.Management.CommonServices
             CurrentPageNumber = 1;
         }
 
-        public void SetCurrentPageNumberIntoInteger(string enteredPageNum)
+        public void SetCurrentPageNumber(string enteredPageNum)
         {
             if (IsPageNumberAnInteger(enteredPageNum) == false)
             {

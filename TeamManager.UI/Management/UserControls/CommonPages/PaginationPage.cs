@@ -41,7 +41,7 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                paginationService.SetCurrentPageNumberIntoInteger(enteredPageNum);
+                paginationService.SetCurrentPageNumber(enteredPageNum);
                 OnCurrentPageNumChanged?.Invoke(paginationService.CurrentPageNumber);
             }
             catch (Exception ex)
