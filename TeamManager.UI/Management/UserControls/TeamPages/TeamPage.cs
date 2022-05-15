@@ -7,7 +7,6 @@ namespace TeamManager.UI.Management.UserControls
 {
     public partial class TeamPage : UserControl
     {
-        const int NumOfTeamsPerPage = 10;
         TeamPageService teamPageService;
         IManagementDatabaseConnection connection;
         public TeamPage(IManagementDatabaseConnection connection)
@@ -19,21 +18,9 @@ namespace TeamManager.UI.Management.UserControls
             DisplayTeamsInPage(1);
         }
 
-        private void ResizeColumns(DataGridView dataGrid)
-        {
-            int width = dataGrid.Width;
-            int minColWidth = (int)Math.Ceiling(width / (double)dataGrid.Columns.Count);
-            for (int i = 0; i < dataGrid.Columns.Count; i++)
-            {
-                dataGrid.Columns[i].MinimumWidth = minColWidth;
-            }
-        }
-
         private void AdjustPaginationComponent()
         {
-            int maxNumOfPages = (int)Math.Ceiling(teamPageService.GetAllTeams().Count / ((double)NumOfTeamsPerPage));
-            maxNumOfPages = Math.Max(maxNumOfPages, 1);
-            paginationComponent.SetMaxPageNum(maxNumOfPages);
+            paginationComponent.SetMaxPageNum(teamPageService.MaxNumOfPages);
             paginationComponent.OnCurrentPageNumChanged += PageNumChanged;
         }
 
@@ -44,17 +31,20 @@ namespace TeamManager.UI.Management.UserControls
 
         private void DisplayTeamsInPage(int pageNum)
         {
-            int startingIndexInList = ((pageNum - 1) * NumOfTeamsPerPage);
-            int endingIndexInList = startingIndexInList + NumOfTeamsPerPage;
-            Range range = new Range(startingIndexInList, endingIndexInList);
-            var teamsToDisplay = teamPageService.GetAllTeams().Take(range).ToList();
-            DisplayTeams(teamsToDisplay);
-        }
-        private void DisplayTeams(List<Team> teamsToShowInPage)
-        {
-            var teamsDataTable = HelperFunctions.ConvertToDatatable(teamsToShowInPage);
+            List<Team> teamsToDisplay = teamPageService.GetTeamsInPage(pageNum);
+            var teamsDataTable = HelperFunctions.ConvertListToDatatable(teamsToDisplay);
             dataGridViewTeams.DataSource = teamsDataTable;
             ResizeColumns(dataGridViewTeams);
+        }
+
+        private void ResizeColumns(DataGridView dataGrid)
+        {
+            int width = dataGrid.Width;
+            int minColWidth = (int)Math.Ceiling(width / (double)dataGrid.Columns.Count);
+            for (int i = 0; i < dataGrid.Columns.Count; i++)
+            {
+                dataGrid.Columns[i].MinimumWidth = minColWidth;
+            }
         }
 
         private void buttonDeleteTeam_Click(object sender, EventArgs e)
@@ -71,35 +61,37 @@ namespace TeamManager.UI.Management.UserControls
 
         private void TryToDeleteSelectedTeam()
         {
-            Team teamToDelete = GetSelectedTeamInDataGridView(dataGridViewTeams);
-            
+            Team teamToDelete = GetSelectedTeamInDataGridView();
+
             DialogResult d = MessageBox.Show($"Do you want to delete team '{teamToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes)
             {
                 teamPageService.DeleteTeam(teamToDelete);
                 (dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView).Delete();
+                RefreshTeamsDataGridView();
             }
         }
 
-        private Team GetSelectedTeamInDataGridView(DataGridView dataGridView)
+        private Team GetSelectedTeamInDataGridView()
         {
-            if (dataGridView.SelectedRows.Count < 1)
+            if (dataGridViewTeams.SelectedRows.Count < 1)
             {
                 throw new Exception("No item is selected! Please select an item first!");
             }
 
-            DataRowView selectedRow = dataGridView.SelectedRows[0].DataBoundItem as DataRowView;
-            int selectedItemID = (int)selectedRow["ID"];
+            int selectedItemID = FindSelectedItemIDInDataGridView();
             var allTeams = teamPageService.GetAllTeams();
             var selectedItem = allTeams.Find(u => u.ID == selectedItemID);
 
-            if (selectedItem == null)
-            {
-                throw new Exception("Can't find the selected item! Please refresh the page!");
-            }
-
             return selectedItem;
+        }
+
+        private int FindSelectedItemIDInDataGridView()
+        {
+            DataRowView selectedRow = dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView;
+            int selectedItemID = (int)selectedRow["ID"];
+            return selectedItemID;
         }
 
         private void buttonAddNewTeam_Click(object sender, EventArgs e)
@@ -142,38 +134,58 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                Team team = GetSelectedTeamInDataGridView(dataGridViewTeams);
-                var teamDetailsPageUserControl = new TeamDetailsPage(connection, team);
-                teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
                 HideAllItems();
-                Controls.Add(teamDetailsPageUserControl);
+                Team team = GetSelectedTeamInDataGridView();
+                CreateTeamDetailsPage(team);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ExposeAllItems();
             }
+        }
+
+        private void CreateTeamDetailsPage(Team team)
+        {
+            var teamDetailsPageUserControl = new TeamDetailsPage(connection, team);
+            teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
+            Controls.Add(teamDetailsPageUserControl);
         }
 
         private void OnBackButtonClicked(UserControl pageToClose)
         {
             pageToClose.Dispose();
+            RefreshTeamsDataGridView();
             ExposeAllItems();
+        }
+
+        private void RefreshTeamsDataGridView()
+        {
+            teamPageService = new TeamPageService(connection);
+            AdjustPaginationComponent();
+            DisplayTeamsInPage(1);
         }
 
         private void buttonEditTeam_Click(object sender, EventArgs e)
         {
             try
             {
-                Team team = GetSelectedTeamInDataGridView(dataGridViewTeams);
-                var editTeamPageUserControl = new EditTeamPage(connection, team);
-                editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
                 HideAllItems();
-                Controls.Add(editTeamPageUserControl);
+                Team team = GetSelectedTeamInDataGridView();
+                CreateEditTeamPage(team);
             }
             catch (Exception ex)
             {
+                ExposeAllItems();
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void CreateEditTeamPage(Team team)
+        {
+            var editTeamPageUserControl = new EditTeamPage(connection, team);
+            editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
+            Controls.Add(editTeamPageUserControl);
         }
     }
 }

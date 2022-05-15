@@ -36,7 +36,7 @@ namespace TeamManager.UI.Management.UserControls
         private void FillDataGrid()
         {
             var users = pageService.GetUsersInTeam(team);
-            var usersDataTable = HelperFunctions.ConvertToDatatable(users);
+            var usersDataTable = HelperFunctions.ConvertListToDatatable(users);
             dataGridViewUsers.DataSource = usersDataTable;
             dataGridViewUsers.AutoResizeColumns();
             ResizeColumns(dataGridViewUsers);

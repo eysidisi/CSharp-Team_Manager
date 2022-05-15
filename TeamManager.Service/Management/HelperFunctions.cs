@@ -12,7 +12,7 @@ namespace TeamManager.Service.Management
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static DataTable ConvertToDatatable<T>(List<T> data)
+        public static DataTable ConvertListToDatatable<T>(List<T> data)
         {
             PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
             DataTable table = new DataTable();

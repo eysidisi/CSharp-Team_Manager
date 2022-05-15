@@ -37,7 +37,7 @@ namespace TeamManager.UI.Management.UserControls.UserPages
         private void FillUserDatatable()
         {
             var allTeams = userDetailsPageService.GetTeamsThatUserIn(user);
-            var usersDataTable = HelperFunctions.ConvertToDatatable(allTeams);
+            var usersDataTable = HelperFunctions.ConvertListToDatatable(allTeams);
             dataGridViewTeams.DataSource = usersDataTable;
             ResizeColumns(dataGridViewTeams);
         }

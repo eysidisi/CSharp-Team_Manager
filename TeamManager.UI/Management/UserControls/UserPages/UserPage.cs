@@ -49,7 +49,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void DisplayUsersInDataGridView(List<User> usersToShowInPage)
         {
-            var usersDataTable = HelperFunctions.ConvertToDatatable(usersToShowInPage);
+            var usersDataTable = HelperFunctions.ConvertListToDatatable(usersToShowInPage);
             dataGridViewUsers.DataSource = usersDataTable;
             ResizeColumns(dataGridViewUsers);
         }

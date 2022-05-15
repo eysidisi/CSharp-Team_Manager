@@ -16,6 +16,7 @@ namespace TeamManager.Service.Test.Management
         public TeamPageServiceTests()
         {
             connection = new Mock<IManagementDatabaseConnection>();
+            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
             teamPageService = new TeamPageService(connection.Object);
         }
 

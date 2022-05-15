@@ -49,7 +49,7 @@ namespace TeamManager.UI.Management.UserControls
             var usersInTeam = editTeamPageService.GetUsersInTeam(teamToEdit);
             Range range = GetCorrectRangeForPage(pageNumber);
             var usersToDisplay = usersInTeam.Take(range).ToList();
-            var usersDataTable = HelperFunctions.ConvertToDatatable(usersToDisplay);
+            var usersDataTable = HelperFunctions.ConvertListToDatatable(usersToDisplay);
             dataGridViewTeamUsers.DataSource = usersDataTable;
             ResizeColumns(dataGridViewAllUsers);
         }
@@ -78,7 +78,7 @@ namespace TeamManager.UI.Management.UserControls
             var allUsers = editTeamPageService.GetUsers();
             Range range = GetCorrectRangeForPage(pageNumber);
             var usersToDisplay = allUsers.Take(range).ToList();
-            var usersDataTable = HelperFunctions.ConvertToDatatable(usersToDisplay);
+            var usersDataTable = HelperFunctions.ConvertListToDatatable(usersToDisplay);
             dataGridViewAllUsers.DataSource = usersDataTable;
             ResizeColumns(dataGridViewAllUsers);
         }
