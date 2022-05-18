@@ -16,39 +16,25 @@ namespace TeamManager.UI.Management.UserControls
     public partial class TeamDetailsPage : UserControl
     {
         public Action<TeamDetailsPage> OnBackButtonClicked;
-        TeamDetailsPageService pageService;
-        Team team;
+        DataViewPage<User> dataViewPage;
+        TeamDetailsPageService teamDetailPageService;
 
-        public TeamDetailsPage(IManagementDatabaseConnection connection,Team team)
+        public TeamDetailsPage(IManagementDatabaseConnection connection, Team team)
         {
             InitializeComponent();
             InitializeVariables(connection, team);
-            FillDataGrid();
+            CreateDataViewPage();
         }
 
         private void InitializeVariables(IManagementDatabaseConnection connection, Team team)
         {
-            pageService = new TeamDetailsPageService(connection);
-            this.team = team;
+            teamDetailPageService = new TeamDetailsPageService(connection, team);
             labelTeamName.Text = team.Name;
         }
-
-        private void FillDataGrid()
+        private void CreateDataViewPage()
         {
-            var users = pageService.GetUsersInTeam(team);
-            var usersDataTable = HelperFunctions.ConvertListToDatatable(users);
-            dataGridViewUsers.DataSource = usersDataTable;
-            dataGridViewUsers.AutoResizeColumns();
-            ResizeColumns(dataGridViewUsers);
-        }
-        private void ResizeColumns(DataGridView dataGrid)
-        {
-            int width = dataGrid.Width;
-            int minColWidth = (int)Math.Ceiling(width / (double)dataGrid.Columns.Count);
-            for (int i = 0; i < dataGrid.Columns.Count; i++)
-            {
-                dataGrid.Columns[i].MinimumWidth = minColWidth;
-            }
+            dataViewPage = new DataViewPage<User>(panelUserssDataGridView);
+            dataViewPage.SetUpPage(teamDetailPageService.GetUsersInTeam());
         }
 
         private void buttonBack_Click(object sender, EventArgs e)

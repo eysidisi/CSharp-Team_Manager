@@ -15,26 +15,34 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 {
     public class TeamDetailsPageServiceTests:SQLiteIntegrationTestsBase
     {
+        Team temToGetDetails ;
+        TeamDetailsPageService teamDetailsPageService ;
+
+
+        public TeamDetailsPageServiceTests()
+        {
+            temToGetDetails = new Team() { Name = "team", ID = 1 };
+            teamDetailsPageService = new TeamDetailsPageService(connection,temToGetDetails);
+        }
+
         [Fact]
         public void GetUsersInTeam_TeamHasUsers_ReturnsUsers()
         {
             // Arrange
-            Team teamToAdd = new Team() { Name = "team", ID = 1 };
             User expectedUser = new User() { Name = "user", ID = 1 };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = 1, UserID = 1 };
 
             using (var cnn = new SQLiteConnection(connString))
             {
-                cnn.Insert(teamToAdd);
+                cnn.Insert(temToGetDetails);
                 cnn.Insert(expectedUser);
                 cnn.Insert(userIDToTeamID);
             }
 
             ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
-            TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
 
             // Act 
-            var actualUsers = teamDetailsPageService.GetUsersInTeam(teamToAdd);
+            var actualUsers = teamDetailsPageService.GetUsersInTeam();
             Assert.Contains(actualUsers, u => u.Name == expectedUser.Name);
         }
 
@@ -42,18 +50,17 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void GetUsersInTeam_TeamHasNoUsers_ReturnsEmptyList()
         {
             // Arrange
-            Team teamToAdd = new Team() { Name = "team", ID = 1 };
+            Team temToGetDetails = new Team() { Name = "team", ID = 1 };
 
             using (var cnn = new SQLiteConnection(connString))
             {
-                cnn.Insert(teamToAdd);
+                cnn.Insert(temToGetDetails);
             }
 
             ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
-            TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
 
             // Act 
-            var actualUsers = teamDetailsPageService.GetUsersInTeam(teamToAdd);
+            var actualUsers = teamDetailsPageService.GetUsersInTeam();
             Assert.Empty(actualUsers);
         }
 
@@ -62,12 +69,10 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         {
             // Arrange
             Team team = new Team() { Name = "team", ID = 1 };
-
             ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
-            TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
-
+            
             // Act 
-            var actualUsers = teamDetailsPageService.GetUsersInTeam(team);
+            var actualUsers = teamDetailsPageService.GetUsersInTeam();
             Assert.Empty(actualUsers);
         }
 
@@ -83,11 +88,8 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(teamInDB);
             }
 
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
-            TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
-
             // Act 
-            var actualUsers = teamDetailsPageService.GetUsersInTeam(teamNotInDB);
+            var actualUsers = teamDetailsPageService.GetUsersInTeam();
             Assert.Empty(actualUsers);
         }
 
@@ -107,11 +109,9 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(userIDToTeamID);
             }
 
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
-            TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection);
 
             // Act 
-            var actualUsers = teamDetailsPageService.GetUsersInTeam(teamNotInDB);
+            var actualUsers = teamDetailsPageService.GetUsersInTeam();
             Assert.Empty(actualUsers);
         }
     }

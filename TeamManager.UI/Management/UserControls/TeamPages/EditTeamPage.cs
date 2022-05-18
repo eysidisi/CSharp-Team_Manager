@@ -17,111 +17,56 @@ namespace TeamManager.UI.Management.UserControls
     public partial class EditTeamPage : UserControl
     {
         public Action<EditTeamPage> OnBackButtonClicked;
-        const int NumberOfElementsPerPage = 10;
-        Team teamToEdit;
         EditTeamPageService editTeamPageService;
+        DataViewPage<User> allUsersDataViewPage;
+        DataViewPage<User> teamUsersDataViewPage;
 
         public EditTeamPage(IManagementDatabaseConnection connection, Team teamToEdit)
         {
             InitializeComponent();
-            this.teamToEdit = teamToEdit;
-            editTeamPageService = new EditTeamPageService(connection);
-            SetHeaderText();
-            FillUsersTable();
-            FillTeamUsersTable();
+            editTeamPageService = new EditTeamPageService(connection, teamToEdit);
+            SetHeaderText(teamToEdit.Name);
+            CreateAllUsersDataViewPage();
+            CreateTeamUsersDataViewPage();
         }
 
-        private void SetHeaderText()
+        private void CreateTeamUsersDataViewPage()
         {
-            labelTeamName.Text = teamToEdit.Name;
+            teamUsersDataViewPage = new DataViewPage<User>(panelTeamUsersDataViewPage);
+            SetUpTeamUsersDataViewPage();
         }
 
-        private void FillTeamUsersTable()
+        private void SetUpTeamUsersDataViewPage()
         {
-            var allUsersInTheTeam = editTeamPageService.GetUsersInTeam(teamToEdit);
-            var numberOfMaxPages = CalculateNumberOfMaxPages(allUsersInTheTeam);
-            AdjustPaginationPageTeamUsers(numberOfMaxPages);
-            DisplayTeamUsersInPage(1);
+            var usersInTeam = editTeamPageService.GetUsersInTeam();
+            teamUsersDataViewPage.SetUpPage(usersInTeam);
         }
 
-        private void DisplayTeamUsersInPage(int pageNumber)
+        private void CreateAllUsersDataViewPage()
         {
-            var usersInTeam = editTeamPageService.GetUsersInTeam(teamToEdit);
-            Range range = GetCorrectRangeForPage(pageNumber);
-            var usersToDisplay = usersInTeam.Take(range).ToList();
-            var usersDataTable = HelperFunctions.ConvertListToDatatable(usersToDisplay);
-            dataGridViewTeamUsers.DataSource = usersDataTable;
-            ResizeColumns(dataGridViewAllUsers);
+            allUsersDataViewPage = new DataViewPage<User>(panelAllUsersDataViewPage);
+            SetUpAllUsersDataViewPage();
         }
 
-        private void AdjustPaginationPageTeamUsers(int numberOfMaxPages)
+        private void SetUpAllUsersDataViewPage()
         {
-            paginationPageTeamUsers.SetMaxPageNum(numberOfMaxPages);
-            paginationPageTeamUsers.OnCurrentPageNumChanged += OnTeamUsersPaginationNumberChanged;
+            var allUsers = editTeamPageService.GetAllUsers();
+            allUsersDataViewPage.SetUpPage(allUsers);
         }
 
-        private void OnTeamUsersPaginationNumberChanged(int pageNumber)
+        private void SetHeaderText(string teamName)
         {
-            DisplayTeamUsersInPage(pageNumber);
+            labelTeamName.Text = teamName;
         }
 
-        private void FillUsersTable()
-        {
-            var allUsers = editTeamPageService.GetUsers();
-            var numberOfMaxPages = CalculateNumberOfMaxPages(allUsers);
-            AdjustPaginationPageAllUsers(numberOfMaxPages);
-            DisplayAllUsersInPage(1);
-        }
-
-        private void DisplayAllUsersInPage(int pageNumber)
-        {
-            var allUsers = editTeamPageService.GetUsers();
-            Range range = GetCorrectRangeForPage(pageNumber);
-            var usersToDisplay = allUsers.Take(range).ToList();
-            var usersDataTable = HelperFunctions.ConvertListToDatatable(usersToDisplay);
-            dataGridViewAllUsers.DataSource = usersDataTable;
-            ResizeColumns(dataGridViewAllUsers);
-        }
-
-        private Range GetCorrectRangeForPage(int pageNumber)
-        {
-            int startingIndex = (pageNumber - 1) * NumberOfElementsPerPage;
-            int endingIndex = startingIndex + NumberOfElementsPerPage;
-            Range range = new Range(startingIndex, endingIndex);
-            return range;
-        }
-
-        private void AdjustPaginationPageAllUsers(int numberOfMaxPages)
-        {
-            paginationPageAllUsers.SetMaxPageNum(numberOfMaxPages);
-            paginationPageAllUsers.OnCurrentPageNumChanged += OnUsersPaginationNumberChanged;
-        }
-
-        private int CalculateNumberOfMaxPages(List<User> allUsers)
-        {
-            return (int)Math.Ceiling((double)allUsers.Count / (NumberOfElementsPerPage));
-        }
-
-        private void OnUsersPaginationNumberChanged(int pageNumber)
-        {
-            DisplayAllUsersInPage(pageNumber);
-        }
-
-        private void ResizeColumns(DataGridView dataGrid)
-        {
-            int width = dataGrid.Width;
-            int minColWidth = (int)Math.Ceiling(width / (double)dataGrid.Columns.Count);
-            for (int i = 0; i < dataGrid.Columns.Count; i++)
-            {
-                dataGrid.Columns[i].MinimumWidth = minColWidth;
-            }
-        }
 
         private void buttonAddSelectedUser_Click(object sender, EventArgs e)
         {
             try
             {
                 TryToAddSelectedUser();
+                SetUpTeamUsersDataViewPage();
+                MessageBox.Show("User added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -131,27 +76,28 @@ namespace TeamManager.UI.Management.UserControls
 
         private void TryToAddSelectedUser()
         {
-            User selectedUser = TryToGetSelectedUserInDataGridView(dataGridViewAllUsers);
+            User selectedUser = TryToGetSelectedUserInDataGridView(allUsersDataViewPage);
 
             DialogResult d = MessageBox.Show($"Do you want to add user '{selectedUser.Name}' to the team?", "Add", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes)
             {
-                editTeamPageService.AddUserToTheTeam(selectedUser, teamToEdit);
-                FillTeamUsersTable();
+                editTeamPageService.AddUserToTheTeam(selectedUser);
             }
         }
 
-        private User TryToGetSelectedUserInDataGridView(DataGridView dataGridView)
+        private User TryToGetSelectedUserInDataGridView(DataViewPage<User> dataViewPage)
         {
-            if (dataGridView.SelectedRows.Count < 1)
-            {
-                throw new Exception("No user is selected! Please select a user first!");
-            }
+            DataRowView selectedRow = dataViewPage.GetSelectedRow();
+            User selectedUser = GetUserFromTheRow(selectedRow);
+            
+            return selectedUser;
+        }
 
-            DataRowView selectedRow = dataGridView.SelectedRows[0].DataBoundItem as DataRowView;
+        private User GetUserFromTheRow(DataRowView selectedRow)
+        {
             int selectedUserId = (int)selectedRow["ID"];
-            var allUsers = editTeamPageService.GetUsers();
+            var allUsers = editTeamPageService.GetAllUsers();
             var selectedUser = allUsers.Find(u => u.ID == selectedUserId);
 
             if (selectedUser == null)
@@ -167,6 +113,8 @@ namespace TeamManager.UI.Management.UserControls
             try
             {
                 TryToRemoveSelectedUser();
+                SetUpTeamUsersDataViewPage();
+                MessageBox.Show("User removed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -175,12 +123,11 @@ namespace TeamManager.UI.Management.UserControls
         }
         private void TryToRemoveSelectedUser()
         {
-            User selectedUser = TryToGetSelectedUserInDataGridView(dataGridViewTeamUsers);
+            User selectedUser = TryToGetSelectedUserInDataGridView(teamUsersDataViewPage);
             DialogResult d = MessageBox.Show($"Do you want to remove user '{selectedUser.Name}' from the team?", "Remove", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (d == DialogResult.Yes)
             {
-                editTeamPageService.RemoveUserFromTheTeam(selectedUser, teamToEdit);
-                FillTeamUsersTable();
+                editTeamPageService.RemoveUserFromTheTeam(selectedUser);
             }
         }
 
@@ -191,8 +138,8 @@ namespace TeamManager.UI.Management.UserControls
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
-            FillUsersTable();
-            FillTeamUsersTable();
+            SetUpTeamUsersDataViewPage();
+            SetUpAllUsersDataViewPage();
         }
     }
 }

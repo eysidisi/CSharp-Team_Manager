@@ -10,18 +10,22 @@ namespace TeamManager.Service.Management.UserServices
 {
     public class UserDetailsPageService
     {
-        private IManagementDatabaseConnection connection;
+        public int NumOfTeamsPerPage = 10;
 
-        public UserDetailsPageService(IManagementDatabaseConnection connection)
+        private IManagementDatabaseConnection connection;
+        private User user;
+
+        public UserDetailsPageService(IManagementDatabaseConnection connection, User user)
         {
             this.connection = connection;
+            this.user = user;
         }
 
-        public List<Team> GetTeamsThatUserIn(User user)
+        public List<Team> GetTeamsThatUserIn()
         {
             var allUserIDToTeamIDs = connection.GetAllUserIDToTeamID();
             var allTeams = connection.GetAllTeams();
-            
+
             var teamIDs = allUserIDToTeamIDs.Where(a => a.UserID == user.ID)?.
                 Select(a => a.TeamID).ToList();
 

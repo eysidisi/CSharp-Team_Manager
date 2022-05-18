@@ -8,15 +8,28 @@ using Xunit;
 
 namespace TeamManager.Service.Test.Management.CommonServices
 {
-    public class PaginationPageServiceTests
+    public class DataViewPageServiceTests
     {
+        const int NumberOfItems = 50;
+        const int NumberOfItemsPerPage = 10;
+        DataViewPageService<object> service;
+
+        public DataViewPageServiceTests()
+        {
+            List<object> itemsToDisplay = new List<object>();
+
+            for (int i = 0; i < NumberOfItems; i++)
+            {
+                itemsToDisplay.Add(itemsToDisplay);
+            }
+
+            service = new DataViewPageService<object>(itemsToDisplay,NumberOfItemsPerPage);
+        }
 
         [Fact]
         public void SetCurrentPageNumber_InputIsValid_SetsCurrentPageNumber()
         {
             // Arrange
-            int maxPageNum = 10;
-            PaginationPageService service = new PaginationPageService(maxPageNum);
             string targetValidNumber = "5";
 
             // Act
@@ -30,20 +43,16 @@ namespace TeamManager.Service.Test.Management.CommonServices
         public void SetCurrentPageNumber_InputIsNotAnInteger_ThrowsException()
         {
             // Arrange
-            int maxPageNum = 10;
-            PaginationPageService service = new PaginationPageService(maxPageNum);
             string targetInvalidNumber = "a";
 
             // Act && Assert
-            Assert.Throws<ArgumentException>(()=> service.SetCurrentPageNumber(targetInvalidNumber));
+            Assert.Throws<ArgumentException>(() => service.SetCurrentPageNumber(targetInvalidNumber));
         }
 
         [Fact]
         public void SetCurrentPageNumber_InputIsNotInRange_ThrowsException()
         {
             // Arrange
-            int maxPageNum = 10;
-            PaginationPageService service = new PaginationPageService(maxPageNum);
             string targetInvalidNumber = "11";
 
             // Act && Assert

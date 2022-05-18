@@ -41,8 +41,11 @@ namespace TeamManager.Service.Test.Management
                 cnn.Insert(user);
             }
 
+            // Act
+            bool DeletionResult = managementSQLiteConnetion.DeleteUser(user);
+
             // Assert
-            Assert.True(managementSQLiteConnetion.DeleteUser(user));
+            Assert.True(DeletionResult);
         }
 
         [Fact]
@@ -57,8 +60,11 @@ namespace TeamManager.Service.Test.Management
             }
             var userToDelete = new User() { ID = 2 };
 
+            // Act
+            bool deletionResult = managementSQLiteConnetion.DeleteUser(userToDelete);
+
             // Assert
-            Assert.False(managementSQLiteConnetion.DeleteUser(userToDelete));
+            Assert.False(deletionResult);
         }
 
         [Fact]
@@ -153,10 +159,9 @@ namespace TeamManager.Service.Test.Management
         public void DeleteTeam_TeamDoesntExistInTheDB_CantDeleteTeam()
         {
             //Arrange
-
             var team = new Team()
             {
-                ID = 0,
+                ID = 1,
                 Name = "team",
                 CreationDate = "1234"
             };

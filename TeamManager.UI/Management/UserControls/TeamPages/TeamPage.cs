@@ -9,42 +9,24 @@ namespace TeamManager.UI.Management.UserControls
     {
         TeamPageService teamPageService;
         IManagementDatabaseConnection connection;
+        DataViewPage<Team> dataViewPage;
         public TeamPage(IManagementDatabaseConnection connection)
         {
             InitializeComponent();
             this.connection = connection;
             teamPageService = new TeamPageService(connection);
-            AdjustPaginationComponent();
-            DisplayTeamsInPage(1);
+            CreateDataViewPage();
         }
 
-        private void AdjustPaginationComponent()
+        private void CreateDataViewPage()
         {
-            paginationComponent.SetMaxPageNum(teamPageService.MaxNumOfPages);
-            paginationComponent.OnCurrentPageNumChanged += PageNumChanged;
+            dataViewPage = new DataViewPage<Team>(panelTeamsDataGridView);
+            SetUpDataViewPage();
         }
 
-        private void PageNumChanged(int pageNum)
+        private void SetUpDataViewPage()
         {
-            DisplayTeamsInPage(pageNum);
-        }
-
-        private void DisplayTeamsInPage(int pageNum)
-        {
-            List<Team> teamsToDisplay = teamPageService.GetTeamsInPage(pageNum);
-            var teamsDataTable = HelperFunctions.ConvertListToDatatable(teamsToDisplay);
-            dataGridViewTeams.DataSource = teamsDataTable;
-            ResizeColumns(dataGridViewTeams);
-        }
-
-        private void ResizeColumns(DataGridView dataGrid)
-        {
-            int width = dataGrid.Width;
-            int minColWidth = (int)Math.Ceiling(width / (double)dataGrid.Columns.Count);
-            for (int i = 0; i < dataGrid.Columns.Count; i++)
-            {
-                dataGrid.Columns[i].MinimumWidth = minColWidth;
-            }
+            dataViewPage.SetUpPage(teamPageService.GetAllTeams());
         }
 
         private void buttonDeleteTeam_Click(object sender, EventArgs e)
@@ -52,6 +34,7 @@ namespace TeamManager.UI.Management.UserControls
             try
             {
                 TryToDeleteSelectedTeam();
+                SetUpDataViewPage();
             }
             catch (Exception ex)
             {
@@ -61,35 +44,35 @@ namespace TeamManager.UI.Management.UserControls
 
         private void TryToDeleteSelectedTeam()
         {
-            Team teamToDelete = GetSelectedTeamInDataGridView();
+            Team teamToDelete = TryToGetSelectedTeamInDataGridView();
 
             DialogResult d = MessageBox.Show($"Do you want to delete team '{teamToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if (d == DialogResult.Yes)
             {
                 teamPageService.DeleteTeam(teamToDelete);
-                (dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView).Delete();
-                RefreshTeamsDataGridView();
+                dataViewPage.DeleteSelectedRow();
             }
         }
 
-        private Team GetSelectedTeamInDataGridView()
+        private Team TryToGetSelectedTeamInDataGridView()
         {
-            if (dataGridViewTeams.SelectedRows.Count < 1)
+            int selectedItemID = FindSelectedItemIDInDataGridView();
+
+            var allTeams = teamPageService.GetAllTeams();
+            var selectedTeam = allTeams.Find(u => u.ID == selectedItemID);
+            
+            if (selectedTeam == null)
             {
-                throw new Exception("No item is selected! Please select an item first!");
+                throw new Exception("Can't find the selected user! Please refresh the page!");
             }
 
-            int selectedItemID = FindSelectedItemIDInDataGridView();
-            var allTeams = teamPageService.GetAllTeams();
-            var selectedItem = allTeams.Find(u => u.ID == selectedItemID);
-
-            return selectedItem;
+            return selectedTeam;
         }
 
         private int FindSelectedItemIDInDataGridView()
         {
-            DataRowView selectedRow = dataGridViewTeams.SelectedRows[0].DataBoundItem as DataRowView;
+            DataRowView selectedRow = dataViewPage.GetSelectedRow();
             int selectedItemID = (int)selectedRow["ID"];
             return selectedItemID;
         }
@@ -135,7 +118,7 @@ namespace TeamManager.UI.Management.UserControls
             try
             {
                 HideAllItems();
-                Team team = GetSelectedTeamInDataGridView();
+                Team team = TryToGetSelectedTeamInDataGridView();
                 CreateTeamDetailsPage(team);
             }
             catch (Exception ex)
@@ -155,15 +138,8 @@ namespace TeamManager.UI.Management.UserControls
         private void OnBackButtonClicked(UserControl pageToClose)
         {
             pageToClose.Dispose();
-            RefreshTeamsDataGridView();
+            SetUpDataViewPage();
             ExposeAllItems();
-        }
-
-        private void RefreshTeamsDataGridView()
-        {
-            teamPageService = new TeamPageService(connection);
-            AdjustPaginationComponent();
-            DisplayTeamsInPage(1);
         }
 
         private void buttonEditTeam_Click(object sender, EventArgs e)
@@ -171,7 +147,7 @@ namespace TeamManager.UI.Management.UserControls
             try
             {
                 HideAllItems();
-                Team team = GetSelectedTeamInDataGridView();
+                Team team = TryToGetSelectedTeamInDataGridView();
                 CreateEditTeamPage(team);
             }
             catch (Exception ex)

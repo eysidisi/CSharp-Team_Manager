@@ -8,60 +8,27 @@ namespace TeamManager.UI.Management.UserControls
 {
     public partial class UserPage : UserControl
     {
-        const int NumOfUsersPerPage = 10;
         UserPageService userPageService;
         IManagementDatabaseConnection connection;
+        DataViewPage<User> dataViewPage;
 
         public UserPage(IManagementDatabaseConnection connection)
         {
             InitializeComponent();
-            InitializeVariables(connection);
-            AdjustPaginationComponent();
-            DisplayUsersInPage(1);
-        }
-
-        private void InitializeVariables(IManagementDatabaseConnection connection)
-        {
-            userPageService = new UserPageService(connection);
             this.connection = connection;
+            userPageService = new UserPageService(connection);
+            CreateDataViewPage();
         }
 
-        private void AdjustPaginationComponent()
+        private void CreateDataViewPage()
         {
-            int maxNumOfPages = (int)Math.Ceiling(userPageService.GetUsers().Count / ((double)NumOfUsersPerPage));
-            maxNumOfPages = Math.Max(maxNumOfPages, 1);
-            paginationComponent.SetMaxPageNum(maxNumOfPages);
-            paginationComponent.OnCurrentPageNumChanged += PageNumChanged;
+            dataViewPage = new DataViewPage<User>(panelDataViewPage);
+            SetUpDataViewPage();
         }
 
-        private void PageNumChanged(int pageNum)
+        private void SetUpDataViewPage()
         {
-            DisplayUsersInPage(pageNum);
-        }
-
-        private void DisplayUsersInPage(int pageNum)
-        {
-            int startingIndexInList = ((pageNum - 1) * NumOfUsersPerPage);
-            Range range = new Range(startingIndexInList, startingIndexInList + NumOfUsersPerPage);
-            var usersToDisplay = userPageService.GetUsers().Take(range).ToList();
-            DisplayUsersInDataGridView(usersToDisplay);
-        }
-
-        private void DisplayUsersInDataGridView(List<User> usersToShowInPage)
-        {
-            var usersDataTable = HelperFunctions.ConvertListToDatatable(usersToShowInPage);
-            dataGridViewUsers.DataSource = usersDataTable;
-            ResizeColumns(dataGridViewUsers);
-        }
-
-        private void ResizeColumns(DataGridView dataGrid)
-        {
-            int width = dataGrid.Width;
-            int minColWidth = (int)Math.Ceiling(width / (double)dataGrid.Columns.Count);
-            for (int i = 0; i < dataGrid.Columns.Count; i++)
-            {
-                dataGrid.Columns[i].MinimumWidth = minColWidth;
-            }
+            dataViewPage.SetUpPage(userPageService.GetUsers());
         }
 
         private void OpenNewUserPage()
@@ -74,6 +41,7 @@ namespace TeamManager.UI.Management.UserControls
         private void OnBackButtonClicked(UserControl userControl)
         {
             userControl.Dispose();
+            SetUpDataViewPage();
             ExposeAllItems();
         }
 
@@ -90,6 +58,7 @@ namespace TeamManager.UI.Management.UserControls
             try
             {
                 TryToDeleteSelectedUser();
+                SetUpDataViewPage();
             }
             catch (Exception ex)
             {
@@ -99,24 +68,33 @@ namespace TeamManager.UI.Management.UserControls
 
         private void TryToDeleteSelectedUser()
         {
-            User userToDelete = GetSelectedUser(dataGridViewUsers);
+            User userToDelete = TryToGetSelectedUser();
             DialogResult d = MessageBox.Show($"Do you want to delete user '{userToDelete.Name}'?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (d == DialogResult.Yes)
             {
                 userPageService.DeleteUser(userToDelete);
-                (dataGridViewUsers.SelectedRows[0].DataBoundItem as DataRowView).Delete();
+                dataViewPage.DeleteSelectedRow();
             }
         }
 
-        private User GetSelectedUser(DataGridView dataGridView)
+        private User TryToGetSelectedUser()
         {
-            if (dataGridView.SelectedRows.Count < 1)
-            {
-                throw new Exception("No item is selected! Please select an item first!");
-            }
+            DataRowView selectedRow = dataViewPage.GetSelectedRow();
+            User selectedItem = GetSelectedUserUsingRow(selectedRow);
 
-            DataRowView selectedRow = dataGridView.SelectedRows[0].DataBoundItem as DataRowView;
+            return selectedItem;
+        }
+
+        private User GetSelectedUserUsingRow(DataRowView selectedRow)
+        {
             int selectedItemID = (int)selectedRow["ID"];
+            User userWithID = TryToFindUserUsingID(selectedItemID);
+
+            return userWithID;
+        }
+
+        private User TryToFindUserUsingID(int selectedItemID)
+        {
             var allUsers = userPageService.GetUsers();
             var selectedItem = allUsers.Find(u => u.ID == selectedItemID);
 
@@ -153,7 +131,7 @@ namespace TeamManager.UI.Management.UserControls
         {
             try
             {
-                User selectedUser = GetSelectedUser(dataGridViewUsers);
+                User selectedUser = TryToGetSelectedUser();
                 HideAllItems();
                 OpenNewUserDetailsPage(selectedUser);
             }

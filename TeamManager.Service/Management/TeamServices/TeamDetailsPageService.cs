@@ -11,13 +11,16 @@ namespace TeamManager.Service.Management
     public class TeamDetailsPageService
     {
         IManagementDatabaseConnection connection;
+        Team team;
+        public const int NumOfTeamsPerPage = 10;
 
-        public TeamDetailsPageService(IManagementDatabaseConnection connection)
+        public TeamDetailsPageService(IManagementDatabaseConnection connection,Team team)
         {
             this.connection = connection;
+            this.team = team;
         }
 
-        public List<User> GetUsersInTeam(Team team)
+        public List<User> GetUsersInTeam()
         {
             var users = connection.GetAllUsers();
             var teams = connection.GetAllTeams();

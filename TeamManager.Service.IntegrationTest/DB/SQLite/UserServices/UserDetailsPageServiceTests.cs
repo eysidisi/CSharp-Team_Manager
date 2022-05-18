@@ -13,16 +13,21 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
     public class UserDetailsPageServiceTests : SQLiteIntegrationTestsBase
     {
+        User userToGetDetails;
+        UserDetailsPageService userDetailsPageService;
+        public UserDetailsPageServiceTests()
+        {
+            userToGetDetails = new User() { ID = 1, Name = "UserToGetDetails" };
+            userDetailsPageService = new UserDetailsPageService(connection, userToGetDetails);
+        }
+
         [Fact]
         public void GetTeamsThatUserIn_EmptyDB_ReturnsEmptyList()
         {
             // Arrange
-            UserDetailsPageService userDetailsPageService = new UserDetailsPageService(connection);
-
-            User user = new User();
 
             // Act
-            var teams = userDetailsPageService.GetTeamsThatUserIn(user);
+            var teams = userDetailsPageService.GetTeamsThatUserIn();
 
             // Assert
             Assert.Empty(teams);
@@ -32,7 +37,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void GetTeamsThatUserIn_UserIsInATeam_ReturnsEmptyList()
         {
             // Arrange
-            UserDetailsPageService userDetailsPageService = new UserDetailsPageService(connection);
 
             Team team = new Team() { ID = 1, Name = "team" };
             User user = new User() { ID = 1, Name = "userName" };
@@ -46,7 +50,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             }
 
             // Act
-            var actualTeams = userDetailsPageService.GetTeamsThatUserIn(user);
+            var actualTeams = userDetailsPageService.GetTeamsThatUserIn();
 
             // Assert
             Assert.Contains(team, actualTeams);

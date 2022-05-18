@@ -18,37 +18,31 @@ namespace TeamManager.UI.Management.UserControls.UserPages
     {
         public Action<UserControl> OnBackButtonClicked;
         UserDetailsPageService userDetailsPageService;
-        User user;
+        new DataViewPage<Team> dataViewPage;
 
         public UserDetailsPage(IManagementDatabaseConnection connection, User user)
         {
             InitializeComponent();
-            InitializeVariables(connection, user);
-            FillUserDatatable();
+            userDetailsPageService = new UserDetailsPageService(connection, user);
+            SetHeaderText(user.Name);
+            CreateDataViewPage();
+        }
+        
+
+        private void SetHeaderText(string text)
+        {
+            labelUserName.Text = text;
         }
 
-        private void InitializeVariables(IManagementDatabaseConnection connection, User user)
+        private void CreateDataViewPage()
         {
-            userDetailsPageService = new UserDetailsPageService(connection);
-            this.user = user;
-            labelUserName.Text = user.Name;
+            dataViewPage = new DataViewPage<Team>(panelDataViewPage);
+            SetUpDataViewPage();
         }
 
-        private void FillUserDatatable()
+        private void SetUpDataViewPage()
         {
-            var allTeams = userDetailsPageService.GetTeamsThatUserIn(user);
-            var usersDataTable = HelperFunctions.ConvertListToDatatable(allTeams);
-            dataGridViewTeams.DataSource = usersDataTable;
-            ResizeColumns(dataGridViewTeams);
-        }
-        private void ResizeColumns(DataGridView dataGrid)
-        {
-            int width = dataGrid.Width;
-            int minColWidth = (int)Math.Ceiling(width / (double)dataGrid.Columns.Count);
-            for (int i = 0; i < dataGrid.Columns.Count; i++)
-            {
-                dataGrid.Columns[i].MinimumWidth = minColWidth;
-            }
+            dataViewPage.SetUpPage( userDetailsPageService.GetTeamsThatUserIn());
         }
 
         private void buttonBack_Click(object sender, EventArgs e)

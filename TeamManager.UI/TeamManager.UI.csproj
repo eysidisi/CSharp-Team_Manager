@@ -13,6 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Management\UserControls\CommonPages\DataViewPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="TestDBFiles\Large.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

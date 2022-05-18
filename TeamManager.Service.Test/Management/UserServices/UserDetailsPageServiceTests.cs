@@ -16,20 +16,20 @@ namespace TeamManager.Service.Test.Management.UserServices
     {
         Mock<IManagementDatabaseConnection> connection;
         UserDetailsPageService userDetailsPageService;
-
+        User userToGetDetails;
         public UserDetailsPageServiceTests()
         {
             connection = new Mock<IManagementDatabaseConnection>();
-            userDetailsPageService = new UserDetailsPageService(connection.Object);
+            userToGetDetails = new User() { ID = 1 };
+            userDetailsPageService = new UserDetailsPageService(connection.Object, userToGetDetails);
         }
 
         [Fact]
         public void GetTeamsThatUserIn_OneTeamInDB_GetsTeams()
         {
             // Arange 
-            User user = new User() { ID = 1 };
             Team team = new Team() { ID = 1, Name = "team1" };
-            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = team.ID, UserID = user.ID };
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = team.ID, UserID = userToGetDetails.ID };
 
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team });
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
@@ -37,7 +37,7 @@ namespace TeamManager.Service.Test.Management.UserServices
             List<Team> expectedTeamsUserIsIn = new List<Team>() { team };
 
             // Act
-            List<Team> actualTeamsUserIsIn = userDetailsPageService.GetTeamsThatUserIn(user);
+            List<Team> actualTeamsUserIsIn = userDetailsPageService.GetTeamsThatUserIn();
 
             // Assert
             Assert.Equal(expectedTeamsUserIsIn, actualTeamsUserIsIn);
@@ -47,15 +47,13 @@ namespace TeamManager.Service.Test.Management.UserServices
         public void GetTeamsThatUserIn_NoTeamExists_GetsEmptyList()
         {
             // Arange 
-            User user = new User() { ID = 1 };
-
-            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = 1, UserID = user.ID };
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = 1, UserID = userToGetDetails.ID };
 
             connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
 
             // Act
-            List<Team> teamsThatUserIsIn = userDetailsPageService.GetTeamsThatUserIn(user);
+            List<Team> teamsThatUserIsIn = userDetailsPageService.GetTeamsThatUserIn();
 
             // Assert
             Assert.Empty(teamsThatUserIsIn);
@@ -65,7 +63,6 @@ namespace TeamManager.Service.Test.Management.UserServices
         public void GetTeamsThatUserIn_NoUserIDToTeamIDExists_GetsEmptyList()
         {
             // Arange 
-            User user1 = new User() { ID = 1 };
             User user2 = new User() { ID = 2 };
 
             Team team1 = new Team() { ID = 1, Name = "team1" };
@@ -75,7 +72,7 @@ namespace TeamManager.Service.Test.Management.UserServices
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
 
             // Act
-            List<Team> teamsThatUser1IsIn = userDetailsPageService.GetTeamsThatUserIn(user1);
+            List<Team> teamsThatUser1IsIn = userDetailsPageService.GetTeamsThatUserIn();
 
             // Assert
             Assert.Empty(teamsThatUser1IsIn);
@@ -85,7 +82,6 @@ namespace TeamManager.Service.Test.Management.UserServices
         public void GetTeamsThatUserIn_UserIsNotInAnyTeams_GetsEmptyList()
         {
             // Arange 
-            User user1 = new User() { ID = 1 };
             User user2 = new User() { ID = 2 };
 
             Team team1 = new Team() { ID = 1, Name = "team1" };
@@ -99,7 +95,7 @@ namespace TeamManager.Service.Test.Management.UserServices
             connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
 
             // Act
-            List<Team> teamsThatUser1IsIn = userDetailsPageService.GetTeamsThatUserIn(user1);
+            List<Team> teamsThatUser1IsIn = userDetailsPageService.GetTeamsThatUserIn();
 
             // Assert
             Assert.Empty(teamsThatUser1IsIn);

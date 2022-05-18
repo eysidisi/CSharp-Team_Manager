@@ -6,15 +6,32 @@ using System.Threading.Tasks;
 
 namespace TeamManager.Service.Management.CommonServices
 {
-    public class PaginationPageService
+    public class DataViewPageService<T>
     {
-        private int maxPageNum;
+        int numOfItemsPerPage;
         public int CurrentPageNumber { get; private set; }
+        public int NumOfMaximumPages => CalculateNumberOfMaximumPages();
 
-        public PaginationPageService(int maxPageNum)
+        List<T> items;
+
+        public DataViewPageService(List<T> items, int numOfItemsPerPage = 15)
         {
-            this.maxPageNum = maxPageNum;
+            this.items = items;
+            this.numOfItemsPerPage = numOfItemsPerPage;
             CurrentPageNumber = 1;
+        }
+
+        private int CalculateNumberOfMaximumPages()
+        {
+            return (int)Math.Ceiling((double)items.Count / (numOfItemsPerPage));
+        }
+
+        public List<T> GetItemsInPage(int pageNum)
+        {
+            int startingIndexInList = ((pageNum - 1) * numOfItemsPerPage);
+            int endingIndexInList = startingIndexInList + numOfItemsPerPage;
+            Range range = new Range(startingIndexInList, endingIndexInList);
+            return items.Take(range).ToList();
         }
 
         public void SetCurrentPageNumber(string enteredPageNum)
@@ -41,7 +58,7 @@ namespace TeamManager.Service.Management.CommonServices
 
         private bool IsPageNumberInRange(int pageNumberInteger)
         {
-            return pageNumberInteger >= 1 && pageNumberInteger <= maxPageNum;
+            return pageNumberInteger >= 1 && pageNumberInteger <= NumOfMaximumPages;
         }
     }
 }

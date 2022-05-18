@@ -28,46 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.dataGridViewTeams = new System.Windows.Forms.DataGridView();
             this.buttonDeleteTeam = new System.Windows.Forms.Button();
             this.buttonAddNewTeam = new System.Windows.Forms.Button();
             this.buttonTeamDetails = new System.Windows.Forms.Button();
             this.buttonEditTeam = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.paginationComponent = new TeamManager.UI.Management.UserControls.PaginationPage();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTeams)).BeginInit();
+            this.panelTeamsDataGridView = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // dataGridViewTeams
-            // 
-            this.dataGridViewTeams.AllowUserToAddRows = false;
-            this.dataGridViewTeams.AllowUserToDeleteRows = false;
-            this.dataGridViewTeams.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewTeams.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewTeams.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewTeams.Location = new System.Drawing.Point(0, 50);
-            this.dataGridViewTeams.MultiSelect = false;
-            this.dataGridViewTeams.Name = "dataGridViewTeams";
-            this.dataGridViewTeams.ReadOnly = true;
-            this.dataGridViewTeams.RowHeadersVisible = false;
-            this.dataGridViewTeams.RowTemplate.Height = 25;
-            this.dataGridViewTeams.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewTeams.Size = new System.Drawing.Size(615, 350);
-            this.dataGridViewTeams.TabIndex = 1;
             // 
             // buttonDeleteTeam
             // 
             this.buttonDeleteTeam.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonDeleteTeam.Location = new System.Drawing.Point(310, 415);
+            this.buttonDeleteTeam.Location = new System.Drawing.Point(310, 647);
             this.buttonDeleteTeam.Name = "buttonDeleteTeam";
             this.buttonDeleteTeam.Size = new System.Drawing.Size(150, 50);
             this.buttonDeleteTeam.TabIndex = 2;
@@ -78,7 +50,7 @@
             // buttonAddNewTeam
             // 
             this.buttonAddNewTeam.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonAddNewTeam.Location = new System.Drawing.Point(156, 415);
+            this.buttonAddNewTeam.Location = new System.Drawing.Point(156, 647);
             this.buttonAddNewTeam.Name = "buttonAddNewTeam";
             this.buttonAddNewTeam.Size = new System.Drawing.Size(150, 50);
             this.buttonAddNewTeam.TabIndex = 3;
@@ -89,7 +61,7 @@
             // buttonTeamDetails
             // 
             this.buttonTeamDetails.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonTeamDetails.Location = new System.Drawing.Point(3, 415);
+            this.buttonTeamDetails.Location = new System.Drawing.Point(3, 647);
             this.buttonTeamDetails.Name = "buttonTeamDetails";
             this.buttonTeamDetails.Size = new System.Drawing.Size(150, 50);
             this.buttonTeamDetails.TabIndex = 4;
@@ -100,7 +72,7 @@
             // buttonEditTeam
             // 
             this.buttonEditTeam.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonEditTeam.Location = new System.Drawing.Point(464, 415);
+            this.buttonEditTeam.Location = new System.Drawing.Point(464, 647);
             this.buttonEditTeam.Name = "buttonEditTeam";
             this.buttonEditTeam.Size = new System.Drawing.Size(150, 50);
             this.buttonEditTeam.TabIndex = 5;
@@ -112,47 +84,43 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(275, 10);
+            this.label1.Location = new System.Drawing.Point(278, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 28);
             this.label1.TabIndex = 6;
             this.label1.Text = "Teams";
             // 
-            // paginationComponent
+            // panelTeamsDataGridView
             // 
-            this.paginationComponent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.paginationComponent.Location = new System.Drawing.Point(3, 471);
-            this.paginationComponent.Name = "paginationComponent";
-            this.paginationComponent.Size = new System.Drawing.Size(611, 99);
-            this.paginationComponent.TabIndex = 7;
+            this.panelTeamsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTeamsDataGridView.Location = new System.Drawing.Point(5, 40);
+            this.panelTeamsDataGridView.Name = "panelTeamsDataGridView";
+            this.panelTeamsDataGridView.Size = new System.Drawing.Size(610, 600);
+            this.panelTeamsDataGridView.TabIndex = 7;
             // 
             // TeamPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.paginationComponent);
+            this.Controls.Add(this.panelTeamsDataGridView);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonEditTeam);
             this.Controls.Add(this.buttonTeamDetails);
             this.Controls.Add(this.buttonAddNewTeam);
             this.Controls.Add(this.buttonDeleteTeam);
-            this.Controls.Add(this.dataGridViewTeams);
             this.Name = "TeamPage";
-            this.Size = new System.Drawing.Size(620, 600);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTeams)).EndInit();
+            this.Size = new System.Drawing.Size(620, 700);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private DataGridView dataGridViewTeams;
         private Button buttonDeleteTeam;
         private Button buttonAddNewTeam;
         private Button buttonTeamDetails;
         private Button buttonEditTeam;
         private Label label1;
-        private UserControls.PaginationPage paginationComponent;
+        private Panel panelTeamsDataGridView;
     }
 }

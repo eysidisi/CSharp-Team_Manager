@@ -10,21 +10,22 @@ namespace TeamManager.Service.Management.TeamServices
 {
     public class EditTeamPageService
     {
-        private IManagementDatabaseConnection connection;
-
-        public EditTeamPageService(IManagementDatabaseConnection connection)
+        IManagementDatabaseConnection connection;
+        Team team;
+        public EditTeamPageService(IManagementDatabaseConnection connection, Team teamToEdit)
         {
             this.connection = connection;
+            team = teamToEdit;
         }
 
-        public void AddUserToTheTeam(User user, Team team)
+        public void AddUserToTheTeam(User user)
         {
             if (CheckIfUserExistsInDB(user) == false)
             {
                 throw new ArgumentException("User doesn't exist in the DB!");
             }
 
-            if (CheckIfTeamExistsInDB(team) == false)
+            if (CheckIfTeamExistsInDB() == false)
             {
                 throw new ArgumentException("Team doesn't exist in the DB!");
             }
@@ -39,14 +40,14 @@ namespace TeamManager.Service.Management.TeamServices
             connection.SaveUserIDToTeamID(userIDToTeamID);
         }
 
-        public List<User> GetUsers()
+        public List<User> GetAllUsers()
         {
             return connection.GetAllUsers();
         }
 
-        public List<User> GetUsersInTeam(Team team)
+        public List<User> GetUsersInTeam()
         {
-            if (CheckIfTeamExistsInDB(team) == false)
+            if (CheckIfTeamExistsInDB() == false)
             {
                 throw new ArgumentException("Team doesn't exist in DB!");
             }
@@ -64,14 +65,14 @@ namespace TeamManager.Service.Management.TeamServices
             return users.Where(u => userIDsBelongedToTeam.Contains(u.ID)).ToList();
         }
 
-        public void RemoveUserFromTheTeam(User userToRemove, Team teamToRemoveUserFrom)
+        public void RemoveUserFromTheTeam(User userToRemove)
         {
             if (CheckIfUserExistsInDB(userToRemove) == false)
             {
                 throw new ArgumentException("User doesn't exist in the DB!");
             }
 
-            if (CheckIfTeamExistsInDB(teamToRemoveUserFrom) == false)
+            if (CheckIfTeamExistsInDB() == false)
             {
                 throw new ArgumentException("Team doesn't exist in the DB!");
             }
@@ -79,7 +80,7 @@ namespace TeamManager.Service.Management.TeamServices
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID()
             {
                 UserID = userToRemove.ID,
-                TeamID = teamToRemoveUserFrom.ID
+                TeamID = team.ID
             };
 
             if (CheckIfUserIsInTheTeam(userIDToTeamID) == false)
@@ -126,7 +127,7 @@ namespace TeamManager.Service.Management.TeamServices
             return connection.GetAllUsers().Find(u => u.ID == user.ID) != null ? true : false;
         }
 
-        private bool CheckIfTeamExistsInDB(Team team)
+        private bool CheckIfTeamExistsInDB()
         {
             return connection.GetAllTeams().Find(t => t.ID == team.ID) != null ? true : false;
         }

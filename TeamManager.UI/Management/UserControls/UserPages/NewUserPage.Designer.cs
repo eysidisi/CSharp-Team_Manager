@@ -45,7 +45,7 @@
             // buttonSave
             // 
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonSave.Location = new System.Drawing.Point(146, 406);
+            this.buttonSave.Location = new System.Drawing.Point(138, 647);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(150, 50);
             this.buttonSave.TabIndex = 0;
@@ -57,7 +57,7 @@
             // 
             this.textBoxName.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.textBoxName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxName.Location = new System.Drawing.Point(484, 75);
+            this.textBoxName.Location = new System.Drawing.Point(479, 30);
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(128, 29);
             this.textBoxName.TabIndex = 1;
@@ -65,7 +65,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonCancel.Location = new System.Drawing.Point(302, 406);
+            this.buttonCancel.Location = new System.Drawing.Point(294, 647);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(150, 50);
             this.buttonCancel.TabIndex = 2;
@@ -78,7 +78,7 @@
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(3, 113);
+            this.label2.Location = new System.Drawing.Point(3, 68);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 21);
             this.label2.TabIndex = 4;
@@ -89,7 +89,7 @@
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(3, 141);
+            this.label3.Location = new System.Drawing.Point(3, 96);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(116, 21);
             this.label3.TabIndex = 5;
@@ -100,7 +100,7 @@
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(3, 173);
+            this.label4.Location = new System.Drawing.Point(3, 128);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 21);
             this.label4.TabIndex = 6;
@@ -111,7 +111,7 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(3, 81);
+            this.label1.Location = new System.Drawing.Point(3, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 21);
             this.label1.TabIndex = 7;
@@ -134,7 +134,7 @@
             this.groupBoxUserInfo.Margin = new System.Windows.Forms.Padding(0);
             this.groupBoxUserInfo.Name = "groupBoxUserInfo";
             this.groupBoxUserInfo.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBoxUserInfo.Size = new System.Drawing.Size(615, 400);
+            this.groupBoxUserInfo.Size = new System.Drawing.Size(610, 600);
             this.groupBoxUserInfo.TabIndex = 8;
             this.groupBoxUserInfo.TabStop = false;
             this.groupBoxUserInfo.Text = "New User Info";
@@ -143,7 +143,7 @@
             // 
             this.textBoxTitle.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.textBoxTitle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxTitle.Location = new System.Drawing.Point(484, 183);
+            this.textBoxTitle.Location = new System.Drawing.Point(479, 138);
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(128, 29);
             this.textBoxTitle.TabIndex = 10;
@@ -152,7 +152,7 @@
             // 
             this.textBoxPhoneNumber.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.textBoxPhoneNumber.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxPhoneNumber.Location = new System.Drawing.Point(484, 148);
+            this.textBoxPhoneNumber.Location = new System.Drawing.Point(479, 103);
             this.textBoxPhoneNumber.Name = "textBoxPhoneNumber";
             this.textBoxPhoneNumber.Size = new System.Drawing.Size(128, 29);
             this.textBoxPhoneNumber.TabIndex = 9;
@@ -161,7 +161,7 @@
             // 
             this.textBoxSurname.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.textBoxSurname.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxSurname.Location = new System.Drawing.Point(484, 113);
+            this.textBoxSurname.Location = new System.Drawing.Point(479, 68);
             this.textBoxSurname.Name = "textBoxSurname";
             this.textBoxSurname.Size = new System.Drawing.Size(128, 29);
             this.textBoxSurname.TabIndex = 8;
@@ -175,7 +175,7 @@
             this.Controls.Add(this.buttonSave);
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "NewUserPage";
-            this.Size = new System.Drawing.Size(620, 600);
+            this.Size = new System.Drawing.Size(620, 700);
             this.groupBoxUserInfo.ResumeLayout(false);
             this.groupBoxUserInfo.PerformLayout();
             this.ResumeLayout(false);
