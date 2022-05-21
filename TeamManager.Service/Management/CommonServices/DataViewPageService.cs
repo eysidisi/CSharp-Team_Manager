@@ -26,12 +26,41 @@ namespace TeamManager.Service.Management.CommonServices
             return (int)Math.Ceiling((double)items.Count / (numOfItemsPerPage));
         }
 
-        public List<T> GetItemsInPage(int pageNum)
+        public List<T> TryToGetItemsInPage(int pageNum)
+        {
+            if (IsItemsListEmpty())
+            {
+                throw new InvalidOperationException("No items present!");
+            }
+
+            else if (IsPageNumberIsNotInRange(pageNum))
+            {
+                throw new ArgumentOutOfRangeException("Page number is not in range!");
+            }
+
+            else
+            {
+                return GetItemsInPage(pageNum);
+            }
+        }
+
+        private bool IsItemsListEmpty()
+        {
+            return items.Count == 0;
+        }
+
+        private List<T> GetItemsInPage(int pageNum)
+        {
+            Range range = GetRangeOfItemsInPage(pageNum);
+            return items.Take(range).ToList();
+        }
+
+        private Range GetRangeOfItemsInPage(int pageNum)
         {
             int startingIndexInList = ((pageNum - 1) * numOfItemsPerPage);
             int endingIndexInList = startingIndexInList + numOfItemsPerPage;
             Range range = new Range(startingIndexInList, endingIndexInList);
-            return items.Take(range).ToList();
+            return range;
         }
 
         public void SetCurrentPageNumber(string enteredPageNum)
@@ -43,7 +72,7 @@ namespace TeamManager.Service.Management.CommonServices
 
             int pageNumberInteger = int.Parse(enteredPageNum);
 
-            if (IsPageNumberInRange(pageNumberInteger) == false)
+            if (IsPageNumberIsInRange(pageNumberInteger) == false)
             {
                 throw new ArgumentException("The entered page number must be in the minimum and maximum range!");
             }
@@ -56,7 +85,12 @@ namespace TeamManager.Service.Management.CommonServices
             return int.TryParse(enteredPageNum, out int _);
         }
 
-        private bool IsPageNumberInRange(int pageNumberInteger)
+        private bool IsPageNumberIsNotInRange(int pageNumberInteger)
+        {
+            return !IsPageNumberIsInRange(pageNumberInteger);
+        }
+
+        private bool IsPageNumberIsInRange(int pageNumberInteger)
         {
             return pageNumberInteger >= 1 && pageNumberInteger <= NumOfMaximumPages;
         }

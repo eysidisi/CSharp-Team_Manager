@@ -10,61 +10,54 @@ namespace TeamManager.Service.Test.Wizard
 {
     public class LoginPageServiceTests
     {
-        [Fact]
-        public void GetManager_ValidUserNameValidPassword_ReturnsManager()
+        Manager validManager;
+        LoginPageService loginPageService;
+        public LoginPageServiceTests()
         {
-            // Arrange
             string userName = "CorrectName";
             string password = "CorrectPassword";
 
-            Manager manager = new Manager()
+            validManager = new Manager()
             {
                 UserName = userName,
                 Password = password
             };
 
             var connection = new Mock<IWizardDatabaseConnection>();
-            connection.Setup(x => x.GetManagers()).Returns(new List<Manager>() { manager });
+            connection.Setup(x => x.GetManagers()).Returns(new List<Manager>() { validManager });
 
-            LoginPageService loginPageService = new LoginPageService(connection.Object);
-
-            // Act && Assert
-            var actualManager = loginPageService.GetManager(manager);
+            loginPageService = new LoginPageService(connection.Object);
         }
+
+        [Fact]
+        public void GetManager_ValidUserNameValidPassword_ReturnsManager()
+        {
+            // Act 
+            Manager actualManager = loginPageService.GetManager(validManager);
+
+            // Assert
+            Assert.Equal(validManager, actualManager);
+        }
+
         [Fact]
         public void GetManager_ValidUserNameInvalidPassword_CantReturnManager()
         {
             // Arrange
-            string userName = "CorrectName";
-            string password = "InvalidPassword";
-
             Manager manager = new Manager()
             {
-                UserName = userName,
-                Password = password
+                UserName = "CorrectName",
+                Password = "InvalidPassword"
             };
-
-
-            Manager managerInDB = new Manager()
-            {
-                UserName = userName,
-                Password = "CorrectPassword"
-            };
-
-            var connection = new Mock<IWizardDatabaseConnection>();
-            connection.Setup(x => x.GetManagers()).Returns(new List<Manager>() { managerInDB });
-
-            LoginPageService loginPageService = new LoginPageService(connection.Object);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => loginPageService.GetManager(manager));
         }
+
         [Fact]
         public void GetManager_InvalidUserNameValidPassword_CantReturnManager()
         {
             // Arrange
             string invalidUserName = "InvalidName";
-            string validUserName = "ValidName";
             string password = "CorrectPassword";
 
             Manager invalidManager = new Manager()
@@ -72,17 +65,6 @@ namespace TeamManager.Service.Test.Wizard
                 UserName = invalidUserName,
                 Password = password
             };
-
-            Manager validManager = new Manager()
-            {
-                UserName = validUserName,
-                Password = password
-            };
-
-            var connection = new Mock<IWizardDatabaseConnection>();
-            connection.Setup(x => x.GetManagers()).Returns(new List<Manager>() { validManager });
-
-            LoginPageService loginPageService = new LoginPageService(connection.Object);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => loginPageService.GetManager(invalidManager));

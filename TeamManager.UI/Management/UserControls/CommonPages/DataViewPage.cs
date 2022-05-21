@@ -39,7 +39,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void ViewItemsInPage(int pageNum)
         {
-            var itemsToDisplay = dataViewPageService.GetItemsInPage(pageNum);
+            var itemsToDisplay = dataViewPageService.TryToGetItemsInPage(pageNum);
             var teamsDataTable = HelperFunctions.ConvertListToDatatable(itemsToDisplay);
             dataGridView.DataSource = teamsDataTable;
             ResizeColumns(dataGridView);

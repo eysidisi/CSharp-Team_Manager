@@ -8,9 +8,9 @@ namespace TeamManager.Service.Management.Database
 {
     public abstract class ManagementDatabaseManager : IManagementDatabaseConnection
     {
-        List<User> users = null;
-        List<Team> teams = null;
-        List<UserIDToTeamID> userIDsToTeamIDs = null;
+        List<User> users;
+        List<Team> teams;
+        List<UserIDToTeamID> userIDsToTeamIDs;
         protected IDbConnection dbConnection;
         protected string connString;
 
@@ -19,6 +19,8 @@ namespace TeamManager.Service.Management.Database
             this.connString = connString;
             CreateConnection();
         }
+
+        protected abstract void CreateConnection();
 
         public void SaveUser(User user)
         {
@@ -149,6 +151,5 @@ namespace TeamManager.Service.Management.Database
                 return true;
             }
         }
-        protected abstract void CreateConnection();
     }
 }

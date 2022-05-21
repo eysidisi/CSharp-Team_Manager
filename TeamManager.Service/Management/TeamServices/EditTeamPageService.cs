@@ -97,7 +97,7 @@ namespace TeamManager.Service.Management.TeamServices
         {
             var allUserIDsToTeamIDs = connection.GetAllUserIDToTeamID();
 
-            UserIDToTeamID? copyItem = allUserIDsToTeamIDs.Find(u => u.UserID == userIDToTeamID.UserID && u.TeamID == userIDToTeamID.TeamID);
+            UserIDToTeamID copyItem = allUserIDsToTeamIDs.Find(u => u.UserID == userIDToTeamID.UserID && u.TeamID == userIDToTeamID.TeamID);
 
             return copyItem;
         }
@@ -105,12 +105,6 @@ namespace TeamManager.Service.Management.TeamServices
         private bool CheckIfUserIsInTheTeam(UserIDToTeamID userIDToTeamID)
         {
             var allUserIDsToTeamIDs = connection.GetAllUserIDToTeamID();
-
-            // No entry
-            if (allUserIDsToTeamIDs.Count == 0)
-            {
-                return false;
-            }
 
             UserIDToTeamID? copyItem = allUserIDsToTeamIDs.Find(u => u.UserID == userIDToTeamID.UserID && u.TeamID == userIDToTeamID.TeamID);
 

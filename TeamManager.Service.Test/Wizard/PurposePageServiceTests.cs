@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System;
 using TeamManager.Service.Models;
 using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
@@ -9,24 +10,41 @@ namespace TeamManager.Service.Test.Wizard
 {
     public class PurposePageServiceTests
     {
+        Mock<IWizardDatabaseConnection> connection;
+        PurposePageService page;
+        public PurposePageServiceTests()
+        {
+            connection = new Mock<IWizardDatabaseConnection>();
+            page = new PurposePageService(connection.Object);
+
+        }
+
         [Fact]
-        public void SavePurposeOfVisit_EmptyDB_SavesPurpose()
+        public void SavePurposeOfVisit_EmptyDBValidPurpose_SavesPurpose()
         {
             // Arrange
-            var connection = new Mock<IWizardDatabaseConnection>();
-
-            string userName = "validUserName";
+            string userName = "userName";
             string purposeText = "A valid purpose";
-
             Purpose purpose = new Purpose(userName, purposeText);
-
-            var page = new PurposePageService(connection.Object);
 
             // Act
             page.SavePurposeOfVisit(purpose);
 
             // Assert
             connection.Verify(x => x.SavePurpose(purpose));
+        }
+
+        [Fact]
+        public void SavePurposeOfVisit_EmptyDBInvalidPurpose_ThrowsException()
+        {
+            // Arrange
+            string userName = "userName";
+            string invalidPurposeText = "";
+
+            Purpose purpose = new Purpose(userName, invalidPurposeText);
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => page.SavePurposeOfVisit(purpose));
         }
     }
 }
