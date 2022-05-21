@@ -38,7 +38,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void SetUpTeamUsersDataViewPage()
         {
-            var usersInTeam = editTeamPageService.GetUsersInTeam();
+            var usersInTeam = editTeamPageService.TryToGetUsersInTheTeam();
             teamUsersDataViewPage.SetUpPage(usersInTeam);
         }
 

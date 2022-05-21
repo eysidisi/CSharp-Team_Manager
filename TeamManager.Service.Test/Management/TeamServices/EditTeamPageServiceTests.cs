@@ -223,7 +223,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
         }
 
         [Fact]
-        public void GetUsersInTeam_TeamHasUsers_ReturnsUsers()
+        public void TryToGetUsersInTeam_TeamHasUsers_ReturnsUsers()
         {
             // Arrange
             Team teamToEdit = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -240,14 +240,14 @@ namespace TeamManager.Service.Test.Management.TeamServices
             var editTeamPageService = new EditTeamPageService(connection.Object, teamToEdit);
 
             // Act 
-            var actualUsers = editTeamPageService.GetUsersInTeam();
+            var actualUsers = editTeamPageService.TryToGetUsersInTheTeam();
 
             // Assert
             Assert.Equal(new List<User>() { user }, actualUsers);
         }
 
         [Fact]
-        public void GetUsersInTeam_TeamHasNoUsers_ReturnsEmptyList()
+        public void TryToGetUsersInTeam_TeamHasNoUsers_ReturnsEmptyList()
         {
             // Arrange
             Team teamToEdit = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -264,14 +264,14 @@ namespace TeamManager.Service.Test.Management.TeamServices
             var editTeamPageService = new EditTeamPageService(connection.Object, teamToEdit);
 
             // Act 
-            var users = editTeamPageService.GetUsersInTeam();
+            var users = editTeamPageService.TryToGetUsersInTheTeam();
 
             // Assert
             Assert.Empty(users);
         }
 
         [Fact]
-        public void GetUsersInTeam_TeamIsNotInDB_ThrowsException()
+        public void TryToGetUsersInTeam_TeamIsNotInDB_ThrowsException()
         {
             // Arrange
             Team teamToEdit = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -288,11 +288,11 @@ namespace TeamManager.Service.Test.Management.TeamServices
             var editTeamPageService = new EditTeamPageService(connection.Object, teamToEdit);
 
             // Act && Assert
-            Assert.Throws<ArgumentException>(() => editTeamPageService.GetUsersInTeam());
+            Assert.Throws<ArgumentException>(() => editTeamPageService.TryToGetUsersInTheTeam());
         }
 
         [Fact]
-        public void GetUsersInTeam_NoUserExistsInDB_ReturnsEmptyList()
+        public void TryToGetUsersInTeam_NoUserExistsInDB_ReturnsEmptyList()
         {
             // Arrange
             Team teamToEdit = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -305,14 +305,14 @@ namespace TeamManager.Service.Test.Management.TeamServices
             var editTeamPageService = new EditTeamPageService(connection.Object, teamToEdit);
 
             // Act 
-            var users = editTeamPageService.GetUsersInTeam();
+            var users = editTeamPageService.TryToGetUsersInTheTeam();
 
             // Assert
             Assert.Empty(users);
         }
 
         [Fact]
-        public void GetUsersInTeam_NoUserIsInTeams_ReturnsEmptyList()
+        public void TryToGetUsersInTeam_NoUserIsInTeams_ReturnsEmptyList()
         {
             // Arrange
             Team teamToEdit = new Team() { ID = 1, Name = "team", CreationDate = "1234" };
@@ -326,7 +326,7 @@ namespace TeamManager.Service.Test.Management.TeamServices
             var editTeamPageService = new EditTeamPageService(connection.Object, teamToEdit);
 
             // Act 
-            var users = editTeamPageService.GetUsersInTeam();
+            var users = editTeamPageService.TryToGetUsersInTheTeam();
 
             // Assert
             Assert.Empty(users);

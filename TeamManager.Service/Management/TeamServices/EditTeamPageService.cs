@@ -45,24 +45,32 @@ namespace TeamManager.Service.Management.TeamServices
             return connection.GetAllUsers();
         }
 
-        public List<User> GetUsersInTeam()
+        public List<User> TryToGetUsersInTheTeam()
         {
             if (CheckIfTeamExistsInDB() == false)
             {
                 throw new ArgumentException("Team doesn't exist in DB!");
             }
 
+            return GetUsersInTheTeam();
+        }
+
+        private List<User> GetUsersInTheTeam()
+        {
+            List<int> userIDsThatAreInTheTeam = FindUserIDsThatAreInTheTeam();
+
             var users = connection.GetAllUsers();
+            return users.Where(u => userIDsThatAreInTheTeam.Contains(u.ID)).ToList();
+        }
+
+        private List<int> FindUserIDsThatAreInTheTeam()
+        {
             var userIDToTeamIDs = connection.GetAllUserIDToTeamID();
+            var userIDsBelongedToTeam = userIDToTeamIDs
+                                        .Where(u => u.TeamID == team.ID)
+                                        .Select(u => u.UserID).ToList();
 
-            if (users.Count == 0 || userIDToTeamIDs.Count == 0)
-            {
-                return new List<User>();
-            }
-
-            var userIDsBelongedToTeam = userIDToTeamIDs.Where(u => u.TeamID == team.ID)
-                                                        .Select(u => u.UserID).ToList();
-            return users.Where(u => userIDsBelongedToTeam.Contains(u.ID)).ToList();
+            return userIDsBelongedToTeam;
         }
 
         public void RemoveUserFromTheTeam(User userToRemove)

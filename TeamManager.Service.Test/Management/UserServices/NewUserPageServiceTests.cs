@@ -24,7 +24,7 @@ namespace TeamManager.Service.Test.Management
         }
 
         [Fact]
-        public void AddUser_ValidUser_AddsUser()
+        public void SaveNewUser_ValidUser_AddsUser()
         {
             // Arrange
             User expectedUserToSave = new User()
@@ -44,7 +44,7 @@ namespace TeamManager.Service.Test.Management
         }
 
         [Fact]
-        public void AddUser_InvalidUser_ThrowsException()
+        public void SaveNewUser_InvalidUser_ThrowsException()
         {
             // Arrange
             User user = new User();

@@ -163,7 +163,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             }
 
             // Act
-            var actualUsers = editTeamPageService.GetUsersInTeam();
+            var actualUsers = editTeamPageService.TryToGetUsersInTheTeam();
 
             // Assert
             Assert.Equal(expectedUsers, actualUsers);
@@ -182,7 +182,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             }
 
             // Act
-            var actualUsers = editTeamPageService.GetUsersInTeam();
+            var actualUsers = editTeamPageService.TryToGetUsersInTheTeam();
 
             // Assert
             Assert.Empty(actualUsers);
@@ -205,7 +205,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             editTeamPageService = new EditTeamPageService(connection, teamDoesNotExist);
 
             // Act && Assert
-            Assert.Throws<ArgumentException>(() => editTeamPageService.GetUsersInTeam());
+            Assert.Throws<ArgumentException>(() => editTeamPageService.TryToGetUsersInTheTeam());
         }
 
         [Fact]
@@ -246,7 +246,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             User user1 = new User() { Name = "user1", ID = 1 };
             User user2 = new User() { Name = "user2", ID = 2 };
-
             
             UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = teamToEdit.ID, UserID = user1.ID };
 
@@ -254,6 +253,8 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             {
                 con.Insert(teamToEdit);
                 con.Insert(user1IDToTeamID);
+                con.Insert(user1);
+                con.Insert(user2);
             }
 
             // Act && Assert
