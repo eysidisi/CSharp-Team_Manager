@@ -1,9 +1,10 @@
 ﻿using Dapper.Contrib.Extensions;
-using System;
 using System.Data.SQLite;
-using TeamManager.Service.Models;
-using TeamManager.Service.Test.HelperMethods.SQLiteDB;
-namespace TeamManager
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.UnitTest.HelperMethods.SQLiteDB;
+using TeamManager.Service.Wizard.Models;
+
+namespace TeamManager.Console
 {
     internal class Program
     {
@@ -141,7 +142,7 @@ namespace TeamManager
             return users;
         }
 
-        static private Random gen = new Random();
+        private static readonly Random gen = new Random();
         static DateTime RandomDay()
         {
             DateTime start = new DateTime(1995, 1, 1);

@@ -1,22 +1,22 @@
 ﻿using System.Data;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.UserServices;
 using TeamManager.UI.Management.UserControls.UserPages;
 
 namespace TeamManager.UI.Management.UserControls
 {
     public partial class UserPage : UserControl
     {
-        UserPageService userPageService;
-        IManagementDatabaseConnection connection;
+        readonly UserPageService userPageService;
+        readonly DatabaseManager databaseManager;
         DataViewPage<User> dataViewPage;
 
-        public UserPage(IManagementDatabaseConnection connection)
+        public UserPage(DatabaseManager databaseManager)
         {
             InitializeComponent();
-            this.connection = connection;
-            userPageService = new UserPageService(connection);
+            this.databaseManager = databaseManager;
+            userPageService = new UserPageService(databaseManager);
             CreateDataViewPage();
         }
 
@@ -33,7 +33,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void OpenNewUserPage()
         {
-            var saveNewUserPage = new NewUserPage(connection);
+            var saveNewUserPage = new NewUserPage(databaseManager);
             saveNewUserPage.OnCancelClick += OnBackButtonClicked;
             Controls.Add(saveNewUserPage);
         }
@@ -143,7 +143,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void OpenNewUserDetailsPage(User selectedUser)
         {
-            UserDetailsPage userDetailsPage = new UserDetailsPage(connection, selectedUser);
+            UserDetailsPage userDetailsPage = new UserDetailsPage(databaseManager, selectedUser);
             userDetailsPage.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(userDetailsPage);
         }

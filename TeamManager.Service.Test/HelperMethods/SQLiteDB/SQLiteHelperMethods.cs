@@ -1,7 +1,7 @@
 ﻿using System.Data.SQLite;
 using System.IO;
 
-namespace TeamManager.Service.Test.HelperMethods.SQLiteDB
+namespace TeamManager.Service.UnitTest.HelperMethods.SQLiteDB
 {
     public class SQLiteHelperMethods
     {
@@ -39,11 +39,11 @@ namespace TeamManager.Service.Test.HelperMethods.SQLiteDB
                                             PRIMARY KEY('ID' AUTOINCREMENT));";
 
 
-        readonly public static string ValidManagerUserName = "validUserName";
-        readonly public static string ValidManagerPassword = "validPassword";
+        public static readonly string ValidManagerUserName = "validUserName";
+        public static readonly string ValidManagerPassword = "validPassword";
 
         static int NextDBNumber = 0;
-        static object syncObj = new object();
+        static readonly object syncObj = new object();
 
         private SQLiteConnection sqliteConnection;
 
@@ -63,7 +63,7 @@ namespace TeamManager.Service.Test.HelperMethods.SQLiteDB
         {
             int currentDBNum = GetNextDBNumber();
 
-            string dbPath = $@"{ Directory.GetCurrentDirectory() }\TestDB_{currentDBNum}.db";
+            string dbPath = $@"{Directory.GetCurrentDirectory()}\TestDB_{currentDBNum}.db";
 
             DeleteDBIfExists(dbPath);
 
@@ -84,12 +84,12 @@ namespace TeamManager.Service.Test.HelperMethods.SQLiteDB
         private static int GetNextDBNumber()
         {
             int currentDbNum;
-            
+
             lock (syncObj)
             {
                 currentDbNum = NextDBNumber++;
             }
-            
+
             return currentDbNum;
         }
 

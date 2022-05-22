@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 
-namespace TeamManager.Service.Management
+namespace TeamManager.Service.Management.TeamServices
 {
     public class TeamDetailsPageService
     {
-        IManagementDatabaseConnection connection;
-        Team team;
-        public const int NumOfTeamsPerPage = 10;
+        readonly DatabaseManager databaseManager;
+        readonly Team team;
 
-        public TeamDetailsPageService(IManagementDatabaseConnection connection,Team team)
+        public TeamDetailsPageService(DatabaseManager databaseManager, Team team)
         {
-            this.connection = connection;
+            this.databaseManager = databaseManager;
             this.team = team;
         }
 
         public List<User> GetUsersInTeam()
         {
-            var users = connection.GetAllUsers();
-            var teams = connection.GetAllTeams();
-            var userIDToTeamIDs = connection.GetAllUserIDToTeamID();
+            var users = databaseManager.GetAllUsers();
+            var teams = databaseManager.GetAllTeams();
+            var userIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
 
             var userIDsBelongedToTeam = userIDToTeamIDs.Where(u => u.TeamID == team.ID)
                                                         .Select(u => u.UserID).ToList();

@@ -1,21 +1,20 @@
-﻿using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 
-namespace TeamManager.Service.Management
+namespace TeamManager.Service.Management.TeamServices
 {
     public class TeamPageService
     {
-        const int NumOfTeamsPerPage = 10;
-        IManagementDatabaseConnection connection;
+        readonly DatabaseManager databaseManager;
 
-        public TeamPageService(IManagementDatabaseConnection connection)
+        public TeamPageService(DatabaseManager databaseManager)
         {
-            this.connection = connection;
+            this.databaseManager = databaseManager;
         }
 
         public List<Team> GetAllTeams()
         {
-            return connection.GetAllTeams();
+            return databaseManager.GetAllTeams();
         }
         public void DeleteTeam(Team team)
         {
@@ -24,14 +23,14 @@ namespace TeamManager.Service.Management
                 throw new ArgumentException("Can't delete the team! Team has members!");
             }
 
-            if (connection.DeleteTeam(team) == false)
+            if (databaseManager.DeleteTeam(team) == false)
             {
                 throw new ArgumentException("Can't delete the team!");
             }
         }
         private bool CheckIfTeamHasAnyMembers(Team team)
         {
-            var allUserIDToTeamIDs = connection.GetAllUserIDToTeamID();
+            var allUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
 
             if (allUserIDToTeamIDs != null && allUserIDToTeamIDs.Any(a => a.TeamID == team.ID))
             {

@@ -1,20 +1,21 @@
 ﻿using System.Data;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.TeamServices;
 
 namespace TeamManager.UI.Management.UserControls
 {
     public partial class TeamPage : UserControl
     {
-        TeamPageService teamPageService;
-        IManagementDatabaseConnection connection;
+        readonly TeamPageService teamPageService;
+        readonly DatabaseManager databaseManager;
         DataViewPage<Team> dataViewPage;
-        public TeamPage(IManagementDatabaseConnection connection)
+
+        public TeamPage(DatabaseManager databaseManager)
         {
             InitializeComponent();
-            this.connection = connection;
-            teamPageService = new TeamPageService(connection);
+            this.databaseManager = databaseManager;
+            teamPageService = new TeamPageService(databaseManager);
             CreateDataViewPage();
         }
 
@@ -61,7 +62,7 @@ namespace TeamManager.UI.Management.UserControls
 
             var allTeams = teamPageService.GetAllTeams();
             var selectedTeam = allTeams.Find(u => u.ID == selectedItemID);
-            
+
             if (selectedTeam == null)
             {
                 throw new Exception("Can't find the selected user! Please refresh the page!");
@@ -92,7 +93,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void OpenNewTeamPage()
         {
-            var newTeamPageUserControl = new NewTeamPage(connection);
+            var newTeamPageUserControl = new NewTeamPage(databaseManager);
             newTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(newTeamPageUserControl);
         }
@@ -130,7 +131,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void CreateTeamDetailsPage(Team team)
         {
-            var teamDetailsPageUserControl = new TeamDetailsPage(connection, team);
+            var teamDetailsPageUserControl = new TeamDetailsPage(databaseManager, team);
             teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(teamDetailsPageUserControl);
         }
@@ -159,7 +160,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void CreateEditTeamPage(Team team)
         {
-            var editTeamPageUserControl = new EditTeamPage(connection, team);
+            var editTeamPageUserControl = new EditTeamPage(databaseManager, team);
             editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(editTeamPageUserControl);
         }

@@ -1,28 +1,29 @@
-﻿using TeamManager.Service.Management.Database;
+﻿using TeamManager.Service.Management.DatabaseManagers;
 using TeamManager.UI.Management.UserControls;
 
 namespace TeamManager.UI.Management
 {
     public partial class ManagementForm : Form
     {
+        readonly DatabaseManager databaseManager;
         public ManagementForm(string connectionString)
         {
             InitializeComponent();
             CenterToScreen();
-            var connection = new ManagementSQLiteConnetion(connectionString);
-            CreateUserPage(connection);
-            CreateTeamPage(connection);
+            databaseManager = new SQLiteDatabaseManager(connectionString);
+            CreateUserPage();
+            CreateTeamPage();
         }
 
-        private void CreateTeamPage(IManagementDatabaseConnection connection)
+        private void CreateTeamPage()
         {
-            TeamPage teamPage = new TeamPage(connection);
+            TeamPage teamPage = new TeamPage(databaseManager);
             panelTeamPage.Controls.Add(teamPage);
         }
 
-        private void CreateUserPage(IManagementDatabaseConnection connection)
+        private void CreateUserPage()
         {
-            UserPage userPageUser = new UserPage(connection);
+            UserPage userPageUser = new UserPage(databaseManager);
             panelUserDetails.Controls.Add(userPageUser);
         }
     }

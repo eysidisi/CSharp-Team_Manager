@@ -1,14 +1,14 @@
 ﻿using Dapper.Contrib.Extensions;
 
-namespace TeamManager.Service.Models
+namespace TeamManager.Service.Management.Models
 {
     [Table("Purposes")]
     public class Purpose
     {
         public Purpose(string userName, string purposeText)
         {
-            this.UserName = userName;
-            this.PurposeText = purposeText;
+            UserName = userName;
+            PurposeText = purposeText;
         }
         public Purpose()
         {

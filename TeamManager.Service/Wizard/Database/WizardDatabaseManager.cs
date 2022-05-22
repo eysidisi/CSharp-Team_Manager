@@ -1,12 +1,7 @@
 ﻿using Dapper.Contrib.Extensions;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Models;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.Service.Wizard.Database
 {

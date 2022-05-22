@@ -3,12 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
-using TeamManager.Service.Test.HelperMethods.SQLiteDB;
+using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.TeamServices;
 using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
@@ -19,7 +16,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void GetAllTeams_DBHasNoTeams_ReturnsEmptyList()
         {
             // Arrange
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
+            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act
@@ -44,7 +41,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(expectedTeams);
             }
 
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
+            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act
@@ -65,7 +62,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(teamToDelete);
             }
 
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
+            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act
@@ -78,7 +75,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 teamsLeftInDB = cnn.GetAll<Team>().ToList();
             }
 
-            Assert.DoesNotContain(teamToDelete,teamsLeftInDB);
+            Assert.DoesNotContain(teamToDelete, teamsLeftInDB);
         }
 
         [Fact]
@@ -87,7 +84,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
 
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
+            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act && Assert
@@ -107,7 +104,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             }
 
 
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
+            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act && Assert
@@ -127,7 +124,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(userIDToTeamID);
             }
 
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
+            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
             TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act && Assert

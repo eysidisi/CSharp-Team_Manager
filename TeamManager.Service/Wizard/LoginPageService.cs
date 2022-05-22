@@ -1,11 +1,11 @@
-﻿using TeamManager.Service.Models;
-using TeamManager.Service.Wizard.Database;
+﻿using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.Service.Wizard
 {
     public class LoginPageService
     {
-        IWizardDatabaseConnection databaseConnection;
+        readonly IWizardDatabaseConnection databaseConnection;
 
         public LoginPageService(IWizardDatabaseConnection databaseConnection)
         {

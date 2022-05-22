@@ -1,14 +1,10 @@
-﻿using Dapper;
-using Dapper.Contrib.Extensions;
-using System.Data;
-using System.Data.SQLite;
-using TeamManager.Service.Models;
+﻿using System.Data.SQLite;
 
 namespace TeamManager.Service.Wizard.Database
 {
     public class WizardDatabaseManagerSQLite : WizardDatabaseManager
     {
-        public WizardDatabaseManagerSQLite(string connString):base(connString)
+        public WizardDatabaseManagerSQLite(string connString) : base(connString)
         {
 
         }

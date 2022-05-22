@@ -1,6 +1,6 @@
 using System.Configuration;
-using TeamManager.Service.Models;
 using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.Models;
 using TeamManager.UI.Management;
 using TeamManager.UI.Wizard.UserControls;
 
@@ -10,9 +10,8 @@ namespace TeamManager.UI.Wizard
     {
         //string connectionString = ConfigurationManager.ConnectionStrings["TestSmallDB"].ConnectionString;
         //string connectionString = ConfigurationManager.ConnectionStrings["TestMediumDB"].ConnectionString;
-        string connectionString = ConfigurationManager.ConnectionStrings["TestLargeDB"].ConnectionString;
-
-        IWizardDatabaseConnection connection;
+        readonly string connectionString = ConfigurationManager.ConnectionStrings["TestLargeDB"].ConnectionString;
+        readonly IWizardDatabaseConnection connection;
         LoginPage loginPageUserControl;
         PurposePage purposePageUserControl;
 

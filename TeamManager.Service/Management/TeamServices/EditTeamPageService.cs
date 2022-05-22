@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 
 namespace TeamManager.Service.Management.TeamServices
 {
     public class EditTeamPageService
     {
-        IManagementDatabaseConnection connection;
-        Team team;
-        public EditTeamPageService(IManagementDatabaseConnection connection, Team teamToEdit)
+        readonly DatabaseManager databaseManager;
+        readonly Team team;
+        public EditTeamPageService(DatabaseManager databaseManager, Team teamToEdit)
         {
-            this.connection = connection;
+            this.databaseManager = databaseManager;
             team = teamToEdit;
         }
 
@@ -37,12 +32,12 @@ namespace TeamManager.Service.Management.TeamServices
                 throw new ArgumentException("User is already in the team!");
             }
 
-            connection.SaveUserIDToTeamID(userIDToTeamID);
+            databaseManager.SaveUserIDToTeamID(userIDToTeamID);
         }
 
         public List<User> GetAllUsers()
         {
-            return connection.GetAllUsers();
+            return databaseManager.GetAllUsers();
         }
 
         public List<User> TryToGetUsersInTheTeam()
@@ -59,13 +54,13 @@ namespace TeamManager.Service.Management.TeamServices
         {
             List<int> userIDsThatAreInTheTeam = FindUserIDsThatAreInTheTeam();
 
-            var users = connection.GetAllUsers();
+            var users = databaseManager.GetAllUsers();
             return users.Where(u => userIDsThatAreInTheTeam.Contains(u.ID)).ToList();
         }
 
         private List<int> FindUserIDsThatAreInTheTeam()
         {
-            var userIDToTeamIDs = connection.GetAllUserIDToTeamID();
+            var userIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
             var userIDsBelongedToTeam = userIDToTeamIDs
                                         .Where(u => u.TeamID == team.ID)
                                         .Select(u => u.UserID).ToList();
@@ -98,12 +93,12 @@ namespace TeamManager.Service.Management.TeamServices
 
             UserIDToTeamID correctUserIDToTeamID = GetCorrectEntryFromDB(userIDToTeamID);
 
-            connection.DeleteUserIDToTeamID(correctUserIDToTeamID);
+            databaseManager.DeleteUserIDToTeamID(correctUserIDToTeamID);
         }
 
         private UserIDToTeamID GetCorrectEntryFromDB(UserIDToTeamID userIDToTeamID)
         {
-            var allUserIDsToTeamIDs = connection.GetAllUserIDToTeamID();
+            var allUserIDsToTeamIDs = databaseManager.GetAllUserIDToTeamID();
 
             UserIDToTeamID copyItem = allUserIDsToTeamIDs.Find(u => u.UserID == userIDToTeamID.UserID && u.TeamID == userIDToTeamID.TeamID);
 
@@ -112,7 +107,7 @@ namespace TeamManager.Service.Management.TeamServices
 
         private bool CheckIfUserIsInTheTeam(UserIDToTeamID userIDToTeamID)
         {
-            var allUserIDsToTeamIDs = connection.GetAllUserIDToTeamID();
+            var allUserIDsToTeamIDs = databaseManager.GetAllUserIDToTeamID();
 
             UserIDToTeamID? copyItem = allUserIDsToTeamIDs.Find(u => u.UserID == userIDToTeamID.UserID && u.TeamID == userIDToTeamID.TeamID);
 
@@ -126,12 +121,12 @@ namespace TeamManager.Service.Management.TeamServices
 
         private bool CheckIfUserExistsInDB(User user)
         {
-            return connection.GetAllUsers().Find(u => u.ID == user.ID) != null ? true : false;
+            return databaseManager.GetAllUsers().Find(u => u.ID == user.ID) != null ? true : false;
         }
 
         private bool CheckIfTeamExistsInDB()
         {
-            return connection.GetAllTeams().Find(t => t.ID == team.ID) != null ? true : false;
+            return databaseManager.GetAllTeams().Find(t => t.ID == team.ID) != null ? true : false;
         }
     }
 }

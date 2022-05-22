@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TeamManager.Service.Management.CommonServices;
 using Xunit;
 
-namespace TeamManager.Service.Test.Management.CommonServices
+namespace TeamManager.Service.UnitTest.Management.CommonServices
 {
     public class DataViewPageServiceTests
     {
@@ -16,7 +13,7 @@ namespace TeamManager.Service.Test.Management.CommonServices
 
         public DataViewPageServiceTests()
         {
-            
+
         }
 
         [Fact]

@@ -1,25 +1,25 @@
-﻿using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 
-namespace TeamManager.Service.Management
+namespace TeamManager.Service.Management.UserServices
 {
     public class UserPageService
     {
-        private IManagementDatabaseConnection connection;
+        private readonly DatabaseManager databaseManager;
 
-        public UserPageService(IManagementDatabaseConnection connection)
+        public UserPageService(DatabaseManager databaseManager)
         {
-            this.connection = connection;
+            this.databaseManager = databaseManager;
         }
 
         public List<User> GetUsers()
         {
-            return connection.GetAllUsers();
+            return databaseManager.GetAllUsers();
         }
 
         public void DeleteUser(User user)
         {
-            if (connection.DeleteUser(user) == false)
+            if (databaseManager.DeleteUser(user) == false)
             {
                 throw new ArgumentException("Can't delete the user!");
             }
@@ -29,12 +29,12 @@ namespace TeamManager.Service.Management
 
         private void DeleteAllUserIDToTeamIDEntries(User user)
         {
-            var allUserIDToTeamIDs = connection.GetAllUserIDToTeamID();
+            var allUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
             var userToTeamIDs = allUserIDToTeamIDs.Where(a => a.UserID == user.ID).ToList();
 
             foreach (var userToTeamID in userToTeamIDs)
             {
-                connection.DeleteUserIDToTeamID(userToTeamID);
+                databaseManager.DeleteUserIDToTeamID(userToTeamID);
             }
         }
     }

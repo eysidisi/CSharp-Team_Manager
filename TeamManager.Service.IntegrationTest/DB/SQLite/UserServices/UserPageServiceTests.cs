@@ -4,12 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
-using TeamManager.Service.Test.HelperMethods.SQLiteDB;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.UserServices;
 using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
@@ -20,7 +16,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void GetUsers_NoUserIsInDB_ReturnsEmptyList()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(connection);
+            UserPageService userPageService = new UserPageService(databaseManager);
 
             // Act
             var users = userPageService.GetUsers();
@@ -33,7 +29,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void GetUsers_UserIsInDB_ReturnsUser()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(connection);
+            UserPageService userPageService = new UserPageService(databaseManager);
 
             User user = new User() { Name = "user", Surname = "surname" };
 
@@ -53,7 +49,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void DeleteUser_NoUserIsInDB_ThrowsException()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(connection);
+            UserPageService userPageService = new UserPageService(databaseManager);
 
             User user = new User() { Name = "user", Surname = "surname" };
 
@@ -65,7 +61,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void DeleteUser_UserIsInDBNotInATeam_DeletesUser()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(connection);
+            UserPageService userPageService = new UserPageService(databaseManager);
 
             User user = new User() { Name = "user", Surname = "surname" };
 
@@ -91,9 +87,9 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void DeleteUser_UserIsInDBInATeam_DeletesUser()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(connection);
+            UserPageService userPageService = new UserPageService(databaseManager);
 
-            User user = new User() {ID=1, Name = "user", Surname = "surname" };
+            User user = new User() { ID = 1, Name = "user", Surname = "surname" };
             Team team = new Team() { ID = 1, Name = "team" };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = team.ID, UserID = user.ID };
 

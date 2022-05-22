@@ -1,15 +1,15 @@
-﻿using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.UI.Wizard.UserControls
 {
     public partial class PurposePage : UserControl
     {
         public Action OnSuccessfulPurposeEnter;
-
-        Manager manager;
-        PurposePageService purposePageService;
+        readonly Manager manager;
+        readonly PurposePageService purposePageService;
 
         public PurposePage(IWizardDatabaseConnection connection, Manager manager)
         {

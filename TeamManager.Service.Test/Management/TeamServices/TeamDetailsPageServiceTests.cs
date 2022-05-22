@@ -1,27 +1,19 @@
-﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using System.Collections.Generic;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.TeamServices;
 using Xunit;
 
-namespace TeamManager.Service.Test.Management
+namespace TeamManager.Service.UnitTest.Management.TeamServices
 {
-    public class TeamDetailsPageServiceTests
+    public class TeamDetailsPageServiceTests : TeamServiceTestsBase
     {
-        Mock<IManagementDatabaseConnection> connection;
-        TeamDetailsPageService teamDetailsPage;
-        Team teamToGetDetails;
+        readonly TeamDetailsPageService teamDetailsPage;
+        readonly Team teamToGetDetails;
 
         public TeamDetailsPageServiceTests()
         {
-            connection = new Mock<IManagementDatabaseConnection>();
             teamToGetDetails = new Team() { ID = 1, Name = "Team1" };
-            teamDetailsPage = new TeamDetailsPageService(connection.Object,teamToGetDetails);
+            teamDetailsPage = new TeamDetailsPageService(databaseManager.Object, teamToGetDetails);
         }
 
         [Fact]
@@ -38,9 +30,9 @@ namespace TeamManager.Service.Test.Management
             List<User> users = new List<User>() { user1, user2 };
             List<Team> teams = new List<Team>() { teamToGetDetails, team2 };
 
-            connection.Setup(c => c.GetAllUsers()).Returns(users);
-            connection.Setup(c => c.GetAllTeams()).Returns(teams);
-            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDToTeamIDs);
+            databaseManager.Setup(c => c.GetAllUsers()).Returns(users);
+            databaseManager.Setup(c => c.GetAllTeams()).Returns(teams);
+            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDToTeamIDs);
 
             List<User> expectedUsers = new List<User>() { user1 };
 
@@ -50,12 +42,14 @@ namespace TeamManager.Service.Test.Management
             // Assert
             Assert.Equal(expectedUsers, actualUsers);
         }
-        
+
         [Fact]
         public void GetUsersInTheTeam_NoUsersInTheDB_ReturnsEmptyList()
         {
             // Arrange
-            connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
+            databaseManager.Setup(c => c.GetAllUsers()).Returns(new List<User>());
+            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
+            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             // Act
             List<User> actualUsers = teamDetailsPage.GetUsersInTeam();
@@ -74,8 +68,9 @@ namespace TeamManager.Service.Test.Management
             List<User> users = new List<User>() { user1, user2 };
             List<Team> teams = new List<Team>() { teamToGetDetails };
 
-            connection.Setup(c => c.GetAllUsers()).Returns(users);
-            connection.Setup(c => c.GetAllTeams()).Returns(teams);
+            databaseManager.Setup(c => c.GetAllUsers()).Returns(users);
+            databaseManager.Setup(c => c.GetAllTeams()).Returns(teams);
+            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             // Act
             List<User> actualUsers = teamDetailsPage.GetUsersInTeam();

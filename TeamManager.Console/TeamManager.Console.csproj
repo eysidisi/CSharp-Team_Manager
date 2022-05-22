@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TeamManager.Service.Test\TeamManager.Service.Test.csproj" />
+    <ProjectReference Include="..\TeamManager.Service.Test\TeamManager.Service.UnitTest.csproj" />
   </ItemGroup>
 
 </Project>

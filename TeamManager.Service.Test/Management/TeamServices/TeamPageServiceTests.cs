@@ -1,23 +1,20 @@
 ﻿using Moq;
 using System;
 using System.Collections.Generic;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.TeamServices;
 using Xunit;
 
-namespace TeamManager.Service.Test.Management
+namespace TeamManager.Service.UnitTest.Management.TeamServices
 {
-    public class TeamPageServiceTests
+    public class TeamPageServiceTests : TeamServiceTestsBase
     {
-        Mock<IManagementDatabaseConnection> connection;
-        TeamPageService teamPageService;
+        readonly TeamPageService teamPageService;
 
         public TeamPageServiceTests()
         {
-            connection = new Mock<IManagementDatabaseConnection>();
-            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
-            teamPageService = new TeamPageService(connection.Object);
+            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
+            teamPageService = new TeamPageService(databaseManager.Object);
         }
 
         [Fact]
@@ -36,7 +33,7 @@ namespace TeamManager.Service.Test.Management
                 },
             };
 
-            connection.Setup(x => x.GetAllTeams()).Returns(expectedTeams);
+            databaseManager.Setup(x => x.GetAllTeams()).Returns(expectedTeams);
 
             // Act
             List<Team> actualTeams = teamPageService.GetAllTeams();
@@ -48,7 +45,7 @@ namespace TeamManager.Service.Test.Management
         public void GetAllTeams_TeamsDontExistInDB_ReturnsEmptyList()
         {
             // Arrange
-            connection.Setup(x => x.GetAllTeams()).Returns(new List<Team>());
+            databaseManager.Setup(x => x.GetAllTeams()).Returns(new List<Team>());
 
             // Act
             List<Team> actualTeams = teamPageService.GetAllTeams();
@@ -67,14 +64,14 @@ namespace TeamManager.Service.Test.Management
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
-            connection.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == expectedTeamToDelete))).Returns(true);
-            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            databaseManager.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == expectedTeamToDelete))).Returns(true);
+            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             // Act 
             teamPageService.DeleteTeam(expectedTeamToDelete);
 
             // Assert
-            connection.Verify(c => c.DeleteTeam(It.Is<Team>(actualTeamToDelete => actualTeamToDelete.Equals(expectedTeamToDelete))));
+            databaseManager.Verify(c => c.DeleteTeam(It.Is<Team>(actualTeamToDelete => actualTeamToDelete.Equals(expectedTeamToDelete))));
         }
 
         [Fact]
@@ -90,7 +87,7 @@ namespace TeamManager.Service.Test.Management
 
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { TeamID = 1, UserID = 1 };
 
-            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
+            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));
@@ -106,7 +103,7 @@ namespace TeamManager.Service.Test.Management
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
-            connection.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(false);
+            databaseManager.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(false);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));

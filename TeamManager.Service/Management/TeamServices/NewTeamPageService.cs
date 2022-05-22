@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 
-namespace TeamManager.Service.Management
+namespace TeamManager.Service.Management.TeamServices
 {
     public class NewTeamPageService
     {
-        private IManagementDatabaseConnection connection;
+        readonly DatabaseManager databaseManager;
 
-        public NewTeamPageService(IManagementDatabaseConnection connection)
+        public NewTeamPageService(DatabaseManager connection)
         {
-            this.connection = connection;
+            this.databaseManager = connection;
         }
 
         public void SaveTeam(Team newTeam)
@@ -25,14 +20,14 @@ namespace TeamManager.Service.Management
             {
                 throw new ArgumentException("Make sure that all of the sections are filled!");
             }
-            var allTeams = connection.GetAllTeams();
+            var allTeams = databaseManager.GetAllTeams();
 
             if (allTeams.Any(t => t.Name == newTeam.Name))
             {
                 throw new ArgumentException("A team with the same name already exists!");
             }
 
-            connection.SaveTeam(newTeam);
+            databaseManager.SaveTeam(newTeam);
         }
 
         private void AddCreationTimeInfo(Team newTeam)

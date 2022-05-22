@@ -1,17 +1,17 @@
-﻿using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.UserServices;
 
 namespace TeamManager.UI.Management.UserControls
 {
     public partial class NewUserPage : UserControl
     {
         public Action<UserControl> OnCancelClick;
-        NewUserPageService newUserPageService;
+        readonly NewUserPageService newUserPageService;
 
-        public NewUserPage(IManagementDatabaseConnection connection)
+        public NewUserPage(DatabaseManager databaseManager)
         {
-            newUserPageService = new NewUserPageService(connection);
+            newUserPageService = new NewUserPageService(databaseManager);
             InitializeComponent();
         }
 

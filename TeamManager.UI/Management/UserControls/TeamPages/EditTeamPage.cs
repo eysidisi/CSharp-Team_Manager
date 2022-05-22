@@ -1,30 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
+﻿using System.Data;
+using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
-using TeamManager.Service.Models;
 
 namespace TeamManager.UI.Management.UserControls
 {
     public partial class EditTeamPage : UserControl
     {
         public Action<EditTeamPage> OnBackButtonClicked;
-        EditTeamPageService editTeamPageService;
+        readonly EditTeamPageService editTeamPageService;
         DataViewPage<User> allUsersDataViewPage;
         DataViewPage<User> teamUsersDataViewPage;
 
-        public EditTeamPage(IManagementDatabaseConnection connection, Team teamToEdit)
+        public EditTeamPage(DatabaseManager databaseManager, Team teamToEdit)
         {
             InitializeComponent();
-            editTeamPageService = new EditTeamPageService(connection, teamToEdit);
+            editTeamPageService = new EditTeamPageService(databaseManager, teamToEdit);
             SetHeaderText(teamToEdit.Name);
             CreateAllUsersDataViewPage();
             CreateTeamUsersDataViewPage();
@@ -90,7 +81,7 @@ namespace TeamManager.UI.Management.UserControls
         {
             DataRowView selectedRow = dataViewPage.GetSelectedRow();
             User selectedUser = GetUserFromTheRow(selectedRow);
-            
+
             return selectedUser;
         }
 

@@ -1,17 +1,17 @@
 using Moq;
 using System;
 using System.Collections.Generic;
-using TeamManager.Service.Models;
 using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.Models;
 using Xunit;
 
-namespace TeamManager.Service.Test.Wizard
+namespace TeamManager.Service.UnitTest.Wizard
 {
     public class LoginPageServiceTests
     {
-        Manager validManager;
-        LoginPageService loginPageService;
+        readonly Manager validManager;
+        readonly LoginPageService loginPageService;
         public LoginPageServiceTests()
         {
             string userName = "CorrectName";

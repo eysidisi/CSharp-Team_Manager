@@ -1,4 +1,5 @@
-﻿using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.Models;
+using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.Service.Wizard.Database
 {

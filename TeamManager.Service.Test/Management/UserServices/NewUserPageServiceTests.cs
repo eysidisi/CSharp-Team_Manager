@@ -1,26 +1,18 @@
 ﻿using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.UserServices;
 using Xunit;
 
-namespace TeamManager.Service.Test.Management
+namespace TeamManager.Service.UnitTest.Management.UserServices
 {
-    public class NewUserPageServiceTests
+    public class NewUserPageServiceTests : UserServicesTestsBase
     {
-        Mock<IManagementDatabaseConnection> connection;
-
-        NewUserPageService newUserPageService;
+        readonly NewUserPageService newUserPageService;
 
         public NewUserPageServiceTests()
         {
-            connection = new Mock<IManagementDatabaseConnection>();
-            newUserPageService = new NewUserPageService(connection.Object);
+            newUserPageService = new NewUserPageService(databaseManager.Object);
         }
 
         [Fact]
@@ -40,7 +32,7 @@ namespace TeamManager.Service.Test.Management
             newUserPageService.SaveNewUser(expectedUserToSave);
 
             // Assert
-            connection.Verify(c => c.SaveUser(It.Is<User>(actualUserToSave => actualUserToSave.Equals(expectedUserToSave))));
+            databaseManager.Verify(c => c.SaveUser(It.Is<User>(actualUserToSave => actualUserToSave.Equals(expectedUserToSave))));
         }
 
         [Fact]

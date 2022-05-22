@@ -1,34 +1,34 @@
-﻿using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 
-namespace TeamManager.Service.Management
+namespace TeamManager.Service.Management.UserServices
 {
     public class NewUserPageService
     {
-        IManagementDatabaseConnection connection;
+        readonly DatabaseManager databaseManager;
 
-        public NewUserPageService(IManagementDatabaseConnection connection)
+        public NewUserPageService(DatabaseManager databaseManager)
         {
-            this.connection = connection;
+            this.databaseManager = databaseManager;
         }
 
         public void SaveNewUser(User user)
         {
             AddCreationTimeInfo(user);
-            
-            if(CheckIfUserIsValid(user)==false)
+
+            if (CheckIfUserIsValid(user) == false)
             {
                 throw new ArgumentException("User is not valid!");
             }
 
-            connection.SaveUser(user);
+            databaseManager.SaveUser(user);
         }
 
         private bool CheckIfUserIsValid(User user)
         {
             if (string.IsNullOrEmpty(user.Name))
             {
-                return false; 
+                return false;
             }
 
             return true;

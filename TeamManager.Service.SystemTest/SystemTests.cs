@@ -1,16 +1,15 @@
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
+using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
 using TeamManager.Service.Management.UserServices;
-using TeamManager.Service.Models;
-using TeamManager.Service.Test.HelperMethods.SQLiteDB;
+using TeamManager.Service.UnitTest.HelperMethods.SQLiteDB;
 using Xunit;
 
 namespace TeamManager.Service.SystemTest
 {
     public class SystemTests
     {
-        IManagementDatabaseConnection connection;
+        DatabaseManager databaseManager;
         UserPageService userPageService;
         TeamPageService teamPageService;
 
@@ -20,7 +19,7 @@ namespace TeamManager.Service.SystemTest
             SQLiteHelperMethods sQLiteHelperMethods = new SQLiteHelperMethods();
             var dbFilePath = sQLiteHelperMethods.CreateEmptyTestDB_ReturnFilePath();
             var connectionString = $@"Data Source = {dbFilePath}; Version = 3";
-            connection = new ManagementSQLiteConnetion(connectionString);
+            databaseManager = new SQLiteDatabaseManager(connectionString);
         }
 
         // Empty DB
@@ -39,8 +38,8 @@ namespace TeamManager.Service.SystemTest
         {
             CreateEmptySQLConnection();
 
-            teamPageService = new TeamPageService(connection);
-            userPageService = new UserPageService(connection);
+            teamPageService = new TeamPageService(databaseManager);
+            userPageService = new UserPageService(databaseManager);
 
             AssertNoUserExists();
             AssertNoTeamExists();
@@ -99,28 +98,28 @@ namespace TeamManager.Service.SystemTest
 
         private void AssertTeamHasUser(Team team, User addedUser)
         {
-            TeamDetailsPageService teamDetailsPage = new TeamDetailsPageService(connection, team);
+            TeamDetailsPageService teamDetailsPage = new TeamDetailsPageService(databaseManager, team);
             var users = teamDetailsPage.GetUsersInTeam();
             Assert.Contains(addedUser, users);
         }
 
         private void AssertUserHasNoTeams(User user)
         {
-            UserDetailsPageService userDetailsPageService = new UserDetailsPageService(connection, user);
+            UserDetailsPageService userDetailsPageService = new UserDetailsPageService(databaseManager, user);
             var teams = userDetailsPageService.GetTeamsThatUserIn();
             Assert.Empty(teams);
         }
 
         private void AssertTeamHasNoUsers(Team team)
         {
-            TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(connection, team);
+            TeamDetailsPageService teamDetailsPageService = new TeamDetailsPageService(databaseManager, team);
             var users = teamDetailsPageService.GetUsersInTeam();
             Assert.Empty(users);
         }
 
         private void AddUserToTeam(User userToAdd, Team team)
         {
-            EditTeamPageService editTeamPageService = new EditTeamPageService(connection, team);
+            EditTeamPageService editTeamPageService = new EditTeamPageService(databaseManager, team);
             editTeamPageService.AddUserToTheTeam(userToAdd);
         }
 
@@ -132,7 +131,7 @@ namespace TeamManager.Service.SystemTest
 
         private void AddTeam(Team teamToAdd)
         {
-            NewTeamPageService newTeamPageService = new NewTeamPageService(connection);
+            NewTeamPageService newTeamPageService = new NewTeamPageService(databaseManager);
             newTeamPageService.SaveTeam(teamToAdd);
         }
 
@@ -150,7 +149,7 @@ namespace TeamManager.Service.SystemTest
 
         private void AddUser(User userToAdd)
         {
-            NewUserPageService newUserPageService = new NewUserPageService(connection);
+            NewUserPageService newUserPageService = new NewUserPageService(databaseManager);
             newUserPageService.SaveNewUser(userToAdd);
         }
 

@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.TeamServices;
 
 namespace TeamManager.UI.Management.UserControls
 {
     public partial class NewTeamPage : UserControl
     {
-        NewTeamPageService newTeamPageService;
+        readonly NewTeamPageService newTeamPageService;
         public Action<NewTeamPage> OnBackButtonClicked;
 
-        public NewTeamPage(IManagementDatabaseConnection connection)
+        public NewTeamPage(DatabaseManager databaseManager)
         {
             InitializeComponent();
-            newTeamPageService = new NewTeamPageService(connection);
+            newTeamPageService = new NewTeamPageService(databaseManager);
         }
 
         private void buttonSaveTeam_Click(object sender, EventArgs e)

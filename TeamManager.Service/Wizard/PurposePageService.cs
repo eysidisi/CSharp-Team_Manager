@@ -1,10 +1,10 @@
-﻿using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard.Database;
 namespace TeamManager.Service.Wizard
 {
     public class PurposePageService
     {
-        IWizardDatabaseConnection connection;
+        readonly IWizardDatabaseConnection connection;
 
         public PurposePageService(IWizardDatabaseConnection connection)
         {
@@ -24,7 +24,9 @@ namespace TeamManager.Service.Wizard
         {
             // TODO: Can add more validation rules. Length?
             if (string.IsNullOrEmpty(purpose.PurposeText))
+            {
                 return false;
+            }
 
             return true;
         }

@@ -1,6 +1,5 @@
 using System.Configuration;
 using TeamManager.UI.Management;
-using TeamManager.UI.Wizard;
 
 namespace TeamManager.UI
 {
@@ -8,7 +7,7 @@ namespace TeamManager.UI
     {
         //static string connectionString = ConfigurationManager.ConnectionStrings["TestSmallDB"].ConnectionString;
         //static string connectionString = ConfigurationManager.ConnectionStrings["TestMediumDB"].ConnectionString;
-        static string connectionString = ConfigurationManager.ConnectionStrings["TestLargeDB"].ConnectionString;
+        static readonly string connectionString = ConfigurationManager.ConnectionStrings["TestLargeDB"].ConnectionString;
 
         /// <summary>
         ///  The main entry point for the application.

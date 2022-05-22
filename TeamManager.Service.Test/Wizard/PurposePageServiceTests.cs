@@ -1,17 +1,17 @@
 ﻿using Moq;
 using System;
-using TeamManager.Service.Models;
+using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
 
 using Xunit;
 
-namespace TeamManager.Service.Test.Wizard
+namespace TeamManager.Service.UnitTest.Wizard
 {
     public class PurposePageServiceTests
     {
-        Mock<IWizardDatabaseConnection> connection;
-        PurposePageService page;
+        readonly Mock<IWizardDatabaseConnection> connection;
+        readonly PurposePageService page;
         public PurposePageServiceTests()
         {
             connection = new Mock<IWizardDatabaseConnection>();

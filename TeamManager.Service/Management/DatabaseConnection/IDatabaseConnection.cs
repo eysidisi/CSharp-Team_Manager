@@ -1,8 +1,8 @@
-﻿using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.Models;
 
-namespace TeamManager.Service.Management.Database
+namespace TeamManager.Service.Management.DatabaseConnection
 {
-    public interface IManagementDatabaseConnection
+    public interface IDatabaseConnection
     {
         List<User> GetAllUsers();
         void SaveUser(User user);

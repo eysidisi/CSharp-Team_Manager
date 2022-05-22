@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.Service", "TeamManager.Service\TeamManager.Service.csproj", "{5E59CF8D-20B1-4F3F-88A9-E6F2BD62B724}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.Service.Test", "TeamManager.Service.Test\TeamManager.Service.Test.csproj", "{A648D0EB-F67E-42B4-88C1-5BEB832AFFD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.Service.UnitTest", "TeamManager.Service.Test\TeamManager.Service.UnitTest.csproj", "{A648D0EB-F67E-42B4-88C1-5BEB832AFFD5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.UI", "TeamManager.UI\TeamManager.UI.csproj", "{A29468D7-F844-4134-9C95-8C127EB8398F}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.Console", "Team
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.Service.IntegrationTest", "TeamManager.Service.IntegrationTest\TeamManager.Service.IntegrationTest.csproj", "{7799D285-1349-49B5-9F1D-1729CF746F52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.Service.SystemTest", "TeamManager.Service.SystemTest\TeamManager.Service.SystemTest.csproj", "{39486D75-7046-4F8F-9335-28D86E4472BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamManager.Service.SystemTest", "TeamManager.Service.SystemTest\TeamManager.Service.SystemTest.csproj", "{39486D75-7046-4F8F-9335-28D86E4472BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,6 @@
 ﻿using Dapper.Contrib.Extensions;
-using System;
 
-namespace TeamManager.Service.Models
+namespace TeamManager.Service.Management.Models
 {
     [Table("Users")]
     public class User : IEquatable<User>

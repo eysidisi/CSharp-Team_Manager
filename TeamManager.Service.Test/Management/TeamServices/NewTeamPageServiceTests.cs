@@ -1,25 +1,19 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.TeamServices;
 using Xunit;
-using Moq;
-using TeamManager.Service.Models;
 
-namespace TeamManager.Service.Test.Management
+namespace TeamManager.Service.UnitTest.Management.TeamServices
 {
-    public class NewTeamPageServiceTests
+    public class NewTeamPageServiceTests : TeamServiceTestsBase
     {
-        Mock<IManagementDatabaseConnection> connection;
-        NewTeamPageService newTeamPageService;
+        readonly NewTeamPageService newTeamPageService;
 
         public NewTeamPageServiceTests()
         {
-            connection = new Mock<IManagementDatabaseConnection>();
-            newTeamPageService = new NewTeamPageService(connection.Object);
+            newTeamPageService = new NewTeamPageService(databaseManager.Object);
         }
 
         [Fact]
@@ -33,13 +27,13 @@ namespace TeamManager.Service.Test.Management
                 CreationDate = "123"
             };
 
-            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team> { });
+            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team> { });
 
             // Act 
             newTeamPageService.SaveTeam(teamToSave);
 
             // Assert
-            connection.Verify(c => c.SaveTeam(It.Is<Team>(actualSavedTeam => actualSavedTeam.Equals(teamToSave))));
+            databaseManager.Verify(c => c.SaveTeam(It.Is<Team>(actualSavedTeam => actualSavedTeam.Equals(teamToSave))));
         }
 
         [Fact]
@@ -51,8 +45,8 @@ namespace TeamManager.Service.Test.Management
                 Name = "Team1",
                 CreationDate = "123"
             };
-            
-            connection.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { newTeam });
+
+            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { newTeam });
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => newTeamPageService.SaveTeam(newTeam));

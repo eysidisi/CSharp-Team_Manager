@@ -1,28 +1,22 @@
 ﻿using Dapper.Contrib.Extensions;
-using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
-using TeamManager.Service.Test.HelperMethods.SQLiteDB;
+using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.TeamServices;
 using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 {
-    public class TeamDetailsPageServiceTests:SQLiteIntegrationTestsBase
+    public class TeamDetailsPageServiceTests : SQLiteIntegrationTestsBase
     {
-        Team temToGetDetails ;
-        TeamDetailsPageService teamDetailsPageService ;
+        readonly Team temToGetDetails;
+        readonly TeamDetailsPageService teamDetailsPageService;
 
 
         public TeamDetailsPageServiceTests()
         {
             temToGetDetails = new Team() { Name = "team", ID = 1 };
-            teamDetailsPageService = new TeamDetailsPageService(connection,temToGetDetails);
+            teamDetailsPageService = new TeamDetailsPageService(databaseManager, temToGetDetails);
         }
 
         [Fact]
@@ -39,7 +33,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(userIDToTeamID);
             }
 
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
+            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
 
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam();
@@ -57,7 +51,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(temToGetDetails);
             }
 
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
+            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
 
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam();
@@ -69,8 +63,8 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         {
             // Arrange
             Team team = new Team() { Name = "team", ID = 1 };
-            ManagementSQLiteConnetion connection = new ManagementSQLiteConnetion(connString);
-            
+            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
+
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam();
             Assert.Empty(actualUsers);

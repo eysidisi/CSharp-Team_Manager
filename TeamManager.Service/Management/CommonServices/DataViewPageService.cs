@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TeamManager.Service.Management.CommonServices
+﻿namespace TeamManager.Service.Management.CommonServices
 {
     public class DataViewPageService<T>
     {
-        int numOfItemsPerPage;
+        readonly int numOfItemsPerPage;
         public int CurrentPageNumber { get; private set; }
         public int NumOfMaximumPages => CalculateNumberOfMaximumPages();
 
-        List<T> items;
+        readonly List<T> items;
 
         public DataViewPageService(List<T> items, int numOfItemsPerPage = 15)
         {

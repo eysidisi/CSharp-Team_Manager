@@ -1,33 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.UserServices;
-using TeamManager.Service.Models;
 
 namespace TeamManager.UI.Management.UserControls.UserPages
 {
     public partial class UserDetailsPage : UserControl
     {
         public Action<UserControl> OnBackButtonClicked;
-        UserDetailsPageService userDetailsPageService;
+        readonly UserDetailsPageService userDetailsPageService;
         new DataViewPage<Team> dataViewPage;
 
-        public UserDetailsPage(IManagementDatabaseConnection connection, User user)
+        public UserDetailsPage(DatabaseManager databaseManager, User user)
         {
             InitializeComponent();
-            userDetailsPageService = new UserDetailsPageService(connection, user);
+            userDetailsPageService = new UserDetailsPageService(databaseManager, user);
             SetHeaderText(user.Name);
             CreateDataViewPage();
         }
-        
+
 
         private void SetHeaderText(string text)
         {
@@ -42,7 +32,7 @@ namespace TeamManager.UI.Management.UserControls.UserPages
 
         private void SetUpDataViewPage()
         {
-            dataViewPage.SetUpPage( userDetailsPageService.GetTeamsThatUserIn());
+            dataViewPage.SetUpPage(userDetailsPageService.GetTeamsThatUserIn());
         }
 
         private void buttonBack_Click(object sender, EventArgs e)

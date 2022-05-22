@@ -4,26 +4,26 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Linq;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
-using TeamManager.Service.Test.HelperMethods.SQLiteDB;
+using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.UnitTest.HelperMethods.SQLiteDB;
 using Xunit;
 
-namespace TeamManager.Service.Test.Management
+namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
 {
-    public class ManagementSQLiteConnetionTests : IDisposable
+    public class SQLiteDatabaseManagerTests : IDisposable
     {
-        SQLiteHelperMethods sqliteHelperMethods;
-        string dbFilePath;
-        string connectionString;
-        ManagementSQLiteConnetion managementSQLiteConnetion;
+        readonly SQLiteHelperMethods sqliteHelperMethods;
+        readonly string dbFilePath;
+        readonly string connectionString;
+        readonly SQLiteDatabaseManager sqliteDatabaseManager;
 
-        public ManagementSQLiteConnetionTests()
+        public SQLiteDatabaseManagerTests()
         {
             sqliteHelperMethods = new SQLiteHelperMethods();
             dbFilePath = sqliteHelperMethods.CreateEmptyTestDB_ReturnFilePath();
             connectionString = $@"Data Source = {dbFilePath}; Version = 3";
-            managementSQLiteConnetion = new ManagementSQLiteConnetion(connectionString);
+            sqliteDatabaseManager = new SQLiteDatabaseManager(connectionString);
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace TeamManager.Service.Test.Management
             }
 
             // Act
-            bool DeletionResult = managementSQLiteConnetion.DeleteUser(user);
+            bool DeletionResult = sqliteDatabaseManager.DeleteUser(user);
 
             // Assert
             Assert.True(DeletionResult);
@@ -61,7 +61,7 @@ namespace TeamManager.Service.Test.Management
             var userToDelete = new User() { ID = 2 };
 
             // Act
-            bool deletionResult = managementSQLiteConnetion.DeleteUser(userToDelete);
+            bool deletionResult = sqliteDatabaseManager.DeleteUser(userToDelete);
 
             // Assert
             Assert.False(deletionResult);
@@ -79,7 +79,7 @@ namespace TeamManager.Service.Test.Management
             };
 
             // Act
-            managementSQLiteConnetion.SaveTeam(team);
+            sqliteDatabaseManager.SaveTeam(team);
 
             List<Team> allTeams;
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
@@ -116,7 +116,7 @@ namespace TeamManager.Service.Test.Management
             }
 
             // Act
-            var actualTeams = managementSQLiteConnetion.GetAllTeams();
+            var actualTeams = sqliteDatabaseManager.GetAllTeams();
 
             // Assert
             Assert.Equal(actualTeams, expectedTeams);
@@ -126,7 +126,7 @@ namespace TeamManager.Service.Test.Management
         public void GetAllTeams_NoTeamExistsInTheDB_ReturnsEmptyList()
         {
             // Act
-            var savedTeams = managementSQLiteConnetion.GetAllTeams();
+            var savedTeams = sqliteDatabaseManager.GetAllTeams();
 
             // Assert
             Assert.Empty(savedTeams);
@@ -149,7 +149,7 @@ namespace TeamManager.Service.Test.Management
             }
 
             // Act
-            var deletionResult = managementSQLiteConnetion.DeleteTeam(team);
+            var deletionResult = sqliteDatabaseManager.DeleteTeam(team);
 
             // Assert
             Assert.True(deletionResult);
@@ -174,7 +174,7 @@ namespace TeamManager.Service.Test.Management
             // Act
             // Object in the DB has ID 1
             team.ID = 0;
-            var deletionResult = managementSQLiteConnetion.DeleteTeam(team);
+            var deletionResult = sqliteDatabaseManager.DeleteTeam(team);
 
             // Assert
             Assert.False(deletionResult);
@@ -184,7 +184,7 @@ namespace TeamManager.Service.Test.Management
         public void GetAllUserIDToTeamID_NoUserIDToTeamIDExistsInTheDB_ReturnsEmptyList()
         {
             // Act
-            var savedTeams = managementSQLiteConnetion.GetAllUserIDToTeamID();
+            var savedTeams = sqliteDatabaseManager.GetAllUserIDToTeamID();
 
             // Assert
             Assert.Empty(savedTeams);
@@ -206,7 +206,7 @@ namespace TeamManager.Service.Test.Management
             }
 
             // Act
-            var savedUserIDToTeamIDs = managementSQLiteConnetion.GetAllUserIDToTeamID();
+            var savedUserIDToTeamIDs = sqliteDatabaseManager.GetAllUserIDToTeamID();
 
             // Assert
             Assert.Contains(userIDToTeamID, savedUserIDToTeamIDs);
@@ -219,7 +219,7 @@ namespace TeamManager.Service.Test.Management
             var userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = 1, TeamID = 1 };
 
             // Act
-            managementSQLiteConnetion.SaveUserIDToTeamID(userIDToTeamID);
+            sqliteDatabaseManager.SaveUserIDToTeamID(userIDToTeamID);
 
             // Assert
             List<UserIDToTeamID> actualUserIDToTeamIDs;
@@ -244,7 +244,7 @@ namespace TeamManager.Service.Test.Management
             }
 
             // Act
-            bool deletionResult = managementSQLiteConnetion.DeleteUserIDToTeamID(userIDToTeamID);
+            bool deletionResult = sqliteDatabaseManager.DeleteUserIDToTeamID(userIDToTeamID);
 
             // Assert
             Assert.True(deletionResult);
@@ -263,7 +263,7 @@ namespace TeamManager.Service.Test.Management
 
             // Act
             userIDToTeamID.ID = 3;
-            bool deletionResult = managementSQLiteConnetion.DeleteUserIDToTeamID(userIDToTeamID);
+            bool deletionResult = sqliteDatabaseManager.DeleteUserIDToTeamID(userIDToTeamID);
 
             // Assert
             Assert.False(deletionResult);

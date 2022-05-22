@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
 
 namespace TeamManager.Service.Management.UserServices
 {
@@ -12,19 +7,18 @@ namespace TeamManager.Service.Management.UserServices
     {
         public int NumOfTeamsPerPage = 10;
 
-        private IManagementDatabaseConnection connection;
-        private User user;
+        private readonly DatabaseManager databaseManager;
+        private readonly User user;
 
-        public UserDetailsPageService(IManagementDatabaseConnection connection, User user)
+        public UserDetailsPageService(DatabaseManager databaseManager, User user)
         {
-            this.connection = connection;
+            this.databaseManager = databaseManager;
             this.user = user;
         }
-
         public List<Team> GetTeamsThatUserIn()
         {
-            var allUserIDToTeamIDs = connection.GetAllUserIDToTeamID();
-            var allTeams = connection.GetAllTeams();
+            var allUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            var allTeams = databaseManager.GetAllTeams();
 
             var teamIDs = allUserIDToTeamIDs.Where(a => a.UserID == user.ID)?.
                 Select(a => a.TeamID).ToList();

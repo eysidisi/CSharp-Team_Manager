@@ -1,6 +1,6 @@
 ﻿using Dapper.Contrib.Extensions;
 
-namespace TeamManager.Service.Models
+namespace TeamManager.Service.Wizard.Models
 {
     [Table("Managers")]
     public class Manager

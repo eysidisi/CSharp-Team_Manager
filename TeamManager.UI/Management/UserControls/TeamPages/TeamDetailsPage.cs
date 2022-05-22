@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using TeamManager.Service.Management;
-using TeamManager.Service.Management.Database;
-using TeamManager.Service.Models;
+﻿using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.Models;
+using TeamManager.Service.Management.TeamServices;
 
 namespace TeamManager.UI.Management.UserControls
 {
@@ -19,16 +10,16 @@ namespace TeamManager.UI.Management.UserControls
         DataViewPage<User> dataViewPage;
         TeamDetailsPageService teamDetailPageService;
 
-        public TeamDetailsPage(IManagementDatabaseConnection connection, Team team)
+        public TeamDetailsPage(DatabaseManager databaseManager, Team team)
         {
             InitializeComponent();
-            InitializeVariables(connection, team);
+            InitializeVariables(databaseManager, team);
             CreateDataViewPage();
         }
 
-        private void InitializeVariables(IManagementDatabaseConnection connection, Team team)
+        private void InitializeVariables(DatabaseManager databaseManager, Team team)
         {
-            teamDetailPageService = new TeamDetailsPageService(connection, team);
+            teamDetailPageService = new TeamDetailsPageService(databaseManager, team);
             labelTeamName.Text = team.Name;
         }
         private void CreateDataViewPage()

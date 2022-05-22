@@ -1,11 +1,6 @@
 ﻿using Dapper.Contrib.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace TeamManager.Service.Models
+namespace TeamManager.Service.Management.Models
 {
     [Table("UserID_To_TeamID")]
     public class UserIDToTeamID : IEquatable<UserIDToTeamID>
@@ -25,8 +20,8 @@ namespace TeamManager.Service.Models
                 return false;
             }
 
-            return ID == other.ID && 
-                   UserID == other.UserID && 
+            return ID == other.ID &&
+                   UserID == other.UserID &&
                    TeamID == other.TeamID;
         }
     }

@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 using TeamManager.Service.Management;
 using TeamManager.Service.Management.CommonServices;
-using TeamManager.Service.Models;
 
 namespace TeamManager.UI.Management.UserControls
 {
@@ -29,7 +20,7 @@ namespace TeamManager.UI.Management.UserControls
             panelToFit.Controls.Add(this);
         }
 
-        public void SetUpPage( List<DataTypeToView> itemsToDisplay)
+        public void SetUpPage(List<DataTypeToView> itemsToDisplay)
         {
             dataViewPageService = new DataViewPageService<DataTypeToView>(itemsToDisplay);
             labelMaxNumOfPage.Text = dataViewPageService.NumOfMaximumPages.ToString();
@@ -44,7 +35,7 @@ namespace TeamManager.UI.Management.UserControls
             dataGridView.DataSource = teamsDataTable;
             ResizeColumns(dataGridView);
         }
-        
+
         private void ResizeColumns(DataGridView dataGrid)
         {
             int width = dataGrid.Width;
@@ -67,7 +58,7 @@ namespace TeamManager.UI.Management.UserControls
                 throw new Exception("No item is selected! Please select an item first!");
             }
             DataRowView selectedRow = dataGridView.SelectedRows[0].DataBoundItem as DataRowView;
- 
+
             return selectedRow;
         }
 

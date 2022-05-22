@@ -1,14 +1,13 @@
-﻿using TeamManager.Service.Models;
-using TeamManager.Service.Wizard;
+﻿using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.UI.Wizard.UserControls
 {
     public partial class LoginPage : UserControl
     {
         public Action<Manager> OnSuccessfulLogin;
-
-        LoginPageService loginPageService;
+        readonly LoginPageService loginPageService;
         public LoginPage(IWizardDatabaseConnection databaseConnection)
         {
             InitializeComponent();
