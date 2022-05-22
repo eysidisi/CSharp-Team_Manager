@@ -37,5 +37,32 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             Assert.Contains(team, actualTeams);
         }
+
+        [Fact]
+        public void SaveTeam_TeamWithSameNameExistsInDB_ThrowsException()
+        {
+            // Arrange
+            NewTeamPageService newTeamPageService = new NewTeamPageService(connection);
+            Team team = new Team() { Name = "Team1" };
+
+            using (var cnn = new SQLiteConnection(connString))
+            {
+                cnn.Insert(team);
+            }
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => newTeamPageService.SaveTeam(team));
+        }
+
+        [Fact]
+        public void SaveTeam_InvalidTeam_ThrowsException()
+        {
+            // Arrange
+            NewTeamPageService newTeamPageService = new NewTeamPageService(connection);
+            Team team = new Team() { };
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => newTeamPageService.SaveTeam(team));
+        }
     }
 }

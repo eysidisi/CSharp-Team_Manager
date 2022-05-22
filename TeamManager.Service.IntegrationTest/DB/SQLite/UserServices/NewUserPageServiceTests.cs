@@ -12,7 +12,7 @@ using System;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
-    public class NewUserPageServiceTests:SQLiteIntegrationTestsBase
+    public class NewUserPageServiceTests : SQLiteIntegrationTestsBase
     {
         [Fact]
         public void SaveNewUser_EmptyDB_SavesNewUser()
@@ -20,7 +20,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             // Arrange
             NewUserPageService newUserPageService = new NewUserPageService(connection);
 
-            User user = new User() { Name = "userName", Surname = "userSurname" ,ID=1};
+            User user = new User() { Name = "userName", Surname = "userSurname", ID = 1 };
 
             // Act
             newUserPageService.SaveNewUser(user);
@@ -33,7 +33,18 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
                 actualUsers = cnn.GetAll<User>().ToList();
             }
 
-            Assert.Contains(user,actualUsers);
+            Assert.Contains(user, actualUsers);
+        }
+
+        [Fact]
+        public void SaveNewUser_EmptyDBInvalidUser_ThrowsException()
+        {
+            // Arrange
+            NewUserPageService newUserPageService = new NewUserPageService(connection);
+            User user = new User() { Surname = "userSurname", ID = 1 };
+
+            // Act && Assert
+            Assert.Throws<ArgumentException>(() => newUserPageService.SaveNewUser(user));
         }
     }
 }

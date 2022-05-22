@@ -50,7 +50,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         }
 
         [Fact]
-        public void DeleteUser_NoUserIsInDB_ReturnsUser()
+        public void DeleteUser_NoUserIsInDB_ThrowsException()
         {
             // Arrange
             UserPageService userPageService = new UserPageService(connection);
@@ -62,7 +62,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         }
 
         [Fact]
-        public void DeleteUser_UserIsInDB_ReturnsUser()
+        public void DeleteUser_UserIsInDBNotInATeam_DeletesUser()
         {
             // Arrange
             UserPageService userPageService = new UserPageService(connection);
@@ -72,6 +72,36 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             using (IDbConnection cnn = new SQLiteConnection(connString))
             {
                 cnn.Insert(user);
+            }
+
+            // Act 
+            userPageService.DeleteUser(user);
+
+            // Assert
+            List<User> users;
+            using (IDbConnection cnn = new SQLiteConnection(connString))
+            {
+                users = cnn.GetAll<User>().ToList();
+            }
+
+            Assert.Empty(users);
+        }
+
+        [Fact]
+        public void DeleteUser_UserIsInDBInATeam_DeletesUser()
+        {
+            // Arrange
+            UserPageService userPageService = new UserPageService(connection);
+
+            User user = new User() {ID=1, Name = "user", Surname = "surname" };
+            Team team = new Team() { ID = 1, Name = "team" };
+            UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = team.ID, UserID = user.ID };
+
+            using (IDbConnection cnn = new SQLiteConnection(connString))
+            {
+                cnn.Insert(user);
+                cnn.Insert(team);
+                cnn.Insert(userIDToTeamID);
             }
 
             // Act 

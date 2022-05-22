@@ -26,11 +26,6 @@ namespace TeamManager.Service.Management
             var teams = connection.GetAllTeams();
             var userIDToTeamIDs = connection.GetAllUserIDToTeamID();
 
-            if (users == null || teams == null || userIDToTeamIDs == null)
-            {
-                return new List<User>();
-            }
-
             var userIDsBelongedToTeam = userIDToTeamIDs.Where(u => u.TeamID == team.ID)
                                                         .Select(u => u.UserID).ToList();
             return users.Where(u => userIDsBelongedToTeam.Contains(u.ID)).ToList();

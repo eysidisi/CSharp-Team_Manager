@@ -27,7 +27,7 @@ namespace TeamManager.Service.Management
             }
             var allTeams = connection.GetAllTeams();
 
-            if (allTeams != null && allTeams.Any(t => t.Name == newTeam.Name))
+            if (allTeams.Any(t => t.Name == newTeam.Name))
             {
                 throw new ArgumentException("A team with the same name already exists!");
             }
