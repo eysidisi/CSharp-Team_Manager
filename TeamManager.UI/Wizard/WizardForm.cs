@@ -1,4 +1,5 @@
 using System.Configuration;
+using TeamManager.Service.Management.DatabaseManagers;
 using TeamManager.Service.Wizard.Database;
 using TeamManager.Service.Wizard.Models;
 using TeamManager.UI.Management;
@@ -47,7 +48,8 @@ namespace TeamManager.UI.Wizard
         {
             panelCenter.Controls.Remove(purposePageUserControl);
             this.Hide();
-            var managerForm = new ManagementForm(connectionString);
+            DatabaseManager databaseManager = new MySQLDatabaseManager(connectionString);
+            var managerForm = new ManagementForm(databaseManager);
             managerForm.Closed += (s, args) => this.Close();
             managerForm.Show();
         }

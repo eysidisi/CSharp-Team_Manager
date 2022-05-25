@@ -2,7 +2,7 @@ using TeamManager.Service.Management.DatabaseManagers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
 using TeamManager.Service.Management.UserServices;
-using TeamManager.Service.UnitTest.HelperMethods.SQLiteDB;
+using TeamManager.Service.UnitTest.HelperMethods.Database;
 using Xunit;
 
 namespace TeamManager.Service.SystemTest
@@ -16,9 +16,8 @@ namespace TeamManager.Service.SystemTest
 
         private void CreateEmptySQLConnection()
         {
-            SQLiteHelperMethods sQLiteHelperMethods = new SQLiteHelperMethods();
-            var dbFilePath = sQLiteHelperMethods.CreateEmptyTestDB_ReturnFilePath();
-            var connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            SQLiteDatabaseTestHelper sQLiteHelperMethods = new SQLiteDatabaseTestHelper();
+            var connectionString = sQLiteHelperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
             databaseManager = new SQLiteDatabaseManager(connectionString);
         }
 

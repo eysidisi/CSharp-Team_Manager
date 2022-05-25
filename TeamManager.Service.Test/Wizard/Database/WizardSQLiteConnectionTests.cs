@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using TeamManager.Service.Management.Models;
-using TeamManager.Service.UnitTest.HelperMethods.SQLiteDB;
+using TeamManager.Service.UnitTest.HelperMethods.Database;
 using TeamManager.Service.Wizard.Database;
 using TeamManager.Service.Wizard.Models;
 using Xunit;
@@ -17,14 +17,13 @@ namespace TeamManager.Service.UnitTest.Wizard.Database
         public void GetManagers_ManagersExistInDB_GetsManagers()
         {
             //Arrange
-            SQLiteHelperMethods helperMethods = new SQLiteHelperMethods();
-            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
+            SQLiteDatabaseTestHelper helperMethods = new SQLiteDatabaseTestHelper();
 
-            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            string connectionString = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
             WizardDatabaseManagerSQLite dataAccess = new WizardDatabaseManagerSQLite(connectionString);
 
             // Insert manager
-            Manager expectedManager = new Manager(SQLiteHelperMethods.ValidManagerUserName, SQLiteHelperMethods.ValidManagerPassword);
+            Manager expectedManager = new Manager(SQLiteDatabaseTestHelper.ValidManagerUserName, SQLiteDatabaseTestHelper.ValidManagerPassword);
 
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
             {
@@ -36,18 +35,15 @@ namespace TeamManager.Service.UnitTest.Wizard.Database
 
             // Assert
             Assert.Contains(allManagers, m => m.UserName == expectedManager.UserName && m.Password == expectedManager.Password);
-
-            helperMethods.DeleteDBIfExists(dbFilePath);
         }
 
         [Fact]
         public void GetManager_NoManagerExistsInDB_ReturnsEmptyList()
         {
             //Arrange
-            SQLiteHelperMethods helperMethods = new SQLiteHelperMethods();
-            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
+            SQLiteDatabaseTestHelper helperMethods = new SQLiteDatabaseTestHelper();
 
-            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            string connectionString = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
             WizardDatabaseManagerSQLite dataAccess = new WizardDatabaseManagerSQLite(connectionString);
 
             // Act
@@ -55,18 +51,15 @@ namespace TeamManager.Service.UnitTest.Wizard.Database
 
             // Assert
             Assert.Empty(allManagers);
-
-            helperMethods.DeleteDBIfExists(dbFilePath);
         }
 
         [Fact]
         public void SavePurpose_SavesPurposeSuccessfully()
         {
             //Arrange
-            SQLiteHelperMethods helperMethods = new SQLiteHelperMethods();
-            string dbFilePath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
+            SQLiteDatabaseTestHelper helperMethods = new SQLiteDatabaseTestHelper();
 
-            string connectionString = $@"Data Source = {dbFilePath}; Version = 3";
+            string connectionString = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
             WizardDatabaseManagerSQLite dataAccess = new WizardDatabaseManagerSQLite(connectionString);
 
             string purposeText = "A purpose text";
@@ -86,8 +79,6 @@ namespace TeamManager.Service.UnitTest.Wizard.Database
             }
 
             Assert.Contains(purposeText, purposes.Select(p => p.PurposeText).ToList());
-
-            helperMethods.DeleteDBIfExists(dbFilePath);
         }
     }
 }

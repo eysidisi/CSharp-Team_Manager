@@ -1,8 +1,5 @@
-﻿using Dapper.Contrib.Extensions;
-using System.Data.SQLite;
-using TeamManager.Service.Management.Models;
-using TeamManager.Service.UnitTest.HelperMethods.SQLiteDB;
-using TeamManager.Service.Wizard.Models;
+﻿using TeamManager.Console.TestDBCreation;
+using TeamManager.Service.UnitTest.HelperMethods.Database;
 
 namespace TeamManager.Console
 {
@@ -14,158 +11,25 @@ namespace TeamManager.Console
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            SQLiteHelperMethods helperMethods = new SQLiteHelperMethods();
+            DatabaseTestHelperBase helperMethods = new MySqlDatabaseTestHelper();
+            var mySQLConnectionStringSmall = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString("test_small_db");
+            var mySQLConnectionStringMedium = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString("test_medium_db");
+            var mySQLConnectionStringLarge = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString("test_large_db");
 
-            var smallDbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            var mediumDbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
-            var largeDbPath = helperMethods.CreateEmptyTestDB_ReturnFilePath();
+            TestDBCreationBase testDBCreation = new MySqlTestDBCreation();
+            testDBCreation.CreateDB(mySQLConnectionStringSmall, numOfManagers: 100, numOfUsers: 100, numberOfTeams: 1);
+            testDBCreation.CreateDB(mySQLConnectionStringMedium, numOfManagers: 1000, numOfUsers: 1000, numberOfTeams: 10);
+            testDBCreation.CreateDB(mySQLConnectionStringLarge, numOfManagers: 10000, numOfUsers: 100000, numberOfTeams: 100);
 
-            // Small DB
-            CreateDB(smallDbPath, numOfManagers: 100, numOfUsers: 100, numberOfTeams: 1);
+            helperMethods = new SQLiteDatabaseTestHelper();
+            var sqliteConnectionStringSmall = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString("test_small_db");
+            var sqliteConnectionStringMedium = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString("test_medium_db");
+            var sqliteonnectionStringLarge = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString("test_large_db");
 
-            // Medium DB
-            CreateDB(mediumDbPath, numOfManagers: 1000, numOfUsers: 1000, numberOfTeams: 10);
-
-            // Large DB
-            CreateDB(largeDbPath, numOfManagers: 10000, numOfUsers: 10000, numberOfTeams: 100);
-        }
-
-        private static void CreateDB(string dbPath, int numOfManagers, int numOfUsers, int numberOfTeams)
-        {
-            List<Manager> managers = CreateRandomManagers(numOfManagers);
-            List<User> users = CreateRandomUsers(numOfUsers);
-            List<Team> teams = CreateRandomTeams(numberOfTeams);
-            List<UserIDToTeamID> userIDToTeamIDs = AddRandomMembers(users.Count, teams.Count);
-
-            Manager validManager = new Manager()
-            {
-                UserName = "validUserName",
-                Password = "validPassword"
-            };
-
-            using (var conn = new SQLiteConnection($"Data Source={dbPath}"))
-            {
-                conn.Insert(validManager);
-                conn.Insert(managers);
-                conn.Insert(users);
-                conn.Insert(teams);
-                conn.Insert(userIDToTeamIDs);
-            }
-        }
-
-        private static List<UserIDToTeamID> AddRandomMembers(int numOfUsers, int numOfTeams)
-        {
-            List<UserIDToTeamID> usersToTeamIDs = new List<UserIDToTeamID>();
-
-            // %1 is a member of all of the teams
-            int numberOfUsersMemberToAllTeams = Math.Max(numOfUsers / 100, 1);
-
-            for (int userID = 1; userID <= numberOfUsersMemberToAllTeams; userID++)
-            {
-                for (int teamID = 1; teamID <= numOfTeams; teamID++)
-                {
-                    UserIDToTeamID userIDToTeamID = new UserIDToTeamID()
-                    {
-                        UserID = userID,
-                        TeamID = teamID
-                    };
-                    usersToTeamIDs.Add(userIDToTeamID);
-                }
-            }
-
-
-            for (int userID = numberOfUsersMemberToAllTeams + 1; userID <= numOfUsers; userID++)
-            {
-                Random random = new Random();
-                int startingTeamIndex = random.Next(1, numOfTeams);
-                int endingTeamIndex = Math.Min(random.Next(startingTeamIndex, startingTeamIndex + 2), numOfTeams);
-
-                for (int teamID = startingTeamIndex; teamID <= endingTeamIndex; teamID++)
-                {
-                    UserIDToTeamID userIDToTeamID = new UserIDToTeamID()
-                    {
-                        UserID = userID,
-                        TeamID = teamID
-                    };
-                    usersToTeamIDs.Add(userIDToTeamID);
-                }
-            }
-
-            return usersToTeamIDs;
-        }
-
-        private static List<Team> CreateRandomTeams(int numOfTeams)
-        {
-            List<Team> teams = new List<Team>();
-            for (int i = 0; i < numOfTeams; i++)
-            {
-                string name = "Team_" + (i + 1);
-
-                var randomDate = RandomDay();
-                string creationDate = randomDate.ToString("yyyy-MM-dd HH:mm:ss");
-
-                Team team = new Team()
-                {
-                    Name = name,
-                    CreationDate = creationDate
-                };
-
-                teams.Add(team);
-            }
-            return teams;
-        }
-
-        private static List<User> CreateRandomUsers(int numOfUsers)
-        {
-            List<User> users = new List<User>();
-            for (int i = 0; i < numOfUsers; i++)
-            {
-                string name = "UserName_" + (i + 1);
-                string surname = "SurnameName_" + (i + 1);
-                string title = "Title_" + (i + 1);
-                string phoneNumber = new string(i.ToString()[0], 10);
-
-                var randomDate = RandomDay();
-                string creationDate = randomDate.ToString("yyyy-MM-dd HH:mm:ss");
-
-                User user = new User()
-                {
-                    Name = name,
-                    PhoneNumber = phoneNumber,
-                    Surname = surname,
-                    Title = title,
-                    CreationDate = creationDate,
-                };
-
-                users.Add(user);
-            }
-            return users;
-        }
-
-        private static readonly Random gen = new Random();
-        static DateTime RandomDay()
-        {
-            DateTime start = new DateTime(1995, 1, 1);
-            int range = (DateTime.Today - start).Days;
-            return start.AddDays(gen.Next(range));
-        }
-
-        private static List<Manager> CreateRandomManagers(int numOfManagers)
-        {
-            List<Manager> managers = new List<Manager>();
-            for (int i = 0; i < numOfManagers; i++)
-            {
-                string userName = "Manager_" + (i + 1);
-                string password = "Password" + (i + 1);
-                Manager manager = new Manager()
-                {
-                    UserName = userName,
-                    Password = password
-                };
-
-                managers.Add(manager);
-            }
-            return managers;
+            testDBCreation = new SQLiteTestDBCreation();
+            testDBCreation.CreateDB(sqliteConnectionStringSmall, numOfManagers: 100, numOfUsers: 100, numberOfTeams: 1);
+            testDBCreation.CreateDB(sqliteConnectionStringMedium, numOfManagers: 1000, numOfUsers: 1000, numberOfTeams: 10);
+            testDBCreation.CreateDB(sqliteonnectionStringLarge, numOfManagers: 10000, numOfUsers: 100000, numberOfTeams: 100);
         }
     }
 }

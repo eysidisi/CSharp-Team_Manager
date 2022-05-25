@@ -8,7 +8,7 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
         protected readonly Mock<DatabaseManager> databaseManager;
         public UserServicesTestsBase()
         {
-            databaseManager = new Mock<DatabaseManager>();
+            databaseManager = new Mock<DatabaseManager>("connectionString");
         }
     }
 }

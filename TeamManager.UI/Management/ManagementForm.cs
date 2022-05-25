@@ -6,11 +6,11 @@ namespace TeamManager.UI.Management
     public partial class ManagementForm : Form
     {
         readonly DatabaseManager databaseManager;
-        public ManagementForm(string connectionString)
+        public ManagementForm(DatabaseManager databaseManager)
         {
             InitializeComponent();
             CenterToScreen();
-            databaseManager = new SQLiteDatabaseManager(connectionString);
+            this.databaseManager = databaseManager;
             CreateUserPage();
             CreateTeamPage();
         }

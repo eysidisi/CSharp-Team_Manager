@@ -12,11 +12,6 @@ namespace TeamManager.Service.Management.DatabaseManagers
         List<UserIDToTeamID> userIDsToTeamIDs;
         readonly IDatabaseConnection connection;
 
-        public DatabaseManager()
-        {
-
-        }
-
         protected DatabaseManager(string connString)
         {
             this.connString = connString;
