@@ -1,21 +1,28 @@
 ﻿using Dapper.Contrib.Extensions;
-using MySql.Data.MySqlClient;
+using System;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TeamManager.Service.Management.Models;
 
-namespace TeamManager.Service.Management.DatabaseConnection
+namespace TeamManager.Service.Management.DatabaseConnection.DapperSupportedDatabaseConnections
 {
-    public class ManagerMySQLDatabaseConnection : IManagerDatabaseConnection
+    public abstract class ManagerDapperSupportedDatabaseConnection : IManagerDatabaseConnection
     {
-        private readonly string connString;
+        protected string connectionString;
 
-        public ManagerMySQLDatabaseConnection(string connString)
+        protected ManagerDapperSupportedDatabaseConnection(string connectionString)
         {
-            this.connString = connString;
+            this.connectionString = connectionString;
         }
+
+        protected abstract DbConnection CreateConnection();
 
         public bool DeleteTeam(Team team)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = CreateConnection())
             {
                 return connection.Delete(team);
             }
@@ -23,7 +30,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public bool DeleteUser(User user)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = CreateConnection())
             {
                 return connection.Delete(user);
             }
@@ -31,7 +38,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public bool DeleteUserIDToTeamID(UserIDToTeamID userIDToTeamID)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = CreateConnection())
             {
                 return connection.Delete(userIDToTeamID);
             }
@@ -39,7 +46,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public List<Team> GetAllTeams()
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = CreateConnection())
             {
                 return connection.GetAll<Team>().ToList();
             }
@@ -47,7 +54,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public List<UserIDToTeamID> GetAllUserIDToTeamID()
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = CreateConnection())
             {
                 return connection.GetAll<UserIDToTeamID>().ToList();
             }
@@ -55,7 +62,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public List<User> GetAllUsers()
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = CreateConnection())
             {
                 return connection.GetAll<User>().ToList();
             }
@@ -63,7 +70,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public void SaveTeam(Team newTeam)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = CreateConnection())
             {
                 connection.Insert(newTeam);
             }
@@ -71,7 +78,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public void SaveUser(User user)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = CreateConnection())
             {
                 connection.Insert(user);
             }
@@ -79,7 +86,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public void SaveUserIDToTeamID(UserIDToTeamID userIDToTeamID)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = CreateConnection())
             {
                 connection.Insert(userIDToTeamID);
             }

@@ -51,7 +51,8 @@
 
         private Range GetRangeOfItemsInPage(int pageNum)
         {
-            int startingIndexInList = ((pageNum - 1) * numOfItemsPerPage);
+            int normalizedPageNum = pageNum - 1;
+            int startingIndexInList = (normalizedPageNum * numOfItemsPerPage);
             int endingIndexInList = startingIndexInList + numOfItemsPerPage;
             Range range = new Range(startingIndexInList, endingIndexInList);
             return range;
