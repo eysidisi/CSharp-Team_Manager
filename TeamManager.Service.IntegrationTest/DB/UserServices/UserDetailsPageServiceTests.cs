@@ -6,14 +6,14 @@ using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
-    public class UserDetailsPageServiceTests : SQLiteIntegrationTestsBase
+    public abstract class UserDetailsPageServiceTests: IntegrationTests
     {
         readonly User userToGetDetails;
         readonly UserDetailsPageService userDetailsPageService;
         public UserDetailsPageServiceTests()
         {
             userToGetDetails = new User() { ID = 1, Name = "UserToGetDetails" };
-            userDetailsPageService = new UserDetailsPageService(databaseManager, userToGetDetails);
+            userDetailsPageService = new UserDetailsPageService(databaseController, userToGetDetails);
         }
 
         [Fact]

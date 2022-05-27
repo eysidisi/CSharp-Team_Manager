@@ -1,15 +1,18 @@
 ﻿using Dapper.Contrib.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
+using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
+using TeamManager.Service.UnitTest.HelperMethods.Database;
 using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 {
-    public class EditTeamPageServiceTests : SQLiteIntegrationTestsBase
+    public abstract class EditTeamPageServiceTests:IntegrationTests
     {
         readonly Team teamToEdit;
         EditTeamPageService editTeamPageService;
@@ -17,7 +20,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public EditTeamPageServiceTests()
         {
             teamToEdit = new Team() { Name = "team", ID = 1 };
-            editTeamPageService = new EditTeamPageService(databaseManager, teamToEdit);
+            editTeamPageService = new EditTeamPageService(databaseController, teamToEdit);
         }
 
         [Fact]
@@ -26,7 +29,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             User user = new User() { Name = "user", ID = 1 };
 
-            using (var cnn = new SQLiteConnection(connString))
+            using (var cnn = CreateConnection(connString))
             {
                 cnn.Insert(teamToEdit);
                 cnn.Insert(user);
@@ -38,7 +41,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Assert
             List<UserIDToTeamID> userIDToTeamIDs;
 
-            using (var cnn = new SQLiteConnection(connString))
+            using (var cnn = CreateConnection(connString))
             {
                 userIDToTeamIDs = cnn.GetAll<UserIDToTeamID>().ToList();
             }
@@ -64,7 +67,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             User user = new User() { Name = "user", ID = 1 };
 
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(teamToEdit);
             }
@@ -80,7 +83,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             User user = new User() { Name = "user", ID = 1 };
 
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(user);
             }
@@ -96,7 +99,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             User user = new User() { Name = "user", ID = 1 };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = 1, TeamID = 1 };
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(user);
                 con.Insert(teamToEdit);
@@ -115,7 +118,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             User user2 = new User() { Name = "user2", ID = 2 };
             List<User> expecteUsers = new List<User>() { user1, user2 };
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(expecteUsers);
             }
@@ -151,7 +154,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { TeamID = teamToEdit.ID, UserID = user1.ID };
             UserIDToTeamID user2IDToTeamID = new UserIDToTeamID() { TeamID = teamToEdit.ID, UserID = user2.ID };
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(user1);
                 con.Insert(user2);
@@ -173,7 +176,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             User user = new User() { Name = "user1", ID = 1 };
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(user);
                 con.Insert(teamToEdit);
@@ -194,13 +197,13 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             Team teamExists = new Team() { Name = "teamExists", ID = 1 };
             Team teamDoesNotExist = new Team() { Name = "teamDoesNotExists", ID = 2 };
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(user);
                 con.Insert(teamExists);
             }
 
-            editTeamPageService = new EditTeamPageService(databaseManager, teamDoesNotExist);
+            editTeamPageService = new EditTeamPageService(databaseController, teamDoesNotExist);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => editTeamPageService.TryToGetUsersInTheTeam());
@@ -216,7 +219,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = teamToEdit.ID, UserID = user1.ID };
             UserIDToTeamID user2IDToTeamID = new UserIDToTeamID() { ID = 2, TeamID = teamToEdit.ID, UserID = user2.ID };
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(teamToEdit);
                 con.Insert(user1);
@@ -230,7 +233,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             // Assert
             List<UserIDToTeamID> actualUserToTeamIDs;
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 actualUserToTeamIDs = con.GetAll<UserIDToTeamID>().ToList();
             }
@@ -247,7 +250,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = teamToEdit.ID, UserID = user1.ID };
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(teamToEdit);
                 con.Insert(user1IDToTeamID);
@@ -267,7 +270,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = teamToEdit.ID, UserID = user1.ID };
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(teamToEdit);
                 con.Insert(user1IDToTeamID);
@@ -285,7 +288,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 
             UserIDToTeamID user1IDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = teamToEdit.ID, UserID = user1.ID };
 
-            using (var con = new SQLiteConnection(connString))
+            using (var con = CreateConnection(connString))
             {
                 con.Insert(user1IDToTeamID);
                 con.Insert(user1);

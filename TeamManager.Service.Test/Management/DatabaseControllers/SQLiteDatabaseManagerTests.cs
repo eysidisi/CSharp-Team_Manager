@@ -17,7 +17,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             return new SQLiteDatabaseTestHelper();
         }
 
-        protected override ManagerDatabaseController CreateDatabaseManager(string connectionString)
+        protected override ManagerDatabaseController CreateDatabaseController(string connectionString)
         {
             return new ManagerSQLiteDatabaseController(connectionString);
         }

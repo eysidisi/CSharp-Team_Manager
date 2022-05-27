@@ -10,13 +10,13 @@ using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
-    public class UserPageServiceTests : SQLiteIntegrationTestsBase
+    public abstract class UserPageServiceTests : IntegrationTests
     {
         [Fact]
         public void GetUsers_NoUserIsInDB_ReturnsEmptyList()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(databaseManager);
+            UserPageService userPageService = new UserPageService(databaseController);
 
             // Act
             var users = userPageService.GetUsers();
@@ -29,7 +29,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void GetUsers_UserIsInDB_ReturnsUser()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(databaseManager);
+            UserPageService userPageService = new UserPageService(databaseController);
 
             User user = new User() { Name = "user", Surname = "surname" };
 
@@ -49,7 +49,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void DeleteUser_NoUserIsInDB_ThrowsException()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(databaseManager);
+            UserPageService userPageService = new UserPageService(databaseController);
 
             User user = new User() { Name = "user", Surname = "surname" };
 
@@ -61,7 +61,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void DeleteUser_UserIsInDBNotInATeam_DeletesUser()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(databaseManager);
+            UserPageService userPageService = new UserPageService(databaseController);
 
             User user = new User() { Name = "user", Surname = "surname" };
 
@@ -87,7 +87,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
         public void DeleteUser_UserIsInDBInATeam_DeletesUser()
         {
             // Arrange
-            UserPageService userPageService = new UserPageService(databaseManager);
+            UserPageService userPageService = new UserPageService(databaseController);
 
             User user = new User() { ID = 1, Name = "user", Surname = "surname" };
             Team team = new Team() { ID = 1, Name = "team" };

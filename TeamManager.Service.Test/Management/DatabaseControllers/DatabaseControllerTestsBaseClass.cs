@@ -14,19 +14,19 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
     {
         readonly DatabaseTestHelperBase databaseTestHelperMethods;
         readonly string connectionString;
-        readonly ManagerDatabaseController databaseManager;
+        readonly ManagerDatabaseController databaseController;
 
         public DatabaseControllerTestsBaseClass()
         {
             databaseTestHelperMethods = CreateDatabaseHelperMethods();
             connectionString = databaseTestHelperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
-            databaseManager = CreateDatabaseManager(connectionString);
+            databaseController = CreateDatabaseController(connectionString);
         }
 
         [Fact]
         public void GetAllUsers_EmptyDB_ReturnsEmptyList()
         {
-            var users = databaseManager.GetAllUsers();
+            var users = databaseController.GetAllUsers();
 
             Assert.Empty(users);
         }
@@ -51,13 +51,13 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
                 cnn.Insert(user1);
             }
 
-            var actualUsers = databaseManager.GetAllUsers();
+            var actualUsers = databaseController.GetAllUsers();
 
             Assert.Equal(new List<User>() { user1 }, actualUsers);
 
-            databaseManager.SaveUser(user2);
+            databaseController.SaveUser(user2);
 
-            actualUsers = databaseManager.GetAllUsers();
+            actualUsers = databaseController.GetAllUsers();
 
             Assert.Equal(new List<User>() { user1, user2 }, actualUsers);
 
@@ -79,7 +79,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             }
 
             // Act
-            bool deletionResult = databaseManager.DeleteUser(user);
+            bool deletionResult = databaseController.DeleteUser(user);
 
             // Assert
             Assert.True(deletionResult);
@@ -100,11 +100,11 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
                 cnn.Insert(user);
             }
 
-            var users = databaseManager.GetAllUsers();
+            var users = databaseController.GetAllUsers();
             Assert.Equal(new List<User>() { user }, users);
 
-            databaseManager.DeleteUser(user);
-            users = databaseManager.GetAllUsers();
+            databaseController.DeleteUser(user);
+            users = databaseController.GetAllUsers();
             Assert.Empty(users);
         }
 
@@ -122,7 +122,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             var userToDelete = new User() { ID = 2 };
 
             // Act
-            bool deletionResult = databaseManager.DeleteUser(userToDelete);
+            bool deletionResult = databaseController.DeleteUser(userToDelete);
 
             // Assert
             Assert.False(deletionResult);
@@ -140,7 +140,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             };
 
             // Act
-            databaseManager.SaveTeam(team);
+            databaseController.SaveTeam(team);
 
             List<Team> allTeams;
             using (IDbConnection cnn = CreateConnection(connectionString))
@@ -176,14 +176,14 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             }
 
             // Act
-            var actualTeams = databaseManager.GetAllTeams();
+            var actualTeams = databaseController.GetAllTeams();
 
             // Assert
             Assert.Equal(actualTeams, new List<Team>() { team1 });
 
-            databaseManager.SaveTeam(team2);
+            databaseController.SaveTeam(team2);
 
-            actualTeams = databaseManager.GetAllTeams();
+            actualTeams = databaseController.GetAllTeams();
 
             Assert.Equal(actualTeams, new List<Team>() { team1, team2 });
         }
@@ -213,14 +213,14 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             }
 
             // Act
-            var actualTeams = databaseManager.GetAllTeams();
+            var actualTeams = databaseController.GetAllTeams();
 
             // Assert
             Assert.Equal(actualTeams, new List<Team>() { team1, team2 });
 
-            databaseManager.DeleteTeam(team2);
+            databaseController.DeleteTeam(team2);
 
-            actualTeams = databaseManager.GetAllTeams();
+            actualTeams = databaseController.GetAllTeams();
 
             Assert.Equal(actualTeams, new List<Team>() { team1 });
         }
@@ -228,7 +228,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
         public void GetAllTeams_NoTeamExistsInTheDB_ReturnsEmptyList()
         {
             // Act
-            var savedTeams = databaseManager.GetAllTeams();
+            var savedTeams = databaseController.GetAllTeams();
 
             // Assert
             Assert.Empty(savedTeams);
@@ -251,7 +251,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             }
 
             // Act
-            var deletionResult = databaseManager.DeleteTeam(team);
+            var deletionResult = databaseController.DeleteTeam(team);
 
             // Assert
             Assert.True(deletionResult);
@@ -276,7 +276,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             // Act
             // Object in the DB has ID 1
             team.ID = 0;
-            var deletionResult = databaseManager.DeleteTeam(team);
+            var deletionResult = databaseController.DeleteTeam(team);
 
             // Assert
             Assert.False(deletionResult);
@@ -286,7 +286,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
         public void GetAllUserIDToTeamID_NoUserIDToTeamIDExistsInTheDB_ReturnsEmptyList()
         {
             // Act
-            var savedTeams = databaseManager.GetAllUserIDToTeamID();
+            var savedTeams = databaseController.GetAllUserIDToTeamID();
 
             // Assert
             Assert.Empty(savedTeams);
@@ -316,19 +316,19 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
                 cnn.Insert(userIDToTeamID2);
             }
 
-            var actualUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            var actualUserIDToTeamIDs = databaseController.GetAllUserIDToTeamID();
             Assert.Equal(new List<UserIDToTeamID>() { userIDToTeamID1, userIDToTeamID2 }, actualUserIDToTeamIDs);
 
-            var deletionResult = databaseManager.DeleteUserIDToTeamID(userIDToTeamID1);
+            var deletionResult = databaseController.DeleteUserIDToTeamID(userIDToTeamID1);
             Assert.True(deletionResult);
 
-            actualUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            actualUserIDToTeamIDs = databaseController.GetAllUserIDToTeamID();
             Assert.Equal(new List<UserIDToTeamID>() { userIDToTeamID2 }, actualUserIDToTeamIDs);
 
             // When it's added to DB db auto increments ID for the next added element
             userIDToTeamID1.ID = 3;
-            databaseManager.SaveUserIDToTeamID(userIDToTeamID1);
-            actualUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            databaseController.SaveUserIDToTeamID(userIDToTeamID1);
+            actualUserIDToTeamIDs = databaseController.GetAllUserIDToTeamID();
             Assert.Equal(new List<UserIDToTeamID>() { userIDToTeamID2, userIDToTeamID1 }, actualUserIDToTeamIDs);
         }
 
@@ -339,7 +339,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             var userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = 1, TeamID = 1 };
 
             // Act
-            databaseManager.SaveUserIDToTeamID(userIDToTeamID);
+            databaseController.SaveUserIDToTeamID(userIDToTeamID);
 
             // Assert
             List<UserIDToTeamID> actualUserIDToTeamIDs;
@@ -364,7 +364,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             }
 
             // Act
-            bool deletionResult = databaseManager.DeleteUserIDToTeamID(userIDToTeamID);
+            bool deletionResult = databaseController.DeleteUserIDToTeamID(userIDToTeamID);
 
             // Assert
             Assert.True(deletionResult);
@@ -383,7 +383,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 
             // Act
             userIDToTeamID.ID = 3;
-            bool deletionResult = databaseManager.DeleteUserIDToTeamID(userIDToTeamID);
+            bool deletionResult = databaseController.DeleteUserIDToTeamID(userIDToTeamID);
 
             // Assert
             Assert.False(deletionResult);
@@ -392,7 +392,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 
         protected abstract IDbConnection CreateConnection(string connectionString);
 
-        protected abstract ManagerDatabaseController CreateDatabaseManager(string connectionString);
+        protected abstract ManagerDatabaseController CreateDatabaseController(string connectionString);
 
         protected abstract DatabaseTestHelperBase CreateDatabaseHelperMethods();
 

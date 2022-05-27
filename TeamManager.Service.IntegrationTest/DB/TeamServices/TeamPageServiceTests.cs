@@ -8,9 +8,9 @@ using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
 using Xunit;
 
-namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
+namespace TeamManager.Service.IntegrationTest.DB.SQLite
 {
-    public class TeamPageServiceTests : SQLiteIntegrationTestsBase
+    public abstract class TeamPageServiceTests : IntegrationTests
     {
         [Fact]
         public void GetAllTeams_DBHasNoTeams_ReturnsEmptyList()
@@ -52,33 +52,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         }
 
         [Fact]
-        public void DeleteTeam_DBHasTheTeam_DeletesTeam()
-        {
-            // Arrange
-            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
 
-            using (var cnn = new SQLiteConnection(connString))
-            {
-                cnn.Insert(teamToDelete);
-            }
-
-            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
-            TeamPageService teamPageService = new TeamPageService(connection);
-
-            // Act
-            teamPageService.DeleteTeam(teamToDelete);
-
-            // Assert
-            List<Team> teamsLeftInDB;
-            using (var cnn = new SQLiteConnection(connString))
-            {
-                teamsLeftInDB = cnn.GetAll<Team>().ToList();
-            }
-
-            Assert.DoesNotContain(teamToDelete, teamsLeftInDB);
-        }
-
-        [Fact]
         public void DeleteTeam_DBHasNoTeams_ThrowsException()
         {
             // Arrange

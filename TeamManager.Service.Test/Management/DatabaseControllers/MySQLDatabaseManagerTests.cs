@@ -17,7 +17,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
             return new MySqlDatabaseTestHelper();
         }
 
-        protected override ManagerDatabaseController CreateDatabaseManager(string connectionString)
+        protected override ManagerDatabaseController CreateDatabaseController(string connectionString)
         {
             return new ManagerMySQLDatabaseController(connectionString);
         }

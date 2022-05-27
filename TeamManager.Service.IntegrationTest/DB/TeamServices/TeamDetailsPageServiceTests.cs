@@ -5,9 +5,9 @@ using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
 using Xunit;
 
-namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
+namespace TeamManager.Service.IntegrationTest.DB.TeamServices
 {
-    public class TeamDetailsPageServiceTests : SQLiteIntegrationTestsBase
+    public abstract class TeamDetailsPageServiceTests : IntegrationTests
     {
         readonly Team temToGetDetails;
         readonly TeamDetailsPageService teamDetailsPageService;
@@ -16,7 +16,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public TeamDetailsPageServiceTests()
         {
             temToGetDetails = new Team() { Name = "team", ID = 1 };
-            teamDetailsPageService = new TeamDetailsPageService(databaseManager, temToGetDetails);
+            teamDetailsPageService = new TeamDetailsPageService(databaseController, temToGetDetails);
         }
 
         [Fact]

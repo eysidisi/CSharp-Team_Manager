@@ -3,20 +3,26 @@ using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
+using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
+using TeamManager.Service.UnitTest.HelperMethods.Database;
 using Xunit;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
 {
-    public class NewTeamPageServiceTests : SQLiteIntegrationTestsBase
+    public abstract class NewTeamPageServiceTests : IntegrationTests
     {
+        NewTeamPageService newTeamPageService;
+        public NewTeamPageServiceTests()
+        {
+            newTeamPageService = new NewTeamPageService(databaseController);
+        }
+
         [Fact]
         public void SaveTeam_NoTeamExistsInDB_AddsTeam()
         {
             // Arrange
-            NewTeamPageService newTeamPageService = new NewTeamPageService(databaseManager);
-
             Team team = new Team() { Name = "Team1", ID = 1 };
 
             // Act
@@ -37,7 +43,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void SaveTeam_TeamWithSameNameExistsInDB_ThrowsException()
         {
             // Arrange
-            NewTeamPageService newTeamPageService = new NewTeamPageService(databaseManager);
             Team team = new Team() { Name = "Team1" };
 
             using (var cnn = new SQLiteConnection(connString))
@@ -53,7 +58,6 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         public void SaveTeam_InvalidTeam_ThrowsException()
         {
             // Arrange
-            NewTeamPageService newTeamPageService = new NewTeamPageService(databaseManager);
             Team team = new Team() { };
 
             // Act && Assert
