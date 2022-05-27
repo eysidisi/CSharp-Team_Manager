@@ -1,5 +1,6 @@
 ﻿using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.DatabaseConnection;
 using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.UI.Wizard.UserControls
@@ -8,10 +9,10 @@ namespace TeamManager.UI.Wizard.UserControls
     {
         public Action<Manager> OnSuccessfulLogin;
         readonly LoginPageService loginPageService;
-        public LoginPage(IWizardDatabaseConnection databaseConnection)
+        public LoginPage(WizardDatabaseController databaseManager)
         {
             InitializeComponent();
-            loginPageService = new LoginPageService(databaseConnection);
+            loginPageService = new LoginPageService(databaseManager);
         }
 
         private void buttonEnter_Click(object sender, EventArgs e)

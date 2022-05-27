@@ -1,6 +1,8 @@
 using System.Configuration;
 using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Wizard.Database;
 using TeamManager.UI.Management;
+using TeamManager.UI.Wizard;
 
 namespace TeamManager.UI
 {
@@ -8,6 +10,8 @@ namespace TeamManager.UI
     {
         //static string connectionString = ConfigurationManager.ConnectionStrings["SQLiteTestSmallDB"].ConnectionString;
         //static string connectionString = ConfigurationManager.ConnectionStrings["SQLiteTestMediumDB"].ConnectionString;
+        //static string connectionString = ConfigurationManager.ConnectionStrings["SQLiteTestLargeDB"].ConnectionString;
+        //static readonly string connectionString = ConfigurationManager.ConnectionStrings["MySQLTestSmallDB"].ConnectionString;
         static readonly string connectionString = ConfigurationManager.ConnectionStrings["MySQLTestLargeDB"].ConnectionString;
 
         /// <summary>
@@ -19,8 +23,7 @@ namespace TeamManager.UI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            DatabaseManager databaseManager = new MySQLDatabaseManager(connectionString);
-            Application.Run(new ManagementForm(databaseManager));
+            Application.Run(new WizardForm());
         }
     }
 }

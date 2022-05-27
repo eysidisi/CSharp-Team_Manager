@@ -5,10 +5,10 @@ namespace TeamManager.Service.Management.TeamServices
 {
     public class TeamDetailsPageService
     {
-        readonly DatabaseManager databaseManager;
+        readonly ManagerDatabaseController databaseManager;
         readonly Team team;
 
-        public TeamDetailsPageService(DatabaseManager databaseManager, Team team)
+        public TeamDetailsPageService(ManagerDatabaseController databaseManager, Team team)
         {
             this.databaseManager = databaseManager;
             this.team = team;

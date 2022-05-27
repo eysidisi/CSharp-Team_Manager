@@ -4,21 +4,21 @@ using TeamManager.Service.Management.Models;
 
 namespace TeamManager.Service.Management.DatabaseManagers
 {
-    public abstract class DatabaseManager
+    public abstract class ManagerDatabaseController
     {
         protected string connString;
         List<User> users;
         List<Team> teams;
         List<UserIDToTeamID> userIDsToTeamIDs;
-        readonly IDatabaseConnection connection;
+        readonly IManagerDatabaseConnection connection;
 
-        protected DatabaseManager(string connString)
+        protected ManagerDatabaseController(string connString)
         {
             this.connString = connString;
             connection = CreateConnection();
         }
 
-        protected abstract IDatabaseConnection CreateConnection();
+        protected abstract IManagerDatabaseConnection CreateConnection();
 
         public virtual void SaveUser(User user)
         {

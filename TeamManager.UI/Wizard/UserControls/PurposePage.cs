@@ -1,6 +1,7 @@
 ﻿using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.DatabaseConnection;
 using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.UI.Wizard.UserControls
@@ -11,10 +12,10 @@ namespace TeamManager.UI.Wizard.UserControls
         readonly Manager manager;
         readonly PurposePageService purposePageService;
 
-        public PurposePage(IWizardDatabaseConnection connection, Manager manager)
+        public PurposePage(WizardDatabaseController databaseManager, Manager manager)
         {
             InitializeComponent();
-            purposePageService = new PurposePageService(connection);
+            purposePageService = new PurposePageService(databaseManager);
             this.manager = manager;
         }
 

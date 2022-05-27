@@ -1,6 +1,7 @@
 using System.Configuration;
 using TeamManager.Service.Management.DatabaseManagers;
 using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.DatabaseManagers;
 using TeamManager.Service.Wizard.Models;
 using TeamManager.UI.Management;
 using TeamManager.UI.Wizard.UserControls;
@@ -11,22 +12,23 @@ namespace TeamManager.UI.Wizard
     {
         //string connectionString = ConfigurationManager.ConnectionStrings["TestSmallDB"].ConnectionString;
         //string connectionString = ConfigurationManager.ConnectionStrings["TestMediumDB"].ConnectionString;
-        readonly string connectionString = ConfigurationManager.ConnectionStrings["TestLargeDB"].ConnectionString;
-        readonly IWizardDatabaseConnection connection;
+        //readonly string connectionString = ConfigurationManager.ConnectionStrings["SQLiteTestLargeDB"].ConnectionString;
+        readonly string connectionString = ConfigurationManager.ConnectionStrings["MySQLTestLargeDB"].ConnectionString;
+        readonly WizardDatabaseController databaseManager;
         LoginPage loginPageUserControl;
         PurposePage purposePageUserControl;
 
         public WizardForm()
         {
             InitializeComponent();
-            this.CenterToScreen();
-            connection = new WizardDatabaseManagerSQLite(connectionString);
+            CenterToScreen();
+            databaseManager = new WizardMySQLDatabaseController(connectionString);
             AdjustLoginPage();
         }
 
         private void AdjustLoginPage()
         {
-            loginPageUserControl = new LoginPage(connection);
+            loginPageUserControl = new LoginPage(databaseManager);
             panelCenter.Controls.Add(loginPageUserControl);
             loginPageUserControl.OnSuccessfulLogin += OnSuccessfulLogin;
         }
@@ -39,7 +41,7 @@ namespace TeamManager.UI.Wizard
 
         private void AdjustPurposePage(Manager manager)
         {
-            purposePageUserControl = new PurposePage(connection, manager);
+            purposePageUserControl = new PurposePage(databaseManager, manager);
             purposePageUserControl.OnSuccessfulPurposeEnter += OnSuccessfulPurposeEnter;
             panelCenter.Controls.Add(purposePageUserControl);
         }
@@ -48,7 +50,7 @@ namespace TeamManager.UI.Wizard
         {
             panelCenter.Controls.Remove(purposePageUserControl);
             this.Hide();
-            DatabaseManager databaseManager = new MySQLDatabaseManager(connectionString);
+            ManagerDatabaseController databaseManager = new ManagerMySQLDatabaseController(connectionString);
             var managerForm = new ManagementForm(databaseManager);
             managerForm.Closed += (s, args) => this.Close();
             managerForm.Show();

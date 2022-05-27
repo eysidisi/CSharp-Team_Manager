@@ -9,7 +9,7 @@ namespace TeamManager.Service.SystemTest
 {
     public class SystemTests
     {
-        DatabaseManager databaseManager;
+        ManagerDatabaseController databaseManager;
         UserPageService userPageService;
         TeamPageService teamPageService;
 
@@ -18,20 +18,10 @@ namespace TeamManager.Service.SystemTest
         {
             SQLiteDatabaseTestHelper sQLiteHelperMethods = new SQLiteDatabaseTestHelper();
             var connectionString = sQLiteHelperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
-            databaseManager = new SQLiteDatabaseManager(connectionString);
+            databaseManager = new ManagerSQLiteDatabaseController(connectionString);
         }
 
-        // Empty DB
-        // Creates a User
-        // Checks if user is added
-        // Creates a Team
-        // Checks if team is added
-        // Adds user a Team
-        // Checks if user is added to the team
-        // Checks user details to see the team
-        // Tries to delete the team
-        // Deletes the user
-        // Deletes the team
+        // A scenerio for an empty DB
         [Fact]
         public void OperationsOnEmptyDB()
         {

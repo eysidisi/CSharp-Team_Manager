@@ -1,14 +1,16 @@
 ﻿using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.DatabaseConnection;
+
 namespace TeamManager.Service.Wizard
 {
     public class PurposePageService
     {
-        readonly IWizardDatabaseConnection connection;
+        readonly WizardDatabaseController databaseManager;
 
-        public PurposePageService(IWizardDatabaseConnection connection)
+        public PurposePageService(WizardDatabaseController databaseManager)
         {
-            this.connection = connection;
+            this.databaseManager = databaseManager;
         }
 
         public void SavePurposeOfVisit(Purpose purpose)
@@ -17,7 +19,7 @@ namespace TeamManager.Service.Wizard
             {
                 throw new ArgumentException("Purpose is not valid!");
             }
-            connection.SavePurpose(purpose);
+            databaseManager.SavePurpose(purpose);
         }
 
         private bool CheckIfPurposeIsValid(Purpose purpose)

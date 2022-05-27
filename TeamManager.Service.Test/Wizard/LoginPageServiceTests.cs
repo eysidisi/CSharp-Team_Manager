@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.DatabaseConnection;
 using TeamManager.Service.Wizard.Models;
 using Xunit;
 
@@ -23,7 +24,7 @@ namespace TeamManager.Service.UnitTest.Wizard
                 Password = password
             };
 
-            var connection = new Mock<IWizardDatabaseConnection>();
+            var connection = new Mock<WizardDatabaseController>("connectionString");
             connection.Setup(x => x.GetManagers()).Returns(new List<Manager>() { validManager });
 
             loginPageService = new LoginPageService(connection.Object);

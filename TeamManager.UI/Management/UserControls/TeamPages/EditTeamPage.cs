@@ -12,7 +12,7 @@ namespace TeamManager.UI.Management.UserControls
         DataViewPage<User> allUsersDataViewPage;
         DataViewPage<User> teamUsersDataViewPage;
 
-        public EditTeamPage(DatabaseManager databaseManager, Team teamToEdit)
+        public EditTeamPage(ManagerDatabaseController databaseManager, Team teamToEdit)
         {
             InitializeComponent();
             editTeamPageService = new EditTeamPageService(databaseManager, teamToEdit);

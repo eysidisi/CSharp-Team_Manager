@@ -5,8 +5,8 @@ namespace TeamManager.UI.Management
 {
     public partial class ManagementForm : Form
     {
-        readonly DatabaseManager databaseManager;
-        public ManagementForm(DatabaseManager databaseManager)
+        readonly ManagerDatabaseController databaseManager;
+        public ManagementForm(ManagerDatabaseController databaseManager)
         {
             InitializeComponent();
             CenterToScreen();

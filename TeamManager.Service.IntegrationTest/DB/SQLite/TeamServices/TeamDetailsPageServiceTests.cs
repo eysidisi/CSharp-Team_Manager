@@ -33,7 +33,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(userIDToTeamID);
             }
 
-            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
+            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
 
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam();
@@ -51,7 +51,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
                 cnn.Insert(temToGetDetails);
             }
 
-            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
+            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
 
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam();
@@ -63,7 +63,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
         {
             // Arrange
             Team team = new Team() { Name = "team", ID = 1 };
-            SQLiteDatabaseManager connection = new SQLiteDatabaseManager(connString);
+            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
 
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam();

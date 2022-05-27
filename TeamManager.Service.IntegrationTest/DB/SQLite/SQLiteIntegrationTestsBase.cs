@@ -6,12 +6,12 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite
     public abstract class SQLiteIntegrationTestsBase
     {
         protected SQLiteDatabaseTestHelper helperMethods = new SQLiteDatabaseTestHelper();
-        protected SQLiteDatabaseManager databaseManager;
+        protected ManagerSQLiteDatabaseController databaseManager;
         protected string connString;
         public SQLiteIntegrationTestsBase()
         {
             connString = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
-            databaseManager = new SQLiteDatabaseManager(connString);
+            databaseManager = new ManagerSQLiteDatabaseController(connString);
         }
     }
 }

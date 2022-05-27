@@ -1,21 +1,21 @@
 ﻿using Dapper.Contrib.Extensions;
-using MySql.Data.MySqlClient;
+using System.Data.SQLite;
 using TeamManager.Service.Management.Models;
 
 namespace TeamManager.Service.Management.DatabaseConnection
 {
-    public class MySQLDatabaseConnection : IDatabaseConnection
+    public class ManagerSQLiteDatabaseConnection : IManagerDatabaseConnection
     {
-        private readonly string connString;
+        readonly string connString;
 
-        public MySQLDatabaseConnection(string connString)
+        public ManagerSQLiteDatabaseConnection(string connString)
         {
             this.connString = connString;
         }
 
         public bool DeleteTeam(Team team)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new SQLiteConnection(connString))
             {
                 return connection.Delete(team);
             }
@@ -23,7 +23,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public bool DeleteUser(User user)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new SQLiteConnection(connString))
             {
                 return connection.Delete(user);
             }
@@ -31,7 +31,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public bool DeleteUserIDToTeamID(UserIDToTeamID userIDToTeamID)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new SQLiteConnection(connString))
             {
                 return connection.Delete(userIDToTeamID);
             }
@@ -39,7 +39,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public List<Team> GetAllTeams()
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new SQLiteConnection(connString))
             {
                 return connection.GetAll<Team>().ToList();
             }
@@ -47,7 +47,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public List<UserIDToTeamID> GetAllUserIDToTeamID()
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new SQLiteConnection(connString))
             {
                 return connection.GetAll<UserIDToTeamID>().ToList();
             }
@@ -55,7 +55,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public List<User> GetAllUsers()
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new SQLiteConnection(connString))
             {
                 return connection.GetAll<User>().ToList();
             }
@@ -63,7 +63,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public void SaveTeam(Team newTeam)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new SQLiteConnection(connString))
             {
                 connection.Insert(newTeam);
             }
@@ -71,7 +71,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public void SaveUser(User user)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new SQLiteConnection(connString))
             {
                 connection.Insert(user);
             }
@@ -79,7 +79,7 @@ namespace TeamManager.Service.Management.DatabaseConnection
 
         public void SaveUserIDToTeamID(UserIDToTeamID userIDToTeamID)
         {
-            using (var connection = new MySqlConnection(connString))
+            using (var connection = new SQLiteConnection(connString))
             {
                 connection.Insert(userIDToTeamID);
             }

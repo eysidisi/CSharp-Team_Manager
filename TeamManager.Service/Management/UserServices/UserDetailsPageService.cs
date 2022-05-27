@@ -7,10 +7,10 @@ namespace TeamManager.Service.Management.UserServices
     {
         public int NumOfTeamsPerPage = 10;
 
-        private readonly DatabaseManager databaseManager;
+        private readonly ManagerDatabaseController databaseManager;
         private readonly User user;
 
-        public UserDetailsPageService(DatabaseManager databaseManager, User user)
+        public UserDetailsPageService(ManagerDatabaseController databaseManager, User user)
         {
             this.databaseManager = databaseManager;
             this.user = user;

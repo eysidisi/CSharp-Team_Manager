@@ -9,7 +9,7 @@ namespace TeamManager.UI.Management.UserControls
         readonly NewTeamPageService newTeamPageService;
         public Action<NewTeamPage> OnBackButtonClicked;
 
-        public NewTeamPage(DatabaseManager databaseManager)
+        public NewTeamPage(ManagerDatabaseController databaseManager)
         {
             InitializeComponent();
             newTeamPageService = new NewTeamPageService(databaseManager);

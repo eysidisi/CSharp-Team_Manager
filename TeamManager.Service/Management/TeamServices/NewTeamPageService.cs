@@ -5,9 +5,9 @@ namespace TeamManager.Service.Management.TeamServices
 {
     public class NewTeamPageService
     {
-        readonly DatabaseManager databaseManager;
+        readonly ManagerDatabaseController databaseManager;
 
-        public NewTeamPageService(DatabaseManager connection)
+        public NewTeamPageService(ManagerDatabaseController connection)
         {
             this.databaseManager = connection;
         }

@@ -9,10 +9,10 @@ namespace TeamManager.UI.Management.UserControls
     public partial class UserPage : UserControl
     {
         readonly UserPageService userPageService;
-        readonly DatabaseManager databaseManager;
+        readonly ManagerDatabaseController databaseManager;
         DataViewPage<User> dataViewPage;
 
-        public UserPage(DatabaseManager databaseManager)
+        public UserPage(ManagerDatabaseController databaseManager)
         {
             InitializeComponent();
             this.databaseManager = databaseManager;

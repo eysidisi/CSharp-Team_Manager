@@ -5,10 +5,10 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
 {
     public class UserServicesTestsBase
     {
-        protected readonly Mock<DatabaseManager> databaseManager;
+        protected readonly Mock<ManagerDatabaseController> databaseManager;
         public UserServicesTestsBase()
         {
-            databaseManager = new Mock<DatabaseManager>("connectionString");
+            databaseManager = new Mock<ManagerDatabaseController>("connectionString");
         }
     }
 }

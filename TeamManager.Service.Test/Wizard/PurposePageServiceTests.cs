@@ -3,20 +3,19 @@ using System;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard;
 using TeamManager.Service.Wizard.Database;
-
+using TeamManager.Service.Wizard.DatabaseConnection;
 using Xunit;
 
 namespace TeamManager.Service.UnitTest.Wizard
 {
     public class PurposePageServiceTests
     {
-        readonly Mock<IWizardDatabaseConnection> connection;
+        readonly Mock<WizardDatabaseController> databaseManager;
         readonly PurposePageService page;
         public PurposePageServiceTests()
         {
-            connection = new Mock<IWizardDatabaseConnection>();
-            page = new PurposePageService(connection.Object);
-
+            databaseManager = new Mock<WizardDatabaseController>("connectionString");
+            page = new PurposePageService(databaseManager.Object);
         }
 
         [Fact]
@@ -26,12 +25,13 @@ namespace TeamManager.Service.UnitTest.Wizard
             string userName = "userName";
             string purposeText = "A valid purpose";
             Purpose purpose = new Purpose(userName, purposeText);
+            databaseManager.Setup(d => d.SavePurpose(purpose));
 
             // Act
             page.SavePurposeOfVisit(purpose);
 
             // Assert
-            connection.Verify(x => x.SavePurpose(purpose));
+            databaseManager.Verify(x => x.SavePurpose(purpose));
         }
 
         [Fact]

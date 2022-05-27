@@ -14,7 +14,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
     {
         readonly DatabaseTestHelperBase databaseTestHelperMethods;
         readonly string connectionString;
-        readonly DatabaseManager databaseManager;
+        readonly ManagerDatabaseController databaseManager;
 
         public DatabaseManagerTestsBaseClass()
         {
@@ -322,7 +322,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
 
         protected abstract IDbConnection CreateConnection(string connectionString);
 
-        protected abstract DatabaseManager CreateDatabaseManager(string connectionString);
+        protected abstract ManagerDatabaseController CreateDatabaseManager(string connectionString);
 
         protected abstract DatabaseTestHelperBase CreateDatabaseHelperMethods();
 

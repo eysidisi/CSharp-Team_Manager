@@ -5,9 +5,9 @@ namespace TeamManager.Service.Management.TeamServices
 {
     public class EditTeamPageService
     {
-        readonly DatabaseManager databaseManager;
+        readonly ManagerDatabaseController databaseManager;
         readonly Team team;
-        public EditTeamPageService(DatabaseManager databaseManager, Team teamToEdit)
+        public EditTeamPageService(ManagerDatabaseController databaseManager, Team teamToEdit)
         {
             this.databaseManager = databaseManager;
             team = teamToEdit;

@@ -20,7 +20,7 @@ namespace TeamManager.Service.UnitTest.Wizard.Database
             SQLiteDatabaseTestHelper helperMethods = new SQLiteDatabaseTestHelper();
 
             string connectionString = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
-            WizardDatabaseManagerSQLite dataAccess = new WizardDatabaseManagerSQLite(connectionString);
+            WizardSQLiteDatabaseController dataAccess = new WizardSQLiteDatabaseController(connectionString);
 
             // Insert manager
             Manager expectedManager = new Manager(SQLiteDatabaseTestHelper.ValidManagerUserName, SQLiteDatabaseTestHelper.ValidManagerPassword);
@@ -44,7 +44,7 @@ namespace TeamManager.Service.UnitTest.Wizard.Database
             SQLiteDatabaseTestHelper helperMethods = new SQLiteDatabaseTestHelper();
 
             string connectionString = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
-            WizardDatabaseManagerSQLite dataAccess = new WizardDatabaseManagerSQLite(connectionString);
+            WizardSQLiteDatabaseController dataAccess = new WizardSQLiteDatabaseController(connectionString);
 
             // Act
             var allManagers = dataAccess.GetManagers();
@@ -60,7 +60,7 @@ namespace TeamManager.Service.UnitTest.Wizard.Database
             SQLiteDatabaseTestHelper helperMethods = new SQLiteDatabaseTestHelper();
 
             string connectionString = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
-            WizardDatabaseManagerSQLite dataAccess = new WizardDatabaseManagerSQLite(connectionString);
+            WizardSQLiteDatabaseController dataAccess = new WizardSQLiteDatabaseController(connectionString);
 
             string purposeText = "A purpose text";
             string managerName = "Managername";

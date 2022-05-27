@@ -1,15 +1,16 @@
 ﻿using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.DatabaseConnection;
 using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.Service.Wizard
 {
     public class LoginPageService
     {
-        readonly IWizardDatabaseConnection databaseConnection;
+        readonly WizardDatabaseController databaseConnection;
 
-        public LoginPageService(IWizardDatabaseConnection databaseConnection)
+        public LoginPageService(WizardDatabaseController databaseManager)
         {
-            this.databaseConnection = databaseConnection;
+            this.databaseConnection = databaseManager;
         }
 
         public Manager GetManager(Manager managerToFind)
