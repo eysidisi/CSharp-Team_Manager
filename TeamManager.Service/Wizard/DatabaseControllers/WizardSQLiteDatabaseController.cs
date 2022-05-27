@@ -1,7 +1,6 @@
-﻿using System.Data.SQLite;
-using TeamManager.Service.Wizard.DatabaseConnection;
+﻿using TeamManager.Service.Wizard.DatabaseConnection;
 
-namespace TeamManager.Service.Wizard.Database
+namespace TeamManager.Service.Wizard.DatabaseControllers
 {
     public class WizardSQLiteDatabaseController : WizardDatabaseController
     {

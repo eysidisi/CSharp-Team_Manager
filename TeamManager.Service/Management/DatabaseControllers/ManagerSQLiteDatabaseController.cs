@@ -1,6 +1,6 @@
 ﻿using TeamManager.Service.Management.DatabaseConnection;
 
-namespace TeamManager.Service.Management.DatabaseManagers
+namespace TeamManager.Service.Management.DatabaseControllers
 {
     public class ManagerSQLiteDatabaseController : ManagerDatabaseController
     {

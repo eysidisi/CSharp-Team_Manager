@@ -1,9 +1,9 @@
 ﻿using System.Data;
 using System.Data.SQLite;
-using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
 
-namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
+namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 {
     public class SQLiteDatabaseManagerTests : DatabaseControllerTestsBaseClass
     {

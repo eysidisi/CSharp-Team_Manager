@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeamManager.Service.Wizard.Database;
-using TeamManager.Service.Wizard.DatabaseConnection;
+﻿using TeamManager.Service.Wizard.DatabaseConnection;
 
-namespace TeamManager.Service.Wizard.DatabaseManagers
+namespace TeamManager.Service.Wizard.DatabaseControllers
 {
     public class WizardMySQLDatabaseController : WizardDatabaseController
     {

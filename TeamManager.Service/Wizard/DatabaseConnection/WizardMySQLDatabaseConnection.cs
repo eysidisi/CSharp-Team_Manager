@@ -1,10 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard.Models;
 
@@ -12,7 +7,7 @@ namespace TeamManager.Service.Wizard.DatabaseConnection
 {
     public class WizardMySQLDatabaseConnection : IWizardDatabaseConnection
     {
-        string connectionString;
+        readonly string connectionString;
         public WizardMySQLDatabaseConnection(string connectionString)
         {
             this.connectionString = connectionString;

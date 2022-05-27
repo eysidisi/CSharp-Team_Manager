@@ -1,10 +1,8 @@
-﻿using Dapper.Contrib.Extensions;
-using System.Data;
-using TeamManager.Service.Management.Models;
+﻿using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard.DatabaseConnection;
 using TeamManager.Service.Wizard.Models;
 
-namespace TeamManager.Service.Wizard.Database
+namespace TeamManager.Service.Wizard.DatabaseControllers
 {
     // Used for database operations' optimization
     public abstract class WizardDatabaseController

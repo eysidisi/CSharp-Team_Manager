@@ -1,7 +1,4 @@
 using System.Configuration;
-using TeamManager.Service.Management.DatabaseManagers;
-using TeamManager.Service.Wizard.Database;
-using TeamManager.UI.Management;
 using TeamManager.UI.Wizard;
 
 namespace TeamManager.UI

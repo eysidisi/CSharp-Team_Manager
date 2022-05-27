@@ -2,7 +2,7 @@
 using TeamManager.Service.Management.DatabaseConnection;
 using TeamManager.Service.Management.Models;
 
-namespace TeamManager.Service.Management.DatabaseManagers
+namespace TeamManager.Service.Management.DatabaseControllers
 {
     public abstract class ManagerDatabaseController
     {

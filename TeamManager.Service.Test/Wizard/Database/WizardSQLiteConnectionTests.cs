@@ -5,7 +5,7 @@ using System.Data.SQLite;
 using System.Linq;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
-using TeamManager.Service.Wizard.Database;
+using TeamManager.Service.Wizard.DatabaseControllers;
 using TeamManager.Service.Wizard.Models;
 using Xunit;
 

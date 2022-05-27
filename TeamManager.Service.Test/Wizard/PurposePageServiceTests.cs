@@ -2,8 +2,7 @@
 using System;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.Database;
-using TeamManager.Service.Wizard.DatabaseConnection;
+using TeamManager.Service.Wizard.DatabaseControllers;
 using Xunit;
 
 namespace TeamManager.Service.UnitTest.Wizard

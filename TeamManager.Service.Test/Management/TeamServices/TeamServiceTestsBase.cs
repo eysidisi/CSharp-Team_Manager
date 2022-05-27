@@ -1,5 +1,5 @@
 ﻿using Moq;
-using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.DatabaseControllers;
 
 namespace TeamManager.Service.UnitTest.Management.TeamServices
 {

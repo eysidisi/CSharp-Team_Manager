@@ -1,10 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
-using System;
-using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard.Models;
 
@@ -12,7 +7,7 @@ namespace TeamManager.Service.Wizard.DatabaseConnection
 {
     public class WizardSQLiteDatabaseConnection : IWizardDatabaseConnection
     {
-        string connectionString;
+        readonly string connectionString;
         public WizardSQLiteDatabaseConnection(string connectionString)
         {
             this.connectionString = connectionString;

@@ -1,6 +1,6 @@
 ﻿using Dapper.Contrib.Extensions;
 using System.Data.SQLite;
-using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
 using Xunit;

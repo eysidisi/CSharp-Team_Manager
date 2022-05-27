@@ -2,8 +2,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.Database;
-using TeamManager.Service.Wizard.DatabaseConnection;
+using TeamManager.Service.Wizard.DatabaseControllers;
 using TeamManager.Service.Wizard.Models;
 using Xunit;
 

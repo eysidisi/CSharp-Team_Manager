@@ -1,9 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Data;
-using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
 
-namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
+namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 {
     public class MySQLDatabaseManagerTests : DatabaseControllerTestsBaseClass
     {

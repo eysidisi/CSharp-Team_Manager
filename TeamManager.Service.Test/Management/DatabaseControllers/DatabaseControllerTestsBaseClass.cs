@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using TeamManager.Service.Management.DatabaseManagers;
+using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
 using Xunit;
 
-namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
+namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 {
     public abstract class DatabaseControllerTestsBaseClass : IDisposable
     {

@@ -1,7 +1,6 @@
 using System.Configuration;
-using TeamManager.Service.Management.DatabaseManagers;
-using TeamManager.Service.Wizard.Database;
-using TeamManager.Service.Wizard.DatabaseManagers;
+using TeamManager.Service.Management.DatabaseControllers;
+using TeamManager.Service.Wizard.DatabaseControllers;
 using TeamManager.Service.Wizard.Models;
 using TeamManager.UI.Management;
 using TeamManager.UI.Wizard.UserControls;
