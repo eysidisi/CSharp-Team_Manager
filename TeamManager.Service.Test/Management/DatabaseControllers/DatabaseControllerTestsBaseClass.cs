@@ -10,13 +10,13 @@ using Xunit;
 
 namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
 {
-    public abstract class DatabaseManagerTestsBaseClass : IDisposable
+    public abstract class DatabaseControllerTestsBaseClass : IDisposable
     {
         readonly DatabaseTestHelperBase databaseTestHelperMethods;
         readonly string connectionString;
         readonly ManagerDatabaseController databaseManager;
 
-        public DatabaseManagerTestsBaseClass()
+        public DatabaseControllerTestsBaseClass()
         {
             databaseTestHelperMethods = CreateDatabaseHelperMethods();
             connectionString = databaseTestHelperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString();
@@ -32,7 +32,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
         }
 
         [Fact]
-        public void GetAllUsers_UsersExistInTheDB_ReturnsUsers()
+        public void GetAllUsers_SaveNewUser_GetAllUsers_UsersExistInTheDB_ReturnsUsers()
         {
             var user1 = new User()
             {
@@ -49,32 +49,18 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
             using (IDbConnection cnn = CreateConnection(connectionString))
             {
                 cnn.Insert(user1);
-                cnn.Insert(user2);
             }
 
             var actualUsers = databaseManager.GetAllUsers();
 
+            Assert.Equal(new List<User>() { user1 }, actualUsers);
+
+            databaseManager.SaveUser(user2);
+
+            actualUsers = databaseManager.GetAllUsers();
+
             Assert.Equal(new List<User>() { user1, user2 }, actualUsers);
-        }
 
-        [Fact]
-        public void SaveUser_SavesUser()
-        {
-            var user = new User()
-            {
-                ID = 1,
-                Name = "user1"
-            };
-
-            databaseManager.SaveUser(user);
-
-            List<User> actualUsers;
-            using (IDbConnection cnn = CreateConnection(connectionString))
-            {
-                actualUsers = cnn.GetAll<User>().ToList();
-            }
-
-            Assert.Equal(new List<User>() { user }, actualUsers);
         }
 
         [Fact]
@@ -98,6 +84,30 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
             // Assert
             Assert.True(deletionResult);
         }
+
+        [Fact]
+        public void GetAllUsers_DeleteUser_GetAllUSers_UserExistsInTheDB_ReturnsEmptyList()
+        {
+            //Arrange
+            var user = new User()
+            {
+                ID = 1,
+                Name = "user"
+            };
+
+            using (IDbConnection cnn = CreateConnection(connectionString))
+            {
+                cnn.Insert(user);
+            }
+
+            var users = databaseManager.GetAllUsers();
+            Assert.Equal(new List<User>() { user }, users);
+
+            databaseManager.DeleteUser(user);
+            users = databaseManager.GetAllUsers();
+            Assert.Empty(users);
+        }
+
 
         [Fact]
         public void DeleteUser_UserDoesntExistInTheDB_CantDeleteUser()
@@ -143,7 +153,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
         }
 
         [Fact]
-        public void GetAllTeams_TeamsExistInDB_GetsAllTeams()
+        public void GetAllTeams_SaveTeam_GetAllTeams_TeamsExistInDB_GetsAllTeams()
         {
             // Arrange
             var team1 = new Team()
@@ -160,19 +170,60 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
                 CreationDate = "1234"
             };
 
-            List<Team> expectedTeams = new List<Team>() { team1, team2 };
             using (IDbConnection cnn = CreateConnection(connectionString))
             {
-                cnn.Insert(expectedTeams);
+                cnn.Insert(team1);
             }
 
             // Act
             var actualTeams = databaseManager.GetAllTeams();
 
             // Assert
-            Assert.Equal(actualTeams, expectedTeams);
+            Assert.Equal(actualTeams, new List<Team>() { team1 });
+
+            databaseManager.SaveTeam(team2);
+
+            actualTeams = databaseManager.GetAllTeams();
+
+            Assert.Equal(actualTeams, new List<Team>() { team1, team2 });
         }
 
+        [Fact]
+        public void GetAllTeams_DeleteTeam_GetAllTeams_TeamsExistInDB_GetsAllTeams()
+        {
+            // Arrange
+            var team1 = new Team()
+            {
+                ID = 1,
+                Name = "team1",
+                CreationDate = "1234"
+            };
+
+            var team2 = new Team()
+            {
+                ID = 2,
+                Name = "team2",
+                CreationDate = "1234"
+            };
+
+            using (IDbConnection cnn = CreateConnection(connectionString))
+            {
+                cnn.Insert(team1);
+                cnn.Insert(team2);
+            }
+
+            // Act
+            var actualTeams = databaseManager.GetAllTeams();
+
+            // Assert
+            Assert.Equal(actualTeams, new List<Team>() { team1, team2 });
+
+            databaseManager.DeleteTeam(team2);
+
+            actualTeams = databaseManager.GetAllTeams();
+
+            Assert.Equal(actualTeams, new List<Team>() { team1 });
+        }
         [Fact]
         public void GetAllTeams_NoTeamExistsInTheDB_ReturnsEmptyList()
         {
@@ -242,25 +293,43 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
         }
 
         [Fact]
-        public void GetAllUserIDToTeamID_UserIDToTeamIDExistsInTheDB_GetsAllUserIDToTeamID()
+        public void UserIDToTeamIDOperations()
         {
             //Arrange
-            UserIDToTeamID userIDToTeamID = new UserIDToTeamID()
+            UserIDToTeamID userIDToTeamID1 = new UserIDToTeamID()
             {
+                ID = 1,
                 TeamID = 1,
                 UserID = 1
             };
 
+            UserIDToTeamID userIDToTeamID2 = new UserIDToTeamID()
+            {
+                ID = 2,
+                TeamID = 1,
+                UserID = 2
+            };
+
             using (IDbConnection cnn = CreateConnection(connectionString))
             {
-                cnn.Insert(userIDToTeamID);
+                cnn.Insert(userIDToTeamID1);
+                cnn.Insert(userIDToTeamID2);
             }
 
-            // Act
-            var savedUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            var actualUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            Assert.Equal(new List<UserIDToTeamID>() { userIDToTeamID1, userIDToTeamID2 }, actualUserIDToTeamIDs);
 
-            // Assert
-            Assert.Contains(userIDToTeamID, savedUserIDToTeamIDs);
+            var deletionResult = databaseManager.DeleteUserIDToTeamID(userIDToTeamID1);
+            Assert.True(deletionResult);
+
+            actualUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            Assert.Equal(new List<UserIDToTeamID>() { userIDToTeamID2 }, actualUserIDToTeamIDs);
+
+            // When it's added to DB db auto increments ID for the next added element
+            userIDToTeamID1.ID = 3;
+            databaseManager.SaveUserIDToTeamID(userIDToTeamID1);
+            actualUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            Assert.Equal(new List<UserIDToTeamID>() { userIDToTeamID2, userIDToTeamID1 }, actualUserIDToTeamIDs);
         }
 
         [Fact]
@@ -319,6 +388,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
             // Assert
             Assert.False(deletionResult);
         }
+
 
         protected abstract IDbConnection CreateConnection(string connectionString);
 

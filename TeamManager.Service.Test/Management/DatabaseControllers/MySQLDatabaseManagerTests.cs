@@ -5,7 +5,7 @@ using TeamManager.Service.UnitTest.HelperMethods.Database;
 
 namespace TeamManager.Service.UnitTest.Management.DatabaseManagers
 {
-    public class MySQLDatabaseManagerTests : DatabaseManagerTestsBaseClass
+    public class MySQLDatabaseManagerTests : DatabaseControllerTestsBaseClass
     {
         protected override IDbConnection CreateConnection(string connectionString)
         {

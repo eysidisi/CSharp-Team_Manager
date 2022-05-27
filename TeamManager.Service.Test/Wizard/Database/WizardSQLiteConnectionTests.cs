@@ -11,7 +11,7 @@ using Xunit;
 
 namespace TeamManager.Service.UnitTest.Wizard.Database
 {
-    public class WizardSQLiteConnectionTests
+    public class WizardSQLiteDatabaseControllerTests
     {
         [Fact]
         public void GetManagers_ManagersExistInDB_GetsManagers()
@@ -23,7 +23,7 @@ namespace TeamManager.Service.UnitTest.Wizard.Database
             WizardSQLiteDatabaseController dataAccess = new WizardSQLiteDatabaseController(connectionString);
 
             // Insert manager
-            Manager expectedManager = new Manager(SQLiteDatabaseTestHelper.ValidManagerUserName, SQLiteDatabaseTestHelper.ValidManagerPassword);
+            Manager expectedManager = new Manager(DatabaseTestHelperBase.ValidManagerUserName, SQLiteDatabaseTestHelper.ValidManagerPassword);
 
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
             {

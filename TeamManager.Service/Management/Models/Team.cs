@@ -1,7 +1,9 @@
 ﻿using Dapper.Contrib.Extensions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TeamManager.Service.Management.Models
 {
+    [ExcludeFromCodeCoverage]
     [Table("Teams")]
     public class Team : IEquatable<Team>
     {

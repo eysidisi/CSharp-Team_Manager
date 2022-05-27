@@ -1,7 +1,10 @@
 ﻿using Dapper.Contrib.Extensions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TeamManager.Service.Management.Models
 {
+
+    [ExcludeFromCodeCoverage]
     [Table("UserID_To_TeamID")]
     public class UserIDToTeamID : IEquatable<UserIDToTeamID>
     {
