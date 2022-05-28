@@ -1,24 +1,24 @@
 ﻿using Dapper.Contrib.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Linq;
-using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
 using Xunit;
 
-namespace TeamManager.Service.IntegrationTest.DB.SQLite
+namespace TeamManager.Service.IntegrationTest.DB.TeamServices
 {
     public abstract class TeamPageServiceTests : IntegrationTests
     {
+        readonly TeamPageService teamPageService;
+        public TeamPageServiceTests()
+        {
+            teamPageService = new TeamPageService(databaseController);
+        }
+
         [Fact]
         public void GetAllTeams_DBHasNoTeams_ReturnsEmptyList()
         {
-            // Arrange
-            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
-            TeamPageService teamPageService = new TeamPageService(connection);
-
             // Act
             var teams = teamPageService.GetAllTeams();
 
@@ -36,13 +36,10 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite
                 new Team(){Name="team2",ID=2}
             };
 
-            using (var cnn = new SQLiteConnection(connString))
+            using (var cnn = CreateConnection(connString))
             {
                 cnn.Insert(expectedTeams);
             }
-
-            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
-            TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act
             var actualTeams = teamPageService.GetAllTeams();
@@ -52,14 +49,36 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite
         }
 
         [Fact]
+        public void DeleteTeam_DBHasNoTeams_DeletesTeam()
+        {
+            // Arrange
+            Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
+
+            using (var conn = CreateConnection(connString))
+            {
+                conn.Insert(teamToDelete);
+            }
+
+            // Act 
+            teamPageService.DeleteTeam(teamToDelete);
+
+            List<Team> actualTeams;
+            using (var conn = CreateConnection(connString))
+            {
+                actualTeams = conn.GetAll<Team>().ToList();
+            }
+
+            Assert.Empty(actualTeams);
+        }
+
+
+
+        [Fact]
 
         public void DeleteTeam_DBHasNoTeams_ThrowsException()
         {
             // Arrange
             Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
-
-            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
-            TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(teamToDelete));
@@ -72,14 +91,10 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite
             Team teamToAdd = new Team() { Name = "teamToAdd", ID = 1 };
             Team teamToDelete = new Team() { Name = "teamToDelete", ID = 2 };
 
-            using (var cnn = new SQLiteConnection(connString))
+            using (var cnn = CreateConnection(connString))
             {
                 cnn.Insert(teamToAdd);
             }
-
-
-            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
-            TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(teamToDelete));
@@ -92,14 +107,11 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite
             Team teamToDelete = new Team() { Name = "teamToDelete", ID = 1 };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = 1, UserID = 1 };
 
-            using (var cnn = new SQLiteConnection(connString))
+            using (var cnn = CreateConnection(connString))
             {
                 cnn.Insert(teamToDelete);
                 cnn.Insert(userIDToTeamID);
             }
-
-            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
-            TeamPageService teamPageService = new TeamPageService(connection);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(teamToDelete));

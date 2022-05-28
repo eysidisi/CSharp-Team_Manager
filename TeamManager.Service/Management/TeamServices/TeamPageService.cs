@@ -5,16 +5,16 @@ namespace TeamManager.Service.Management.TeamServices
 {
     public class TeamPageService
     {
-        readonly ManagerDatabaseController databaseManager;
+        readonly ManagerDatabaseController databaseController;
 
-        public TeamPageService(ManagerDatabaseController databaseManager)
+        public TeamPageService(ManagerDatabaseController databaseController)
         {
-            this.databaseManager = databaseManager;
+            this.databaseController = databaseController;
         }
 
         public List<Team> GetAllTeams()
         {
-            return databaseManager.GetAllTeams();
+            return databaseController.GetAllTeams();
         }
         public void DeleteTeam(Team team)
         {
@@ -23,16 +23,16 @@ namespace TeamManager.Service.Management.TeamServices
                 throw new ArgumentException("Can't delete the team! Team has members!");
             }
 
-            if (databaseManager.DeleteTeam(team) == false)
+            if (databaseController.DeleteTeam(team) == false)
             {
                 throw new ArgumentException("Can't delete the team!");
             }
         }
         private bool CheckIfTeamHasAnyMembers(Team team)
         {
-            var allUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            var allUserIDToTeamIDs = databaseController.GetAllUserIDToTeamID();
 
-            if (allUserIDToTeamIDs != null && allUserIDToTeamIDs.Any(a => a.TeamID == team.ID))
+            if (allUserIDToTeamIDs.Any(a => a.TeamID == team.ID))
             {
                 return true;
             }

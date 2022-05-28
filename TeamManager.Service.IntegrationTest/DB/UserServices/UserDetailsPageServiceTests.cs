@@ -1,12 +1,11 @@
 ﻿using Dapper.Contrib.Extensions;
-using System.Data.SQLite;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.UserServices;
 using Xunit;
 
-namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
+namespace TeamManager.Service.IntegrationTest.DB.UserServices
 {
-    public abstract class UserDetailsPageServiceTests: IntegrationTests
+    public abstract class UserDetailsPageServiceTests : IntegrationTests
     {
         readonly User userToGetDetails;
         readonly UserDetailsPageService userDetailsPageService;
@@ -34,7 +33,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             User user = new User() { ID = 1, Name = "userName" };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, UserID = 1, TeamID = 1 };
 
-            using (var cnn = new SQLiteConnection(connString))
+            using (var cnn = CreateConnection(connString))
             {
                 cnn.Insert(team);
                 cnn.Insert(user);

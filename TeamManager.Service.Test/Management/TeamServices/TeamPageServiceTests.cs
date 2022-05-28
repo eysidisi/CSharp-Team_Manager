@@ -13,7 +13,6 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
 
         public TeamPageServiceTests()
         {
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
             teamPageService = new TeamPageService(databaseManager.Object);
         }
 
@@ -104,6 +103,7 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
             };
 
             databaseManager.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(false);
+            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));

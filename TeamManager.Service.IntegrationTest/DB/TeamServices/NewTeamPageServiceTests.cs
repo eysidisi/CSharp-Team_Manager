@@ -1,19 +1,16 @@
 ﻿using Dapper.Contrib.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.Linq;
-using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
-using TeamManager.Service.UnitTest.HelperMethods.Database;
 using Xunit;
 
-namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
+namespace TeamManager.Service.IntegrationTest.DB.TeamServices
 {
     public abstract class NewTeamPageServiceTests : IntegrationTests
     {
-        NewTeamPageService newTeamPageService;
+        readonly NewTeamPageService newTeamPageService;
         public NewTeamPageServiceTests()
         {
             newTeamPageService = new NewTeamPageService(databaseController);
@@ -31,7 +28,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Assert
             List<Team> actualTeams;
 
-            using (var cnn = new SQLiteConnection(connString))
+            using (var cnn = CreateConnection(connString))
             {
                 actualTeams = cnn.GetAll<Team>().ToList();
             }
@@ -45,7 +42,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
             // Arrange
             Team team = new Team() { Name = "Team1" };
 
-            using (var cnn = new SQLiteConnection(connString))
+            using (var cnn = CreateConnection(connString))
             {
                 cnn.Insert(team);
             }

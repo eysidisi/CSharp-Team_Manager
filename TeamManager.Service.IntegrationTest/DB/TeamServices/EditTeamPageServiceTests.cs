@@ -1,18 +1,14 @@
 ﻿using Dapper.Contrib.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
 using System.Linq;
-using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
-using TeamManager.Service.UnitTest.HelperMethods.Database;
 using Xunit;
 
-namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
+namespace TeamManager.Service.IntegrationTest.DB.TeamServices
 {
-    public abstract class EditTeamPageServiceTests:IntegrationTests
+    public abstract class EditTeamPageServiceTests : IntegrationTests
     {
         readonly Team teamToEdit;
         EditTeamPageService editTeamPageService;

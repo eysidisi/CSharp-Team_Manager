@@ -1,7 +1,5 @@
-﻿using Dapper.Contrib.Extensions;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System.Data.Common;
-using TeamManager.Service.Management.Models;
 
 namespace TeamManager.Service.Management.DatabaseConnection.DapperSupportedDatabaseConnections
 {

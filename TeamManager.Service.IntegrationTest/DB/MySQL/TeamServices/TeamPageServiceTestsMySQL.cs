@@ -1,26 +1,26 @@
-﻿using System.Data;
-using System.Data.SQLite;
+﻿using MySql.Data.MySqlClient;
+using System.Data;
 using TeamManager.Service.IntegrationTest.DB.TeamServices;
 using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
 
-namespace TeamManager.Service.IntegrationTest.DB.SQLite.TeamServices
+namespace TeamManager.Service.IntegrationTest.DB.MySQL.TeamServices
 {
-    public class TeamPageServiceTestsSQLite : TeamPageServiceTests
+    public class TeamPageServiceTestsMySQL : TeamPageServiceTests
     {
         protected override IDbConnection CreateConnection(string connectionString)
         {
-            return new SQLiteConnection(connectionString);
+            return new MySqlConnection(connectionString);
         }
 
         protected override ManagerDatabaseController CreateDatabaseController(string connectionString)
         {
-            return new ManagerSQLiteDatabaseController(connectionString);
+            return new ManagerMySQLDatabaseController(connectionString);
         }
 
         protected override DatabaseTestHelperBase CreateDatabaseHelperMethods()
         {
-            return new SQLiteDatabaseTestHelper();
+            return new MySqlDatabaseTestHelper();
         }
     }
 }

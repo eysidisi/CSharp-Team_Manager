@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
 
@@ -9,7 +8,7 @@ namespace TeamManager.Service.IntegrationTest.DB
     {
         protected string connString;
         protected ManagerDatabaseController databaseController;
-        DatabaseTestHelperBase databaseTestHelperMethods;
+        readonly DatabaseTestHelperBase databaseTestHelperMethods;
 
         public IntegrationTests()
         {

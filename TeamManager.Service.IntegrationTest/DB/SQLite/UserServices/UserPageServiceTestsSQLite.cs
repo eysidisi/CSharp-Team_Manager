@@ -1,15 +1,8 @@
-﻿using Dapper.Contrib.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SQLite;
-using System.Linq;
 using TeamManager.Service.Management.DatabaseControllers;
-using TeamManager.Service.Management.Models;
-using TeamManager.Service.Management.UserServices;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
-using TeamManager.Service.UnitTest.Management.UserServices;
-using Xunit;
+using UserPageServiceTests = TeamManager.Service.IntegrationTest.DB.UserServices.UserPageServiceTests;
 
 namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
 {
