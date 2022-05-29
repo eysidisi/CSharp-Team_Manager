@@ -75,6 +75,10 @@ namespace TeamManager.UI.Management.UserControls
             {
                 editTeamPageService.AddUserToTheTeam(selectedUser);
             }
+            else
+            {
+                throw new Exception("User was not added!");
+            }
         }
 
         private User TryToGetSelectedUserInDataGridView(DataViewPage<User> dataViewPage)

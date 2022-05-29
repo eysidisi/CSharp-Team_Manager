@@ -45,8 +45,9 @@ namespace TeamManager.Service.UnitTest.Management.CommonServices
             // Arrange
             CreateEmptyService();
 
-            // Act && Assert
-            Assert.Throws<InvalidOperationException>(() => service.TryToGetItemsInPage(0));
+            // Act 
+            var actualItems = service.TryToGetItemsInPage(1);
+            Assert.Empty(actualItems);
         }
 
         [Fact]

@@ -9,7 +9,7 @@ namespace TeamManager.UI
         //static string connectionString = ConfigurationManager.ConnectionStrings["SQLiteTestMediumDB"].ConnectionString;
         //static string connectionString = ConfigurationManager.ConnectionStrings["SQLiteTestLargeDB"].ConnectionString;
         //static readonly string connectionString = ConfigurationManager.ConnectionStrings["MySQLTestSmallDB"].ConnectionString;
-        static readonly string connectionString = ConfigurationManager.ConnectionStrings["MySQLTestLargeDB"].ConnectionString;
+        //static readonly string connectionString = ConfigurationManager.ConnectionStrings["MySQLTestLargeDB"].ConnectionString;
 
         /// <summary>
         ///  The main entry point for the application.

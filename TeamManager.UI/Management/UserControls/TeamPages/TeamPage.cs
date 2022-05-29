@@ -36,6 +36,7 @@ namespace TeamManager.UI.Management.UserControls
             {
                 TryToDeleteSelectedTeam();
                 SetUpDataViewPage();
+                MessageBox.Show("Team deleted succesfully!","Success", MessageBoxButtons.OK);
             }
             catch (Exception ex)
             {
@@ -53,6 +54,10 @@ namespace TeamManager.UI.Management.UserControls
             {
                 teamPageService.DeleteTeam(teamToDelete);
                 dataViewPage.DeleteSelectedRow();
+            }
+            else
+            {
+                throw new Exception("Team was not deleted!");
             }
         }
 

@@ -1,3 +1,5 @@
+using Dapper.Contrib.Extensions;
+using System.Data;
 using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
@@ -8,9 +10,9 @@ using TeamManager.Service.Wizard.DatabaseControllers;
 using TeamManager.Service.Wizard.Models;
 using Xunit;
 
-namespace TeamManager.Service.SystemTest
+namespace TeamManager.Service.SystemTests
 {
-    public abstract class SystemTests
+    public abstract class Tests
     {
         ManagerDatabaseController managerDatabaseController;
         WizardDatabaseController wizardDatabaseController;
@@ -20,27 +22,29 @@ namespace TeamManager.Service.SystemTest
         TeamPageService teamPageService;
         DatabaseTestHelper databaseTestHelper;
 
+        protected string connectionString;
+
         public void CreateEmptySQLConnection()
         {
             databaseTestHelper = CreateDatabaseTestHelper();
-            var connectionString = databaseTestHelper.CreateEmptyTestDBWithTables_ReturnConnectionString();
-            managerDatabaseController = CreateManagerDatabaseController(connectionString);
-            wizardDatabaseController = CreateWizardDatabaseController(connectionString);
+            connectionString = databaseTestHelper.CreateEmptyTestDBWithTables_ReturnConnectionString();
+            managerDatabaseController = CreateManagerDatabaseController();
+            wizardDatabaseController = CreateWizardDatabaseController();
         }
 
         protected abstract DatabaseTestHelper CreateDatabaseTestHelper();
-        protected abstract ManagerDatabaseController CreateManagerDatabaseController(string connectionString);
-        protected abstract WizardDatabaseController CreateWizardDatabaseController(string connectionString);
+        protected abstract ManagerDatabaseController CreateManagerDatabaseController();
+        protected abstract WizardDatabaseController CreateWizardDatabaseController();
+        protected abstract IDbConnection CreateConnection();
+
 
         // A scenerio for an empty DB
         [Fact]
-        public void OperationsOnEmptyDB()
+        public  void OperationsOnEmptyDB()
         {
             CreateEmptySQLConnection();
 
-            purposePageService = new PurposePageService(wizardDatabaseController);
             loginPageService = new LoginPageService(wizardDatabaseController);
-
             databaseTestHelper.AddValidManager();
 
             Manager validManager = new Manager(DatabaseTestHelper.ValidManagerUserName, DatabaseTestHelper.ValidManagerPassword);
@@ -48,6 +52,14 @@ namespace TeamManager.Service.SystemTest
 
             Manager invalidManager = new Manager("invalidManager", "validManager");
             AssertManagerDoesNotExists(invalidManager);
+
+            purposePageService = new PurposePageService(wizardDatabaseController);
+
+            Purpose validPurpose = new Purpose("userName", "purposeText");
+            AssertCanAddPurpose(validPurpose);
+
+            Purpose invalidPurpose = new Purpose();
+            AssertCantAddPurpose(invalidPurpose);
 
             teamPageService = new TeamPageService(managerDatabaseController);
             userPageService = new UserPageService(managerDatabaseController);
@@ -115,6 +127,24 @@ namespace TeamManager.Service.SystemTest
 
             AssertCantRemoveUserFromTeam(validUser1, team1);
         }
+
+        private void AssertCantAddPurpose(Purpose purpose)
+        {
+            Assert.Throws<ArgumentException>(() => purposePageService.SavePurposeOfVisit(purpose));
+        }
+
+        private void AssertCanAddPurpose(Purpose purpose)
+        {
+            purposePageService.SavePurposeOfVisit(purpose);
+            List<Purpose> actualPurposes;
+            using (IDbConnection conn = CreateConnection())
+            {
+                actualPurposes = conn.GetAll<Purpose>().ToList();
+            }
+            Assert.Contains(purpose, actualPurposes);
+        }
+
+
 
         private void AssertManagerDoesNotExists(Manager manager)
         {

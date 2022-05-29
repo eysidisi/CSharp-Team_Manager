@@ -17,17 +17,12 @@
 
         private int CalculateNumberOfMaximumPages()
         {
-            return (int)Math.Ceiling((double)items.Count / (numOfItemsPerPage));
+            return Math.Max((int)Math.Ceiling((double)items.Count / (numOfItemsPerPage)), 1);
         }
 
         public List<T> TryToGetItemsInPage(int pageNum)
         {
-            if (IsItemsListEmpty())
-            {
-                throw new InvalidOperationException("No items present!");
-            }
-
-            else if (IsPageNumberIsNotInRange(pageNum))
+            if (IsPageNumberIsNotInRange(pageNum))
             {
                 throw new ArgumentOutOfRangeException("Page number is not in range!");
             }
