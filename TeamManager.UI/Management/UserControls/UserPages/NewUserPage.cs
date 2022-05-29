@@ -9,9 +9,9 @@ namespace TeamManager.UI.Management.UserControls
         public Action<UserControl> OnCancelClick;
         readonly NewUserPageService newUserPageService;
 
-        public NewUserPage(ManagerDatabaseController databaseManager)
+        public NewUserPage(ManagerDatabaseController databaseController)
         {
-            newUserPageService = new NewUserPageService(databaseManager);
+            newUserPageService = new NewUserPageService(databaseController);
             InitializeComponent();
         }
 

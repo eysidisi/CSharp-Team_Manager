@@ -11,7 +11,7 @@ namespace TeamManager.Console
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            DatabaseTestHelperBase helperMethods = new MySqlDatabaseTestHelper();
+            DatabaseTestHelper helperMethods = new MySqlDatabaseTestHelper();
             var mySQLConnectionStringSmall = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString("test_small_db");
             var mySQLConnectionStringMedium = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString("test_medium_db");
             var mySQLConnectionStringLarge = helperMethods.CreateEmptyTestDBWithTables_ReturnConnectionString("test_large_db");

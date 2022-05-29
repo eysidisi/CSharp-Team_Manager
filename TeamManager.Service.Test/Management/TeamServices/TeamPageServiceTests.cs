@@ -13,7 +13,7 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
 
         public TeamPageServiceTests()
         {
-            teamPageService = new TeamPageService(databaseManager.Object);
+            teamPageService = new TeamPageService(databaseController.Object);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
                 },
             };
 
-            databaseManager.Setup(x => x.GetAllTeams()).Returns(expectedTeams);
+            databaseController.Setup(x => x.GetAllTeams()).Returns(expectedTeams);
 
             // Act
             List<Team> actualTeams = teamPageService.GetAllTeams();
@@ -44,7 +44,7 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
         public void GetAllTeams_TeamsDontExistInDB_ReturnsEmptyList()
         {
             // Arrange
-            databaseManager.Setup(x => x.GetAllTeams()).Returns(new List<Team>());
+            databaseController.Setup(x => x.GetAllTeams()).Returns(new List<Team>());
 
             // Act
             List<Team> actualTeams = teamPageService.GetAllTeams();
@@ -63,14 +63,14 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
-            databaseManager.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == expectedTeamToDelete))).Returns(true);
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            databaseController.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == expectedTeamToDelete))).Returns(true);
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             // Act 
             teamPageService.DeleteTeam(expectedTeamToDelete);
 
             // Assert
-            databaseManager.Verify(c => c.DeleteTeam(It.Is<Team>(actualTeamToDelete => actualTeamToDelete.Equals(expectedTeamToDelete))));
+            databaseController.Verify(c => c.DeleteTeam(It.Is<Team>(actualTeamToDelete => actualTeamToDelete.Equals(expectedTeamToDelete))));
         }
 
         [Fact]
@@ -86,7 +86,7 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
 
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { TeamID = 1, UserID = 1 };
 
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));
@@ -102,8 +102,8 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
                 CreationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
             };
 
-            databaseManager.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(false);
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            databaseController.Setup(c => c.DeleteTeam(It.Is<Team>(t => t == team))).Returns(false);
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => teamPageService.DeleteTeam(team));

@@ -5,11 +5,11 @@ namespace TeamManager.Service.Wizard
 {
     public class PurposePageService
     {
-        readonly WizardDatabaseController databaseManager;
+        readonly WizardDatabaseController databaseController;
 
-        public PurposePageService(WizardDatabaseController databaseManager)
+        public PurposePageService(WizardDatabaseController databaseController)
         {
-            this.databaseManager = databaseManager;
+            this.databaseController = databaseController;
         }
 
         public void SavePurposeOfVisit(Purpose purpose)
@@ -18,7 +18,7 @@ namespace TeamManager.Service.Wizard
             {
                 throw new ArgumentException("Purpose is not valid!");
             }
-            databaseManager.SavePurpose(purpose);
+            databaseController.SavePurpose(purpose);
         }
 
         private bool CheckIfPurposeIsValid(Purpose purpose)

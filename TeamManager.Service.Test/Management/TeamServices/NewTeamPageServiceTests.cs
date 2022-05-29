@@ -13,7 +13,7 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
 
         public NewTeamPageServiceTests()
         {
-            newTeamPageService = new NewTeamPageService(databaseManager.Object);
+            newTeamPageService = new NewTeamPageService(databaseController.Object);
         }
 
         [Fact]
@@ -27,13 +27,13 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
                 CreationDate = "123"
             };
 
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team> { });
+            databaseController.Setup(c => c.GetAllTeams()).Returns(new List<Team> { });
 
             // Act 
             newTeamPageService.SaveTeam(teamToSave);
 
             // Assert
-            databaseManager.Verify(c => c.SaveTeam(It.Is<Team>(actualSavedTeam => actualSavedTeam.Equals(teamToSave))));
+            databaseController.Verify(c => c.SaveTeam(It.Is<Team>(actualSavedTeam => actualSavedTeam.Equals(teamToSave))));
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
                 CreationDate = "123"
             };
 
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { newTeam });
+            databaseController.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { newTeam });
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => newTeamPageService.SaveTeam(newTeam));

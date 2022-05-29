@@ -13,7 +13,7 @@ namespace TeamManager.UI.Wizard
         //string connectionString = ConfigurationManager.ConnectionStrings["TestMediumDB"].ConnectionString;
         //readonly string connectionString = ConfigurationManager.ConnectionStrings["SQLiteTestLargeDB"].ConnectionString;
         readonly string connectionString = ConfigurationManager.ConnectionStrings["MySQLTestLargeDB"].ConnectionString;
-        readonly WizardDatabaseController databaseManager;
+        readonly WizardDatabaseController databaseController;
         LoginPage loginPageUserControl;
         PurposePage purposePageUserControl;
 
@@ -21,13 +21,13 @@ namespace TeamManager.UI.Wizard
         {
             InitializeComponent();
             CenterToScreen();
-            databaseManager = new WizardMySQLDatabaseController(connectionString);
+            databaseController = new WizardMySQLDatabaseController(connectionString);
             AdjustLoginPage();
         }
 
         private void AdjustLoginPage()
         {
-            loginPageUserControl = new LoginPage(databaseManager);
+            loginPageUserControl = new LoginPage(databaseController);
             panelCenter.Controls.Add(loginPageUserControl);
             loginPageUserControl.OnSuccessfulLogin += OnSuccessfulLogin;
         }
@@ -40,7 +40,7 @@ namespace TeamManager.UI.Wizard
 
         private void AdjustPurposePage(Manager manager)
         {
-            purposePageUserControl = new PurposePage(databaseManager, manager);
+            purposePageUserControl = new PurposePage(databaseController, manager);
             purposePageUserControl.OnSuccessfulPurposeEnter += OnSuccessfulPurposeEnter;
             panelCenter.Controls.Add(purposePageUserControl);
         }
@@ -49,8 +49,8 @@ namespace TeamManager.UI.Wizard
         {
             panelCenter.Controls.Remove(purposePageUserControl);
             this.Hide();
-            ManagerDatabaseController databaseManager = new ManagerMySQLDatabaseController(connectionString);
-            var managerForm = new ManagementForm(databaseManager);
+            ManagerDatabaseController databaseController = new ManagerMySQLDatabaseController(connectionString);
+            var managerForm = new ManagementForm(databaseController);
             managerForm.Closed += (s, args) => this.Close();
             managerForm.Show();
         }

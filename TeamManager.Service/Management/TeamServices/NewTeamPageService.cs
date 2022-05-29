@@ -5,11 +5,11 @@ namespace TeamManager.Service.Management.TeamServices
 {
     public class NewTeamPageService
     {
-        readonly ManagerDatabaseController databaseManager;
+        readonly ManagerDatabaseController databaseController;
 
         public NewTeamPageService(ManagerDatabaseController connection)
         {
-            this.databaseManager = connection;
+            this.databaseController = connection;
         }
 
         public void SaveTeam(Team newTeam)
@@ -20,14 +20,14 @@ namespace TeamManager.Service.Management.TeamServices
             {
                 throw new ArgumentException("Make sure that all of the sections are filled!");
             }
-            var allTeams = databaseManager.GetAllTeams();
+            var allTeams = databaseController.GetAllTeams();
 
             if (allTeams.Any(t => t.Name == newTeam.Name))
             {
                 throw new ArgumentException("A team with the same name already exists!");
             }
 
-            databaseManager.SaveTeam(newTeam);
+            databaseController.SaveTeam(newTeam);
         }
 
         private void AddCreationTimeInfo(Team newTeam)

@@ -5,14 +5,14 @@ using TeamManager.Service.UnitTest.HelperMethods.Database;
 
 namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 {
-    public class MySQLDatabaseManagerTests : DatabaseControllerTestsBaseClass
+    public class MySQLdatabaseControllerTests : DatabaseControllerTestsBaseClass
     {
         protected override IDbConnection CreateConnection(string connectionString)
         {
             return new MySqlConnection(connectionString);
         }
 
-        protected override DatabaseTestHelperBase CreateDatabaseHelperMethods()
+        protected override DatabaseTestHelper CreateDatabaseHelperMethods()
         {
             return new MySqlDatabaseTestHelper();
         }

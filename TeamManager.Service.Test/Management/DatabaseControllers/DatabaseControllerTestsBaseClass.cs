@@ -12,7 +12,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 {
     public abstract class DatabaseControllerTestsBaseClass : IDisposable
     {
-        readonly DatabaseTestHelperBase databaseTestHelperMethods;
+        readonly DatabaseTestHelper databaseTestHelperMethods;
         readonly string connectionString;
         readonly ManagerDatabaseController databaseController;
 
@@ -394,7 +394,7 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 
         protected abstract ManagerDatabaseController CreateDatabaseController(string connectionString);
 
-        protected abstract DatabaseTestHelperBase CreateDatabaseHelperMethods();
+        protected abstract DatabaseTestHelper CreateDatabaseHelperMethods();
 
         public void Dispose()
         {

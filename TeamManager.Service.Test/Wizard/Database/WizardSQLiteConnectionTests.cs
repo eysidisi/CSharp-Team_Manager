@@ -23,7 +23,7 @@ namespace TeamManager.Service.UnitTest.Wizard.Database
             WizardSQLiteDatabaseController dataAccess = new WizardSQLiteDatabaseController(connectionString);
 
             // Insert manager
-            Manager expectedManager = new Manager(DatabaseTestHelperBase.ValidManagerUserName, SQLiteDatabaseTestHelper.ValidManagerPassword);
+            Manager expectedManager = new Manager(DatabaseTestHelper.ValidManagerUserName, SQLiteDatabaseTestHelper.ValidManagerPassword);
 
             using (IDbConnection cnn = new SQLiteConnection(connectionString))
             {

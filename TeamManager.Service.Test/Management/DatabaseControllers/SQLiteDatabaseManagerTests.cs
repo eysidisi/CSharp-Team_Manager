@@ -5,14 +5,14 @@ using TeamManager.Service.UnitTest.HelperMethods.Database;
 
 namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 {
-    public class SQLiteDatabaseManagerTests : DatabaseControllerTestsBaseClass
+    public class SQLitedatabaseControllerTests : DatabaseControllerTestsBaseClass
     {
         protected override IDbConnection CreateConnection(string connectionString)
         {
             return new SQLiteConnection(connectionString);
         }
 
-        protected override DatabaseTestHelperBase CreateDatabaseHelperMethods()
+        protected override DatabaseTestHelper CreateDatabaseHelperMethods()
         {
             return new SQLiteDatabaseTestHelper();
         }

@@ -5,20 +5,20 @@ namespace TeamManager.Service.Management.TeamServices
 {
     public class TeamDetailsPageService
     {
-        readonly ManagerDatabaseController databaseManager;
+        readonly ManagerDatabaseController databaseController;
         readonly Team team;
 
-        public TeamDetailsPageService(ManagerDatabaseController databaseManager, Team team)
+        public TeamDetailsPageService(ManagerDatabaseController databaseController, Team team)
         {
-            this.databaseManager = databaseManager;
+            this.databaseController = databaseController;
             this.team = team;
         }
 
         public List<User> GetUsersInTeam()
         {
-            var users = databaseManager.GetAllUsers();
-            var teams = databaseManager.GetAllTeams();
-            var userIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            var users = databaseController.GetAllUsers();
+            var teams = databaseController.GetAllTeams();
+            var userIDToTeamIDs = databaseController.GetAllUserIDToTeamID();
 
             var userIDsBelongedToTeam = userIDToTeamIDs.Where(u => u.TeamID == team.ID)
                                                         .Select(u => u.UserID).ToList();

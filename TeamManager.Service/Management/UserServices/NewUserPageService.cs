@@ -5,11 +5,11 @@ namespace TeamManager.Service.Management.UserServices
 {
     public class NewUserPageService
     {
-        readonly ManagerDatabaseController databaseManager;
+        readonly ManagerDatabaseController databaseController;
 
-        public NewUserPageService(ManagerDatabaseController databaseManager)
+        public NewUserPageService(ManagerDatabaseController databaseController)
         {
-            this.databaseManager = databaseManager;
+            this.databaseController = databaseController;
         }
 
         public void SaveNewUser(User user)
@@ -21,7 +21,7 @@ namespace TeamManager.Service.Management.UserServices
                 throw new ArgumentException("User is not valid!");
             }
 
-            databaseManager.SaveUser(user);
+            databaseController.SaveUser(user);
         }
 
         private bool CheckIfUserIsValid(User user)

@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TeamManager.Service.Management
 {
+    [ExcludeFromCodeCoverage]
     public static class HelperFunctions
     {
         /// <summary>

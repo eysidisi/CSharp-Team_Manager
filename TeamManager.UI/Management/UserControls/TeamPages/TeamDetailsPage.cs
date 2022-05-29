@@ -10,16 +10,16 @@ namespace TeamManager.UI.Management.UserControls
         DataViewPage<User> dataViewPage;
         TeamDetailsPageService teamDetailPageService;
 
-        public TeamDetailsPage(ManagerDatabaseController databaseManager, Team team)
+        public TeamDetailsPage(ManagerDatabaseController databaseController, Team team)
         {
             InitializeComponent();
-            InitializeVariables(databaseManager, team);
+            InitializeVariables(databaseController, team);
             CreateDataViewPage();
         }
 
-        private void InitializeVariables(ManagerDatabaseController databaseManager, Team team)
+        private void InitializeVariables(ManagerDatabaseController databaseController, Team team)
         {
-            teamDetailPageService = new TeamDetailsPageService(databaseManager, team);
+            teamDetailPageService = new TeamDetailsPageService(databaseController, team);
             labelTeamName.Text = team.Name;
         }
         private void CreateDataViewPage()

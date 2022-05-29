@@ -5,21 +5,21 @@ namespace TeamManager.Service.Management.UserServices
 {
     public class UserPageService
     {
-        private readonly ManagerDatabaseController databaseManager;
+        private readonly ManagerDatabaseController databaseController;
 
-        public UserPageService(ManagerDatabaseController databaseManager)
+        public UserPageService(ManagerDatabaseController databaseController)
         {
-            this.databaseManager = databaseManager;
+            this.databaseController = databaseController;
         }
 
         public List<User> GetUsers()
         {
-            return databaseManager.GetAllUsers();
+            return databaseController.GetAllUsers();
         }
 
         public void DeleteUser(User user)
         {
-            if (databaseManager.DeleteUser(user) == false)
+            if (databaseController.DeleteUser(user) == false)
             {
                 throw new ArgumentException("Can't delete the user!");
             }
@@ -29,12 +29,12 @@ namespace TeamManager.Service.Management.UserServices
 
         private void DeleteAllUserIDToTeamIDEntries(User user)
         {
-            var allUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            var allUserIDToTeamIDs = databaseController.GetAllUserIDToTeamID();
             var userToTeamIDs = allUserIDToTeamIDs.Where(a => a.UserID == user.ID).ToList();
 
             foreach (var userToTeamID in userToTeamIDs)
             {
-                databaseManager.DeleteUserIDToTeamID(userToTeamID);
+                databaseController.DeleteUserIDToTeamID(userToTeamID);
             }
         }
     }

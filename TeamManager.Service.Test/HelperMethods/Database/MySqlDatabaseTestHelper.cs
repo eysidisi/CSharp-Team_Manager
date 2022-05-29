@@ -3,7 +3,7 @@ using System.Data.Common;
 
 namespace TeamManager.Service.UnitTest.HelperMethods.Database
 {
-    public class MySqlDatabaseTestHelper : DatabaseTestHelperBase
+    public class MySqlDatabaseTestHelper : DatabaseTestHelper
     {
         protected override string UserIDToTeamIDTableSQL => @"CREATE TABLE UserID_To_TeamID (
         	                                        ID	INTEGER AUTO_INCREMENT PRIMARY KEY,

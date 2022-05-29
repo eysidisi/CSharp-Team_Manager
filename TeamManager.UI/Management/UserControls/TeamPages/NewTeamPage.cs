@@ -9,10 +9,10 @@ namespace TeamManager.UI.Management.UserControls
         readonly NewTeamPageService newTeamPageService;
         public Action<NewTeamPage> OnBackButtonClicked;
 
-        public NewTeamPage(ManagerDatabaseController databaseManager)
+        public NewTeamPage(ManagerDatabaseController databaseController)
         {
             InitializeComponent();
-            newTeamPageService = new NewTeamPageService(databaseManager);
+            newTeamPageService = new NewTeamPageService(databaseController);
         }
 
         private void buttonSaveTeam_Click(object sender, EventArgs e)

@@ -8,10 +8,10 @@ namespace TeamManager.UI.Wizard.UserControls
     {
         public Action<Manager> OnSuccessfulLogin;
         readonly LoginPageService loginPageService;
-        public LoginPage(WizardDatabaseController databaseManager)
+        public LoginPage(WizardDatabaseController databaseController)
         {
             InitializeComponent();
-            loginPageService = new LoginPageService(databaseManager);
+            loginPageService = new LoginPageService(databaseController);
         }
 
         private void buttonEnter_Click(object sender, EventArgs e)

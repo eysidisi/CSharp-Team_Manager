@@ -7,9 +7,9 @@ namespace TeamManager.Service.Wizard
     {
         readonly WizardDatabaseController databaseConnection;
 
-        public LoginPageService(WizardDatabaseController databaseManager)
+        public LoginPageService(WizardDatabaseController databaseController)
         {
-            this.databaseConnection = databaseManager;
+            this.databaseConnection = databaseController;
         }
 
         public Manager GetManager(Manager managerToFind)

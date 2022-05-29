@@ -13,7 +13,7 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
         public TeamDetailsPageServiceTests()
         {
             teamToGetDetails = new Team() { ID = 1, Name = "Team1" };
-            teamDetailsPage = new TeamDetailsPageService(databaseManager.Object, teamToGetDetails);
+            teamDetailsPage = new TeamDetailsPageService(databaseController.Object, teamToGetDetails);
         }
 
         [Fact]
@@ -30,9 +30,9 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
             List<User> users = new List<User>() { user1, user2 };
             List<Team> teams = new List<Team>() { teamToGetDetails, team2 };
 
-            databaseManager.Setup(c => c.GetAllUsers()).Returns(users);
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(teams);
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDToTeamIDs);
+            databaseController.Setup(c => c.GetAllUsers()).Returns(users);
+            databaseController.Setup(c => c.GetAllTeams()).Returns(teams);
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDToTeamIDs);
 
             List<User> expectedUsers = new List<User>() { user1 };
 
@@ -47,9 +47,9 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
         public void GetUsersInTheTeam_NoUsersInTheDB_ReturnsEmptyList()
         {
             // Arrange
-            databaseManager.Setup(c => c.GetAllUsers()).Returns(new List<User>());
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            databaseController.Setup(c => c.GetAllUsers()).Returns(new List<User>());
+            databaseController.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             // Act
             List<User> actualUsers = teamDetailsPage.GetUsersInTeam();
@@ -68,9 +68,9 @@ namespace TeamManager.Service.UnitTest.Management.TeamServices
             List<User> users = new List<User>() { user1, user2 };
             List<Team> teams = new List<Team>() { teamToGetDetails };
 
-            databaseManager.Setup(c => c.GetAllUsers()).Returns(users);
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(teams);
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            databaseController.Setup(c => c.GetAllUsers()).Returns(users);
+            databaseController.Setup(c => c.GetAllTeams()).Returns(teams);
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             // Act
             List<User> actualUsers = teamDetailsPage.GetUsersInTeam();

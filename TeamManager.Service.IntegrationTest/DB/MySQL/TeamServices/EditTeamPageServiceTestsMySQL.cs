@@ -18,7 +18,7 @@ namespace TeamManager.Service.IntegrationTest.DB.MySQL.TeamServices
             return new ManagerMySQLDatabaseController(connectionString);
         }
 
-        protected override DatabaseTestHelperBase CreateDatabaseHelperMethods()
+        protected override DatabaseTestHelper CreateDatabaseHelperMethods()
         {
             return new MySqlDatabaseTestHelper();
         }

@@ -4,7 +4,7 @@ using System.IO;
 
 namespace TeamManager.Service.UnitTest.HelperMethods.Database
 {
-    public class SQLiteDatabaseTestHelper : DatabaseTestHelperBase
+    public class SQLiteDatabaseTestHelper : DatabaseTestHelper
     {
         protected override string UserIDToTeamIDTableSQL => @"CREATE TABLE 'UserID_To_TeamID' (
         	                                        'ID'	INTEGER NOT NULL UNIQUE,

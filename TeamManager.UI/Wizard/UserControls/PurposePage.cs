@@ -11,10 +11,10 @@ namespace TeamManager.UI.Wizard.UserControls
         readonly Manager manager;
         readonly PurposePageService purposePageService;
 
-        public PurposePage(WizardDatabaseController databaseManager, Manager manager)
+        public PurposePage(WizardDatabaseController databaseController, Manager manager)
         {
             InitializeComponent();
-            purposePageService = new PurposePageService(databaseManager);
+            purposePageService = new PurposePageService(databaseController);
             this.manager = manager;
         }
 

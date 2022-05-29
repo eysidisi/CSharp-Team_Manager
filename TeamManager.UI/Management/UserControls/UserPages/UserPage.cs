@@ -9,14 +9,14 @@ namespace TeamManager.UI.Management.UserControls
     public partial class UserPage : UserControl
     {
         readonly UserPageService userPageService;
-        readonly ManagerDatabaseController databaseManager;
+        readonly ManagerDatabaseController databaseController;
         DataViewPage<User> dataViewPage;
 
-        public UserPage(ManagerDatabaseController databaseManager)
+        public UserPage(ManagerDatabaseController databaseController)
         {
             InitializeComponent();
-            this.databaseManager = databaseManager;
-            userPageService = new UserPageService(databaseManager);
+            this.databaseController = databaseController;
+            userPageService = new UserPageService(databaseController);
             CreateDataViewPage();
         }
 
@@ -33,7 +33,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void OpenNewUserPage()
         {
-            var saveNewUserPage = new NewUserPage(databaseManager);
+            var saveNewUserPage = new NewUserPage(databaseController);
             saveNewUserPage.OnCancelClick += OnBackButtonClicked;
             Controls.Add(saveNewUserPage);
         }
@@ -143,7 +143,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void OpenNewUserDetailsPage(User selectedUser)
         {
-            UserDetailsPage userDetailsPage = new UserDetailsPage(databaseManager, selectedUser);
+            UserDetailsPage userDetailsPage = new UserDetailsPage(databaseController, selectedUser);
             userDetailsPage.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(userDetailsPage);
         }

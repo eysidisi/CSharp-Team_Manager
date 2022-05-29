@@ -7,18 +7,18 @@ namespace TeamManager.Service.Management.UserServices
     {
         public int NumOfTeamsPerPage = 10;
 
-        private readonly ManagerDatabaseController databaseManager;
+        private readonly ManagerDatabaseController databaseController;
         private readonly User user;
 
-        public UserDetailsPageService(ManagerDatabaseController databaseManager, User user)
+        public UserDetailsPageService(ManagerDatabaseController databaseController, User user)
         {
-            this.databaseManager = databaseManager;
+            this.databaseController = databaseController;
             this.user = user;
         }
         public List<Team> GetTeamsThatUserIn()
         {
-            var allUserIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
-            var allTeams = databaseManager.GetAllTeams();
+            var allUserIDToTeamIDs = databaseController.GetAllUserIDToTeamID();
+            var allTeams = databaseController.GetAllTeams();
 
             var teamIDs = allUserIDToTeamIDs.Where(a => a.UserID == user.ID)?.
                 Select(a => a.TeamID).ToList();

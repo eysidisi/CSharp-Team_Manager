@@ -18,7 +18,7 @@ namespace TeamManager.Service.IntegrationTest.DB.SQLite.UserServices
             return new ManagerSQLiteDatabaseController(connectionString);
         }
 
-        protected override DatabaseTestHelperBase CreateDatabaseHelperMethods()
+        protected override DatabaseTestHelper CreateDatabaseHelperMethods()
         {
             return new SQLiteDatabaseTestHelper();
         }

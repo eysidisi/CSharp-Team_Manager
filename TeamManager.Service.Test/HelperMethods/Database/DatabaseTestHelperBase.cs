@@ -1,8 +1,10 @@
-﻿using System.Data.Common;
+﻿using Dapper.Contrib.Extensions;
+using System.Data.Common;
+using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.Service.UnitTest.HelperMethods.Database
 {
-    public abstract class DatabaseTestHelperBase
+    public abstract class DatabaseTestHelper
     {
         public static readonly string ValidManagerUserName = "validUserName";
         public static readonly string ValidManagerPassword = "validPassword";
@@ -64,7 +66,6 @@ namespace TeamManager.Service.UnitTest.HelperMethods.Database
             return ConnectionString;
         }
 
-
         private void AddUserIDToTeamIDTable()
         {
             RunSQL(UserIDToTeamIDTableSQL);
@@ -93,6 +94,15 @@ namespace TeamManager.Service.UnitTest.HelperMethods.Database
         public void DeleteCreatedDB()
         {
             DeleteDBIfExists();
+        }
+
+        public void AddValidManager()
+        {
+            Manager manager = new Manager(ValidManagerUserName, ValidManagerPassword);
+            using (var conn = CreateConnection())
+            {
+                conn.Insert(manager);
+            }
         }
 
         protected abstract DbConnection CreateConnection();

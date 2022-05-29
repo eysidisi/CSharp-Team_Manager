@@ -5,11 +5,11 @@ namespace TeamManager.Service.Management.TeamServices
 {
     public class EditTeamPageService
     {
-        readonly ManagerDatabaseController databaseManager;
+        readonly ManagerDatabaseController databaseController;
         readonly Team team;
-        public EditTeamPageService(ManagerDatabaseController databaseManager, Team teamToEdit)
+        public EditTeamPageService(ManagerDatabaseController databaseController, Team teamToEdit)
         {
-            this.databaseManager = databaseManager;
+            this.databaseController = databaseController;
             team = teamToEdit;
         }
 
@@ -32,12 +32,12 @@ namespace TeamManager.Service.Management.TeamServices
                 throw new ArgumentException("User is already in the team!");
             }
 
-            databaseManager.SaveUserIDToTeamID(userIDToTeamID);
+            databaseController.SaveUserIDToTeamID(userIDToTeamID);
         }
 
         public List<User> GetAllUsers()
         {
-            return databaseManager.GetAllUsers();
+            return databaseController.GetAllUsers();
         }
 
         public List<User> TryToGetUsersInTheTeam()
@@ -54,13 +54,13 @@ namespace TeamManager.Service.Management.TeamServices
         {
             List<int> userIDsThatAreInTheTeam = FindUserIDsThatAreInTheTeam();
 
-            var users = databaseManager.GetAllUsers();
+            var users = databaseController.GetAllUsers();
             return users.Where(u => userIDsThatAreInTheTeam.Contains(u.ID)).ToList();
         }
 
         private List<int> FindUserIDsThatAreInTheTeam()
         {
-            var userIDToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            var userIDToTeamIDs = databaseController.GetAllUserIDToTeamID();
             var userIDsBelongedToTeam = userIDToTeamIDs
                                         .Where(u => u.TeamID == team.ID)
                                         .Select(u => u.UserID).ToList();
@@ -93,12 +93,12 @@ namespace TeamManager.Service.Management.TeamServices
 
             UserIDToTeamID correctUserIDToTeamID = GetCorrectEntryFromDB(userIDToTeamID);
 
-            databaseManager.DeleteUserIDToTeamID(correctUserIDToTeamID);
+            databaseController.DeleteUserIDToTeamID(correctUserIDToTeamID);
         }
 
         private UserIDToTeamID GetCorrectEntryFromDB(UserIDToTeamID userIDToTeamID)
         {
-            var allUserIDsToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            var allUserIDsToTeamIDs = databaseController.GetAllUserIDToTeamID();
 
             UserIDToTeamID copyItem = allUserIDsToTeamIDs.Find(u => u.UserID == userIDToTeamID.UserID && u.TeamID == userIDToTeamID.TeamID);
 
@@ -107,7 +107,7 @@ namespace TeamManager.Service.Management.TeamServices
 
         private bool CheckIfUserIsInTheTeam(UserIDToTeamID userIDToTeamID)
         {
-            var allUserIDsToTeamIDs = databaseManager.GetAllUserIDToTeamID();
+            var allUserIDsToTeamIDs = databaseController.GetAllUserIDToTeamID();
 
             UserIDToTeamID? copyItem = allUserIDsToTeamIDs.Find(u => u.UserID == userIDToTeamID.UserID && u.TeamID == userIDToTeamID.TeamID);
 
@@ -121,12 +121,12 @@ namespace TeamManager.Service.Management.TeamServices
 
         private bool CheckIfUserExistsInDB(User user)
         {
-            return databaseManager.GetAllUsers().Find(u => u.ID == user.ID) != null ? true : false;
+            return databaseController.GetAllUsers().Find(u => u.ID == user.ID) != null ? true : false;
         }
 
         private bool CheckIfTeamExistsInDB()
         {
-            return databaseManager.GetAllTeams().Find(t => t.ID == team.ID) != null ? true : false;
+            return databaseController.GetAllTeams().Find(t => t.ID == team.ID) != null ? true : false;
         }
     }
 }

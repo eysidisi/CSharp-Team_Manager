@@ -12,7 +12,7 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
         public UserDetailsPageServiceTests()
         {
             userToGetDetails = new User() { ID = 1 };
-            userDetailsPageService = new UserDetailsPageService(databaseManager.Object, userToGetDetails);
+            userDetailsPageService = new UserDetailsPageService(databaseController.Object, userToGetDetails);
         }
 
         [Fact]
@@ -22,8 +22,8 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
             Team team = new Team() { ID = 1, Name = "team1" };
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = team.ID, UserID = userToGetDetails.ID };
 
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team });
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
+            databaseController.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team });
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
 
             List<Team> expectedTeamsUserIsIn = new List<Team>() { team };
 
@@ -40,8 +40,8 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
             // Arange 
             UserIDToTeamID userIDToTeamID = new UserIDToTeamID() { ID = 1, TeamID = 1, UserID = userToGetDetails.ID };
 
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
+            databaseController.Setup(c => c.GetAllTeams()).Returns(new List<Team>());
 
             // Act
             List<Team> teamsThatUserIsIn = userDetailsPageService.GetTeamsThatUserIn();
@@ -59,8 +59,8 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
             Team team1 = new Team() { ID = 1, Name = "team1" };
             Team team2 = new Team() { ID = 2, Name = "team2" };
 
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            databaseController.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
 
             // Act
             List<Team> teamsThatUser1IsIn = userDetailsPageService.GetTeamsThatUserIn();
@@ -82,8 +82,8 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
             UserIDToTeamID userIDToTeamID2 = new UserIDToTeamID() { ID = 2, TeamID = team2.ID, UserID = user2.ID };
             List<UserIDToTeamID> userIDToTeamIDs = new List<UserIDToTeamID>() { userIDToTeamID1, userIDToTeamID2 };
 
-            databaseManager.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDToTeamIDs);
-            databaseManager.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
+            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(userIDToTeamIDs);
+            databaseController.Setup(c => c.GetAllTeams()).Returns(new List<Team>() { team1, team2 });
 
             // Act
             List<Team> teamsThatUser1IsIn = userDetailsPageService.GetTeamsThatUserIn();

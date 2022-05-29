@@ -8,7 +8,7 @@ namespace TeamManager.Service.IntegrationTest.DB
     {
         protected string connString;
         protected ManagerDatabaseController databaseController;
-        readonly DatabaseTestHelperBase databaseTestHelperMethods;
+        readonly DatabaseTestHelper databaseTestHelperMethods;
 
         public IntegrationTests()
         {
@@ -17,7 +17,7 @@ namespace TeamManager.Service.IntegrationTest.DB
             databaseController = CreateDatabaseController(connString);
         }
 
-        protected abstract DatabaseTestHelperBase CreateDatabaseHelperMethods();
+        protected abstract DatabaseTestHelper CreateDatabaseHelperMethods();
 
         protected abstract IDbConnection CreateConnection(string connectionString);
 

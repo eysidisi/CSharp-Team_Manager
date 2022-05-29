@@ -5,25 +5,25 @@ namespace TeamManager.UI.Management
 {
     public partial class ManagementForm : Form
     {
-        readonly ManagerDatabaseController databaseManager;
-        public ManagementForm(ManagerDatabaseController databaseManager)
+        readonly ManagerDatabaseController databaseController;
+        public ManagementForm(ManagerDatabaseController databaseController)
         {
             InitializeComponent();
             CenterToScreen();
-            this.databaseManager = databaseManager;
+            this.databaseController = databaseController;
             CreateUserPage();
             CreateTeamPage();
         }
 
         private void CreateTeamPage()
         {
-            TeamPage teamPage = new TeamPage(databaseManager);
+            TeamPage teamPage = new TeamPage(databaseController);
             panelTeamPage.Controls.Add(teamPage);
         }
 
         private void CreateUserPage()
         {
-            UserPage userPageUser = new UserPage(databaseManager);
+            UserPage userPageUser = new UserPage(databaseController);
             panelUserDetails.Controls.Add(userPageUser);
         }
     }

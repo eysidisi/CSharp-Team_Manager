@@ -12,7 +12,7 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
 
         public NewUserPageServiceTests()
         {
-            newUserPageService = new NewUserPageService(databaseManager.Object);
+            newUserPageService = new NewUserPageService(databaseController.Object);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
             newUserPageService.SaveNewUser(expectedUserToSave);
 
             // Assert
-            databaseManager.Verify(c => c.SaveUser(It.Is<User>(actualUserToSave => actualUserToSave.Equals(expectedUserToSave))));
+            databaseController.Verify(c => c.SaveUser(It.Is<User>(actualUserToSave => actualUserToSave.Equals(expectedUserToSave))));
         }
 
         [Fact]

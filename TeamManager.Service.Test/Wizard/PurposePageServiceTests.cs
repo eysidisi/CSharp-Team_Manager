@@ -9,12 +9,12 @@ namespace TeamManager.Service.UnitTest.Wizard
 {
     public class PurposePageServiceTests
     {
-        readonly Mock<WizardDatabaseController> databaseManager;
+        readonly Mock<WizardDatabaseController> databaseController;
         readonly PurposePageService page;
         public PurposePageServiceTests()
         {
-            databaseManager = new Mock<WizardDatabaseController>("connectionString");
-            page = new PurposePageService(databaseManager.Object);
+            databaseController = new Mock<WizardDatabaseController>("connectionString");
+            page = new PurposePageService(databaseController.Object);
         }
 
         [Fact]
@@ -24,13 +24,13 @@ namespace TeamManager.Service.UnitTest.Wizard
             string userName = "userName";
             string purposeText = "A valid purpose";
             Purpose purpose = new Purpose(userName, purposeText);
-            databaseManager.Setup(d => d.SavePurpose(purpose));
+            databaseController.Setup(d => d.SavePurpose(purpose));
 
             // Act
             page.SavePurposeOfVisit(purpose);
 
             // Assert
-            databaseManager.Verify(x => x.SavePurpose(purpose));
+            databaseController.Verify(x => x.SavePurpose(purpose));
         }
 
         [Fact]

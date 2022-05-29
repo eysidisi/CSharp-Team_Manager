@@ -8,14 +8,14 @@ namespace TeamManager.UI.Management.UserControls
     public partial class TeamPage : UserControl
     {
         readonly TeamPageService teamPageService;
-        readonly ManagerDatabaseController databaseManager;
+        readonly ManagerDatabaseController databaseController;
         DataViewPage<Team> dataViewPage;
 
-        public TeamPage(ManagerDatabaseController databaseManager)
+        public TeamPage(ManagerDatabaseController databaseController)
         {
             InitializeComponent();
-            this.databaseManager = databaseManager;
-            teamPageService = new TeamPageService(databaseManager);
+            this.databaseController = databaseController;
+            teamPageService = new TeamPageService(databaseController);
             CreateDataViewPage();
         }
 
@@ -93,7 +93,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void OpenNewTeamPage()
         {
-            var newTeamPageUserControl = new NewTeamPage(databaseManager);
+            var newTeamPageUserControl = new NewTeamPage(databaseController);
             newTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(newTeamPageUserControl);
         }
@@ -131,7 +131,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void CreateTeamDetailsPage(Team team)
         {
-            var teamDetailsPageUserControl = new TeamDetailsPage(databaseManager, team);
+            var teamDetailsPageUserControl = new TeamDetailsPage(databaseController, team);
             teamDetailsPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(teamDetailsPageUserControl);
         }
@@ -160,7 +160,7 @@ namespace TeamManager.UI.Management.UserControls
 
         private void CreateEditTeamPage(Team team)
         {
-            var editTeamPageUserControl = new EditTeamPage(databaseManager, team);
+            var editTeamPageUserControl = new EditTeamPage(databaseController, team);
             editTeamPageUserControl.OnBackButtonClicked += OnBackButtonClicked;
             Controls.Add(editTeamPageUserControl);
         }

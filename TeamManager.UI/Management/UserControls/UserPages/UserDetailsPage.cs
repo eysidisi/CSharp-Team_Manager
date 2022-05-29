@@ -10,10 +10,10 @@ namespace TeamManager.UI.Management.UserControls.UserPages
         readonly UserDetailsPageService userDetailsPageService;
         new DataViewPage<Team> dataViewPage;
 
-        public UserDetailsPage(ManagerDatabaseController databaseManager, User user)
+        public UserDetailsPage(ManagerDatabaseController databaseController, User user)
         {
             InitializeComponent();
-            userDetailsPageService = new UserDetailsPageService(databaseManager, user);
+            userDetailsPageService = new UserDetailsPageService(databaseController, user);
             SetHeaderText(user.Name);
             CreateDataViewPage();
         }
