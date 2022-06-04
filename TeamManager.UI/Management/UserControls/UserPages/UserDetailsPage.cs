@@ -1,4 +1,4 @@
-﻿using TeamManager.Service.Management.DatabaseControllers;
+﻿using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.UserServices;
 

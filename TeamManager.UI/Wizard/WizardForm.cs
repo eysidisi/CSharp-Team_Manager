@@ -1,6 +1,9 @@
 using System.Configuration;
-using TeamManager.Service.Management.DatabaseControllers;
-using TeamManager.Service.Wizard.DatabaseControllers;
+using TeamManager.Service.Management.DatabaseConnection;
+using TeamManager.Service.Management.DatabaseConnection.DapperSupportedDatabaseConnections;
+using TeamManager.Service.Management.DatabaseController;
+using TeamManager.Service.Wizard.DatabaseConnection;
+using TeamManager.Service.Wizard.DatabaseController;
 using TeamManager.Service.Wizard.Models;
 using TeamManager.UI.Management;
 using TeamManager.UI.Wizard.UserControls;
@@ -21,8 +24,10 @@ namespace TeamManager.UI.Wizard
         {
             InitializeComponent();
             CenterToScreen();
-            wizardDatabaseController = new WizardSQLiteDatabaseController(connectionString);
-            managerDatabaseController = new ManagerSQLiteDatabaseController(connectionString);
+            IWizardDatabaseConnection wizardDatabaseConnection = new WizardSQLiteDatabaseConnection(connectionString);
+            wizardDatabaseController = new WizardDatabaseController(wizardDatabaseConnection);
+            IManagerDatabaseConnection managerDatabaseConnection = new ManagerSQLiteDatabaseConnection(connectionString);
+            managerDatabaseController = new ManagerDatabaseController(managerDatabaseConnection);
             AdjustLoginPage();
         }
 

@@ -1,14 +1,18 @@
 ﻿using Moq;
-using TeamManager.Service.Management.DatabaseControllers;
+using TeamManager.Service.Management.DatabaseConnection;
+using TeamManager.Service.Management.DatabaseController;
 
 namespace TeamManager.Service.UnitTest.Management.TeamServices
 {
     public class TeamServiceTestsBase
     {
-        protected readonly Mock<ManagerDatabaseController> databaseController;
+        protected readonly Mock<IManagerDatabaseConnection> connection;
+        protected readonly ManagerDatabaseController databaseController;
+
         public TeamServiceTestsBase()
         {
-            databaseController = new Mock<ManagerDatabaseController>("connectionString");
+            connection = new Mock<IManagerDatabaseConnection>();
+            databaseController = new ManagerDatabaseController(connection.Object);
         }
     }
 }

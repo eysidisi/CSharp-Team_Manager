@@ -2,7 +2,8 @@
 using System;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.DatabaseControllers;
+using TeamManager.Service.Wizard.DatabaseConnection;
+using TeamManager.Service.Wizard.DatabaseController;
 using Xunit;
 
 namespace TeamManager.Service.UnitTest.Wizard
@@ -13,7 +14,8 @@ namespace TeamManager.Service.UnitTest.Wizard
         readonly PurposePageService page;
         public PurposePageServiceTests()
         {
-            databaseController = new Mock<WizardDatabaseController>("connectionString");
+            IWizardDatabaseConnection connectio = new WizardMySQLDatabaseConnection("a");
+            databaseController = new Mock<WizardDatabaseController>(connectio);
             page = new PurposePageService(databaseController.Object);
         }
 

@@ -1,12 +1,12 @@
 using Dapper.Contrib.Extensions;
 using System.Data;
-using TeamManager.Service.Management.DatabaseControllers;
+using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
 using TeamManager.Service.Management.UserServices;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.DatabaseControllers;
+using TeamManager.Service.Wizard.DatabaseController;
 using TeamManager.Service.Wizard.Models;
 using Xunit;
 
@@ -40,7 +40,7 @@ namespace TeamManager.Service.SystemTests
 
         // A scenerio for an empty DB
         [Fact]
-        public  void OperationsOnEmptyDB()
+        public void OperationsOnEmptyDB()
         {
             CreateEmptySQLConnection();
 

@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using TeamManager.Service.Management.DatabaseControllers;
+using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
 
 namespace TeamManager.Service.IntegrationTest.DB

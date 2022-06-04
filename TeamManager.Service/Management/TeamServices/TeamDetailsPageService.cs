@@ -1,4 +1,4 @@
-﻿using TeamManager.Service.Management.DatabaseControllers;
+﻿using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.Management.Models;
 
 namespace TeamManager.Service.Management.TeamServices

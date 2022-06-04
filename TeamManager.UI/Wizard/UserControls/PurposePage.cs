@@ -1,6 +1,6 @@
 ﻿using TeamManager.Service.Management.Models;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.DatabaseControllers;
+using TeamManager.Service.Wizard.DatabaseController;
 using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.UI.Wizard.UserControls

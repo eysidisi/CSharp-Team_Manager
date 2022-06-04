@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Data.SQLite;
-using TeamManager.Service.Management.DatabaseControllers;
+using TeamManager.Service.Management.DatabaseConnection.DapperSupportedDatabaseConnections;
+using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
 
 namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
@@ -19,7 +20,8 @@ namespace TeamManager.Service.UnitTest.Management.DatabaseControllers
 
         protected override ManagerDatabaseController CreateDatabaseController(string connectionString)
         {
-            return new ManagerSQLiteDatabaseController(connectionString);
+            var connection = new ManagerSQLiteDatabaseConnection(connectionString);
+            return new ManagerDatabaseController(connection);
         }
     }
 }

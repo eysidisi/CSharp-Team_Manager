@@ -1,7 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Data;
 using TeamManager.Service.IntegrationTest.DB.TeamServices;
-using TeamManager.Service.Management.DatabaseControllers;
+using TeamManager.Service.Management.DatabaseConnection.DapperSupportedDatabaseConnections;
+using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
 
 namespace TeamManager.Service.IntegrationTest.DB.MySQL.TeamServices
@@ -15,7 +16,8 @@ namespace TeamManager.Service.IntegrationTest.DB.MySQL.TeamServices
 
         protected override ManagerDatabaseController CreateDatabaseController(string connectionString)
         {
-            return new ManagerMySQLDatabaseController(connectionString);
+            ManagerMySQLDatabaseConnection connection = new ManagerMySQLDatabaseConnection(connectionString);
+            return new ManagerDatabaseController(connection);
         }
 
         protected override DatabaseTestHelper CreateDatabaseHelperMethods()

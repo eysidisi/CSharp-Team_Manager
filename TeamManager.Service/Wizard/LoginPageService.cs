@@ -1,4 +1,4 @@
-﻿using TeamManager.Service.Wizard.DatabaseControllers;
+﻿using TeamManager.Service.Wizard.DatabaseController;
 using TeamManager.Service.Wizard.Models;
 
 namespace TeamManager.Service.Wizard

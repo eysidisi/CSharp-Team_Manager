@@ -1,4 +1,4 @@
-﻿using TeamManager.Service.Management.DatabaseControllers;
+﻿using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.Management.Models;
 
 namespace TeamManager.Service.Management.TeamServices
@@ -7,9 +7,9 @@ namespace TeamManager.Service.Management.TeamServices
     {
         readonly ManagerDatabaseController databaseController;
 
-        public NewTeamPageService(ManagerDatabaseController connection)
+        public NewTeamPageService(ManagerDatabaseController databaseController)
         {
-            this.databaseController = connection;
+            this.databaseController = databaseController;
         }
 
         public void SaveTeam(Team newTeam)

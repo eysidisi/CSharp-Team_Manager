@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using TeamManager.Service.Management.DatabaseControllers;
+using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
 
@@ -36,7 +36,7 @@ namespace TeamManager.UI.Management.UserControls
             {
                 TryToDeleteSelectedTeam();
                 SetUpDataViewPage();
-                MessageBox.Show("Team deleted succesfully!","Success", MessageBoxButtons.OK);
+                MessageBox.Show("Team deleted succesfully!", "Success", MessageBoxButtons.OK);
             }
             catch (Exception ex)
             {

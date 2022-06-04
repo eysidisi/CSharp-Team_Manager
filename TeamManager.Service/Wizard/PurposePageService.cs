@@ -1,5 +1,5 @@
 ﻿using TeamManager.Service.Management.Models;
-using TeamManager.Service.Wizard.DatabaseControllers;
+using TeamManager.Service.Wizard.DatabaseController;
 
 namespace TeamManager.Service.Wizard
 {

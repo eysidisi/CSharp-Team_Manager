@@ -2,23 +2,19 @@
 using TeamManager.Service.Management.DatabaseConnection;
 using TeamManager.Service.Management.Models;
 
-namespace TeamManager.Service.Management.DatabaseControllers
+namespace TeamManager.Service.Management.DatabaseController
 {
-    public abstract class ManagerDatabaseController
+    public class ManagerDatabaseController
     {
-        protected string connString;
         List<User> users;
         List<Team> teams;
         List<UserIDToTeamID> userIDsToTeamIDs;
         readonly IManagerDatabaseConnection connection;
 
-        protected ManagerDatabaseController(string connString)
+        public ManagerDatabaseController(IManagerDatabaseConnection connection)
         {
-            this.connString = connString;
-            connection = CreateConnection();
+            this.connection = connection;
         }
-
-        protected abstract IManagerDatabaseConnection CreateConnection();
 
         public virtual void SaveUser(User user)
         {

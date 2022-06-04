@@ -2,7 +2,8 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using TeamManager.Service.Wizard;
-using TeamManager.Service.Wizard.DatabaseControllers;
+using TeamManager.Service.Wizard.DatabaseConnection;
+using TeamManager.Service.Wizard.DatabaseController;
 using TeamManager.Service.Wizard.Models;
 using Xunit;
 
@@ -22,8 +23,8 @@ namespace TeamManager.Service.UnitTest.Wizard
                 UserName = userName,
                 Password = password
             };
-
-            var connection = new Mock<WizardDatabaseController>("connectionString");
+            IWizardDatabaseConnection connectio = new WizardMySQLDatabaseConnection("a");
+            var connection = new Mock<WizardDatabaseController>(connectio);
             connection.Setup(x => x.GetManagers()).Returns(new List<Manager>() { validManager });
 
             loginPageService = new LoginPageService(connection.Object);

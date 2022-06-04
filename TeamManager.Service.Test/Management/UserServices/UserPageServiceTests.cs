@@ -13,7 +13,7 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
 
         public UserPageServiceTests()
         {
-            userPageService = new UserPageService(databaseController.Object);
+            userPageService = new UserPageService(databaseController);
         }
 
         [Fact]
@@ -23,7 +23,7 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
             User user = new User();
             var expectedUsers = new List<User>() { user };
 
-            databaseController.Setup(c => c.GetAllUsers()).Returns(expectedUsers);
+            connection.Setup(c => c.GetAllUsers()).Returns(expectedUsers);
 
             // Act
             var actualUsers = userPageService.GetUsers();
@@ -36,7 +36,7 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
         public void GetUsers_NoUserExistsInDB_GetsEmptyList()
         {
             // Arrange
-            databaseController.Setup(c => c.GetAllUsers()).Returns(new List<User>());
+            connection.Setup(c => c.GetAllUsers()).Returns(new List<User>());
 
             // Act
             var actualUsers = userPageService.GetUsers();
@@ -50,14 +50,14 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
         {
             // Arrange
             User user = new User() { ID = 1, Name = "user" };
-            databaseController.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
-            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
+            connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>());
 
             // Act 
             userPageService.DeleteUser(user);
 
             // Assert
-            databaseController.Verify(c => c.DeleteUser(It.Is<User>(actualDeletedUser => actualDeletedUser.Equals(user))));
+            connection.Verify(c => c.DeleteUser(It.Is<User>(actualDeletedUser => actualDeletedUser.Equals(user))));
         }
 
         [Fact]
@@ -67,14 +67,14 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
             User user = new User() { ID = 1, Name = "user" };
             var userIDToTeamID = new UserIDToTeamID() { TeamID = 1, UserID = 1 };
 
-            databaseController.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
-            databaseController.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
+            connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(true);
+            connection.Setup(c => c.GetAllUserIDToTeamID()).Returns(new List<UserIDToTeamID>() { userIDToTeamID });
 
             // Act 
             userPageService.DeleteUser(user);
 
             // Assert
-            databaseController.Verify(c => c.DeleteUserIDToTeamID(userIDToTeamID));
+            connection.Verify(c => c.DeleteUserIDToTeamID(userIDToTeamID));
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace TeamManager.Service.UnitTest.Management.UserServices
         {
             // Arrange
             User user = new User();
-            databaseController.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(false);
+            connection.Setup(c => c.DeleteUser(It.Is<User>(u => u == user))).Returns(false);
 
             // Act && Assert
             Assert.Throws<ArgumentException>(() => userPageService.DeleteUser(user));

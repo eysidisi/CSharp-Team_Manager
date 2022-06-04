@@ -1,5 +1,4 @@
 ﻿using Dapper.Contrib.Extensions;
-using TeamManager.Service.Management.DatabaseControllers;
 using TeamManager.Service.Management.Models;
 using TeamManager.Service.Management.TeamServices;
 using Xunit;
@@ -8,13 +7,13 @@ namespace TeamManager.Service.IntegrationTest.DB.TeamServices
 {
     public abstract class TeamDetailsPageServiceTests : IntegrationTests
     {
-        readonly Team temToGetDetails;
+        readonly Team teamToGetDetails;
         readonly TeamDetailsPageService teamDetailsPageService;
 
         public TeamDetailsPageServiceTests()
         {
-            temToGetDetails = new Team() { Name = "team", ID = 1 };
-            teamDetailsPageService = new TeamDetailsPageService(databaseController, temToGetDetails);
+            teamToGetDetails = new Team() { Name = "team", ID = 1 };
+            teamDetailsPageService = new TeamDetailsPageService(databaseController, teamToGetDetails);
         }
 
         [Fact]
@@ -26,12 +25,11 @@ namespace TeamManager.Service.IntegrationTest.DB.TeamServices
 
             using (var cnn = CreateConnection(connString))
             {
-                cnn.Insert(temToGetDetails);
+                cnn.Insert(teamToGetDetails);
                 cnn.Insert(expectedUser);
                 cnn.Insert(userIDToTeamID);
             }
 
-            ManagerSQLiteDatabaseController connection = new ManagerSQLiteDatabaseController(connString);
 
             // Act 
             var actualUsers = teamDetailsPageService.GetUsersInTeam();
@@ -44,7 +42,7 @@ namespace TeamManager.Service.IntegrationTest.DB.TeamServices
             // Arrange
             using (var cnn = CreateConnection(connString))
             {
-                cnn.Insert(temToGetDetails);
+                cnn.Insert(teamToGetDetails);
             }
 
             // Act 

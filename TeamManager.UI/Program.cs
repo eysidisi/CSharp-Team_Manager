@@ -1,4 +1,3 @@
-using System.Configuration;
 using TeamManager.UI.Wizard;
 
 namespace TeamManager.UI

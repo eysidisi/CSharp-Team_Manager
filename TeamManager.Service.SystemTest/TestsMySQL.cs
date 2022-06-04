@@ -1,8 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Data;
-using TeamManager.Service.Management.DatabaseControllers;
+using TeamManager.Service.Management.DatabaseConnection.DapperSupportedDatabaseConnections;
+using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
-using TeamManager.Service.Wizard.DatabaseControllers;
+using TeamManager.Service.Wizard.DatabaseConnection;
+using TeamManager.Service.Wizard.DatabaseController;
 
 namespace TeamManager.Service.SystemTests
 {
@@ -10,7 +12,8 @@ namespace TeamManager.Service.SystemTests
     {
         protected override ManagerDatabaseController CreateManagerDatabaseController()
         {
-            return new ManagerMySQLDatabaseController(connectionString);
+            var connection = new ManagerMySQLDatabaseConnection(connectionString);
+            return new ManagerDatabaseController(connection);
         }
 
         protected override DatabaseTestHelper CreateDatabaseTestHelper()
@@ -20,12 +23,13 @@ namespace TeamManager.Service.SystemTests
 
         protected override WizardDatabaseController CreateWizardDatabaseController()
         {
-            return new WizardMySQLDatabaseController(connectionString);
+            var connection = new WizardMySQLDatabaseConnection(connectionString);
+            return new WizardDatabaseController(connection);
         }
 
         protected override IDbConnection CreateConnection()
         {
-           return new MySqlConnection(connectionString);
+            return new MySqlConnection(connectionString);
         }
     }
 }

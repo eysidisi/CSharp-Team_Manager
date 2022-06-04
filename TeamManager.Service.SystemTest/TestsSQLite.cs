@@ -1,8 +1,10 @@
 ﻿using System.Data;
 using System.Data.SQLite;
-using TeamManager.Service.Management.DatabaseControllers;
+using TeamManager.Service.Management.DatabaseConnection.DapperSupportedDatabaseConnections;
+using TeamManager.Service.Management.DatabaseController;
 using TeamManager.Service.UnitTest.HelperMethods.Database;
-using TeamManager.Service.Wizard.DatabaseControllers;
+using TeamManager.Service.Wizard.DatabaseConnection;
+using TeamManager.Service.Wizard.DatabaseController;
 
 namespace TeamManager.Service.SystemTests
 {
@@ -10,7 +12,8 @@ namespace TeamManager.Service.SystemTests
     {
         protected override ManagerDatabaseController CreateManagerDatabaseController()
         {
-            return new ManagerSQLiteDatabaseController(connectionString);
+            var connection = new ManagerSQLiteDatabaseConnection(connectionString);
+            return new ManagerDatabaseController(connection);
         }
 
         protected override DatabaseTestHelper CreateDatabaseTestHelper()
@@ -20,7 +23,8 @@ namespace TeamManager.Service.SystemTests
 
         protected override WizardDatabaseController CreateWizardDatabaseController()
         {
-            return new WizardSQLiteDatabaseController(connectionString);
+            var connection = new WizardSQLiteDatabaseConnection(connectionString);
+            return new WizardDatabaseController(connection);
         }
 
         protected override IDbConnection CreateConnection()
