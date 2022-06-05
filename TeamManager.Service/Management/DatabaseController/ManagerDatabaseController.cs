@@ -16,7 +16,7 @@ namespace TeamManager.Service.Management.DatabaseController
             this.connection = connection;
         }
 
-        public virtual void SaveUser(User user)
+        public void SaveUser(User user)
         {
             connection.SaveUser(user);
 
@@ -32,7 +32,7 @@ namespace TeamManager.Service.Management.DatabaseController
             users = users.OrderBy(u => u.ID).ToList();
         }
 
-        public virtual bool DeleteUser(User user)
+        public bool DeleteUser(User user)
         {
             if (connection.DeleteUser(user) == false)
             {
@@ -49,7 +49,7 @@ namespace TeamManager.Service.Management.DatabaseController
             }
         }
 
-        public virtual List<User> GetAllUsers()
+        public List<User> GetAllUsers()
         {
             if (users == null)
             {
@@ -65,7 +65,7 @@ namespace TeamManager.Service.Management.DatabaseController
             users = users.OrderBy(u => u.ID).ToList();
         }
 
-        public virtual void SaveTeam(Team team)
+        public void SaveTeam(Team team)
         {
             connection.SaveTeam(team);
             if (teams != null)
@@ -80,7 +80,7 @@ namespace TeamManager.Service.Management.DatabaseController
             teams = teams.OrderBy(t => t.ID).ToList();
         }
 
-        public virtual List<Team> GetAllTeams()
+        public List<Team> GetAllTeams()
         {
             if (teams == null)
             {
@@ -96,7 +96,7 @@ namespace TeamManager.Service.Management.DatabaseController
             teams = teams.OrderBy(t => t.ID).ToList();
         }
 
-        public virtual bool DeleteTeam(Team team)
+        public bool DeleteTeam(Team team)
         {
             if (connection.DeleteTeam(team) == false)
             {
@@ -112,7 +112,7 @@ namespace TeamManager.Service.Management.DatabaseController
             }
         }
 
-        public virtual List<UserIDToTeamID> GetAllUserIDToTeamID()
+        public List<UserIDToTeamID> GetAllUserIDToTeamID()
         {
             if (userIDsToTeamIDs == null)
             {
@@ -121,7 +121,7 @@ namespace TeamManager.Service.Management.DatabaseController
             return userIDsToTeamIDs;
         }
 
-        public virtual void SaveUserIDToTeamID(UserIDToTeamID userIDToTeamID)
+        public void SaveUserIDToTeamID(UserIDToTeamID userIDToTeamID)
         {
             connection.SaveUserIDToTeamID(userIDToTeamID);
             if (userIDsToTeamIDs != null)
@@ -130,7 +130,7 @@ namespace TeamManager.Service.Management.DatabaseController
             }
         }
 
-        public virtual bool DeleteUserIDToTeamID(UserIDToTeamID userIDToTeamID)
+        public bool DeleteUserIDToTeamID(UserIDToTeamID userIDToTeamID)
         {
             if (connection.DeleteUserIDToTeamID(userIDToTeamID) == false)
             {
